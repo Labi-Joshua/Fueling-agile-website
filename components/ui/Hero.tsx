@@ -36,16 +36,16 @@ export default function Hero({ content, dashboardImage }: HeroProps) {
         <p className="hero-animate max-w-2xl text-lg text-brand-900/60">
           {content.subheadline}
         </p>
-        <div className="hero-animate flex flex-row gap-4">
+        <div className="hero-animate flex flex-col gap-4 sm:flex-row">
           <button
             type="button"
-            className="rounded-full bg-brand-500 px-4 py-3 text-xs font-semibold text-white transition-colors hover:bg-brand-600 sm:px-8 sm:py-4 sm:text-sm"
+            className="rounded-full bg-brand-500 px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
           >
             {content.primaryCtaText}
           </button>
           <button
             type="button"
-            className="rounded-full border border-brand-900/20 px-4 py-3 text-xs font-semibold text-brand-900 transition-colors hover:border-brand-900 sm:px-8 sm:py-4 sm:text-sm"
+            className="rounded-full border border-brand-900/20 px-8 py-4 text-sm font-semibold text-brand-900 transition-colors hover:border-brand-900"
           >
             {content.secondaryCtaText}
           </button>
