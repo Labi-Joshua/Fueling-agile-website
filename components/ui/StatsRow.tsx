@@ -49,22 +49,24 @@ export default function StatsRow({ stats }: StatsRowProps) {
   return (
     <div
       ref={containerRef}
-      className="flex w-full flex-col items-center justify-center divide-y divide-slate-200 sm:flex-row sm:divide-x sm:divide-y-0"
+      className="flex w-full flex-row items-center justify-center divide-x divide-slate-200"
     >
       {stats.map((stat, index) => (
         <div
           key={stat.label}
-          className="flex flex-col items-center gap-2 px-8 py-4 first:pt-0 last:pb-0 sm:py-0"
+          className="flex flex-col items-center gap-2 px-4 sm:px-8"
         >
           <span
             ref={(el) => {
               valueRefs.current[index] = el;
             }}
-            className="text-center font-heading text-4xl font-normal leading-none text-brand-500 md:text-5xl"
+            className="text-center font-heading text-2xl font-normal leading-none text-brand-500 sm:text-4xl md:text-5xl"
           >
             0
           </span>
-          <span className="text-xs text-brand-900/50 sm:text-sm">{stat.label}</span>
+          <span className="text-center text-[10px] text-brand-900/50 sm:text-xs md:text-sm">
+            {stat.label}
+          </span>
         </div>
       ))}
     </div>
