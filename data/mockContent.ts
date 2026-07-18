@@ -16,6 +16,23 @@ export interface DashboardImage {
   alt: string;
 }
 
+export interface HowItWorksStep {
+  icon: "truck" | "card" | "fuel";
+  description: string;
+}
+
+export interface Stat {
+  value: string;
+  label: string;
+}
+
+export interface StatsContent {
+  headingEmphasis: string;
+  headingRest: string;
+  stats: Stat[];
+  ctaText: string;
+}
+
 export interface BlogPost {
   id: string;
   title: string;
@@ -52,6 +69,36 @@ export const heroContent: HeroContent = {
 export const dashboardImage: DashboardImage = {
   src: "/platform.png",
   alt: "AgileFlex PetrolKaart fleet overview dashboard showing active vehicles, card balances, and live tracking",
+};
+
+export const howItWorksSteps: HowItWorksStep[] = [
+  {
+    icon: "truck",
+    description:
+      "Tell us about your fleet. We'll set up your account and assign a card to each driver or vehicle in minutes.",
+  },
+  {
+    icon: "card",
+    description:
+      "Load money onto your cards and set spending limits so drivers can only spend what you allow.",
+  },
+  {
+    icon: "fuel",
+    description:
+      "Your drivers fuel up at any of our 2,400+ stations across Nigeria while you watch every transaction on your dashboard in real time.",
+  },
+];
+
+export const statsContent: StatsContent = {
+  headingEmphasis: "Built",
+  headingRest:
+    " for Nigerian businesses that are tired of guessing how much they spend on fuel every month.",
+  stats: [
+    { value: "2400+", label: "Gas Stations Nationwide" },
+    { value: "24/7", label: "Customer Support" },
+    { value: "30 mins", label: "Cards are funded in 30mins" },
+  ],
+  ctaText: "Request fuel cards",
 };
 
 export const blogPosts: BlogPost[] = [
