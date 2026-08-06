@@ -1,10 +1,28 @@
 import Hero from "@/components/ui/Hero";
 import ScrollHighlightText from "@/components/ui/ScrollHighlightText";
 import StatsSection from "@/components/ui/StatsSection";
+import HowItWorks from "@/components/ui/HowItWorks";
+import FeatureTabs from "@/components/ui/FeatureTabs";
+import TrustedBy from "@/components/ui/TrustedBy";
+import WhyUs from "@/components/ui/WhyUs";
+import FaqAccordion from "@/components/ui/FaqAccordion";
 import BlogList from "@/components/ui/BlogList";
-import { heroContent, dashboardImage, statsContent, blogPosts } from "@/data/mockContent";
+import { getAllPosts } from "@/lib/api";
+import {
+  heroContent,
+  dashboardImage,
+  statsContent,
+  howItWorksContent,
+  featuresContent,
+  trustedByContent,
+  whyUsContent,
+  faqContent,
+  blogSectionContent,
+} from "@/data/mockContent";
 
-export default function Home() {
+export default async function Home() {
+  const posts = await getAllPosts();
+
   return (
     <>
       <Hero content={heroContent} dashboardImage={dashboardImage} />
@@ -12,7 +30,12 @@ export default function Home() {
         text={`${statsContent.headingEmphasis}${statsContent.headingRest}`}
       />
       <StatsSection content={statsContent} />
-      <BlogList posts={blogPosts} />
+      <HowItWorks content={howItWorksContent} />
+      <FeatureTabs content={featuresContent} />
+      <TrustedBy content={trustedByContent} logosImageSrc="/trusted-logos-frame.png" />
+      <WhyUs content={whyUsContent} />
+      <FaqAccordion content={faqContent} />
+      <BlogList content={blogSectionContent} posts={posts} />
     </>
   );
 }

@@ -1,12 +1,13 @@
-import type { HowItWorksStep } from "@/data/mockContent";
+import Image from "next/image";
+import type { HowItWorksContent, HowItWorksStep } from "@/data/mockContent";
 
 export interface HowItWorksProps {
-  steps: HowItWorksStep[];
+  content: HowItWorksContent;
 }
 
 const icons: Record<HowItWorksStep["icon"], React.ReactNode> = {
   truck: (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
       <path
         d="M2 7h11v9H2z"
         stroke="currentColor"
@@ -24,7 +25,7 @@ const icons: Record<HowItWorksStep["icon"], React.ReactNode> = {
     </svg>
   ),
   card: (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
       <rect
         x="2"
         y="5"
@@ -38,7 +39,7 @@ const icons: Record<HowItWorksStep["icon"], React.ReactNode> = {
     </svg>
   ),
   fuel: (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
       <path
         d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"
         stroke="currentColor"
@@ -57,37 +58,24 @@ const icons: Record<HowItWorksStep["icon"], React.ReactNode> = {
   ),
 };
 
-function ArcPattern() {
+export default function HowItWorks({ content }: HowItWorksProps) {
   return (
-    <svg
-      className="absolute inset-0 h-full w-full"
-      viewBox="0 0 400 400"
-      preserveAspectRatio="xMidYMid slice"
-      fill="none"
-    >
-      {Array.from({ length: 9 }).map((_, i) => (
-        <circle
-          key={i}
-          cx="400"
-          cy="200"
-          r={40 + i * 45}
-          stroke="currentColor"
-          strokeWidth="1"
-          className="text-brand-900/10"
-        />
-      ))}
-    </svg>
-  );
-}
+    <section className="mx-auto max-w-6xl px-4 pt-[180px] text-center sm:px-8">
+      <h2 className="text-2xl font-semibold text-brand-900 sm:text-3xl">
+        {content.title}
+      </h2>
+      <p className="mt-2 text-sm text-brand-900/50">{content.subtitle}</p>
 
-export default function HowItWorks({ steps }: HowItWorksProps) {
-  return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-8">
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-        {steps.map((step) => (
+      <div className="mt-12 grid grid-cols-1 gap-8 text-left md:grid-cols-3">
+        {content.steps.map((step) => (
           <div key={step.description} className="flex flex-col gap-4">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl bg-brand-900/[0.03]">
-              <ArcPattern />
+            <div className="relative aspect-[4/3] overflow-hidden bg-brand-500/10">
+              <Image
+                src={step.image.src}
+                alt={step.image.alt}
+                fill
+                className="object-cover"
+              />
             </div>
             <div className="flex items-start gap-3">
               <span className="mt-0.5 text-brand-500">{icons[step.icon]}</span>
@@ -98,20 +86,6 @@ export default function HowItWorks({ steps }: HowItWorksProps) {
           </div>
         ))}
       </div>
-
-      <svg
-        className="mx-auto mt-8 hidden w-full max-w-4xl text-brand-900/15 md:block"
-        height="120"
-        viewBox="0 0 1200 120"
-        fill="none"
-      >
-        <path
-          d="M100 0 C100 40, 140 40, 180 40 L1020 40 C1060 40, 1100 40, 1100 0"
-          stroke="currentColor"
-          strokeWidth="1.5"
-        />
-        <path d="M600 40 L600 120" stroke="currentColor" strokeWidth="1.5" />
-      </svg>
     </section>
   );
 }

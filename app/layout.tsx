@@ -3,7 +3,7 @@ import { Manrope, Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
-import { navLinks } from "@/data/mockContent";
+import { navLinks, footerContent } from "@/data/mockContent";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -34,15 +34,16 @@ export default function RootLayout({
         <Navbar
           brand="Fueling Agile Solutions"
           links={navLinks}
-          loginText="Client Portal Log in"
+          loginText="Access Client Portal"
           loginHref="/login"
-          ctaText="Request fuel cards"
+          ctaText="Schedule a Demo"
           ctaHref="/request"
         />
         <main className="flex-1">{children}</main>
         <Footer
-          brand="Fueling Agile Solutions"
-          tagline="Helping Nigerian fleets stop wasting money on fuel with smart cards and real-time tracking."
+          content={footerContent}
+          logoSrc="/fan-logo-icon.png"
+          backgroundImageSrc="/hero-background.jpg"
         />
       </body>
     </html>

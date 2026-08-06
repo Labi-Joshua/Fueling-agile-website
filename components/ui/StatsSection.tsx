@@ -7,7 +7,7 @@ export interface StatsSectionProps {
 
 export default function StatsSection({ content }: StatsSectionProps) {
   return (
-    <section className="mx-auto flex max-w-4xl flex-col items-center gap-12 px-4 pb-20 pt-[48px] text-center sm:px-8 sm:pb-28">
+    <section className="mx-auto flex max-w-4xl flex-col items-center gap-12 px-4 pt-[48px] text-center sm:px-8">
       <StatsRow stats={content.stats} />
 
       <div className="flex flex-col items-center gap-8">
