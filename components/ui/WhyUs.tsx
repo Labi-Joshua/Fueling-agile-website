@@ -18,7 +18,7 @@ export default function WhyUs({ content }: WhyUsProps) {
       <div className="mt-12 grid grid-cols-1 gap-8 text-left md:grid-cols-3">
         {content.points.map((point) => (
           <div key={point.title} className="flex flex-col gap-4">
-            <div className="relative aspect-[4/5] overflow-hidden bg-brand-500/10">
+            <div className="relative aspect-[4/3] overflow-hidden bg-brand-500/10">
               <Image
                 src={point.image.src}
                 alt={point.image.alt}
