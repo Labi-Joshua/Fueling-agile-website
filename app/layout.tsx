@@ -34,7 +34,7 @@ export default function RootLayout({
         <Navbar
           brand="Fueling Agile Solutions"
           links={navLinks}
-          loginText="Access Client Portal"
+          loginText="Access Client Portals"
           loginHref="/login"
           ctaText="Schedule a Demo"
           ctaHref="/request"

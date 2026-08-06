@@ -74,6 +74,31 @@ export interface WhyUsContent {
   points: TrustPoint[];
 }
 
+export interface PortalPlatform {
+  title: string;
+  subtitle: string;
+  image: { src: string; alt: string };
+  ctaText: string;
+  ctaHref: string;
+  checklist: string[];
+}
+
+export interface PortalPageContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  platforms: PortalPlatform[];
+}
+
+export interface PortalSupportContent {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  ctaText: string;
+  ctaHref: string;
+  image: { src: string; alt: string };
+}
+
 export interface FaqItem {
   question: string;
   answer: string;
@@ -252,6 +277,54 @@ export const whyUsContent: WhyUsContent = {
       image: { src: "/trust-3.png", alt: "Illustration representing account and card security" },
     },
   ],
+};
+
+export const portalPageContent: PortalPageContent = {
+  eyebrow: "Access Client Portal",
+  heading: "Two Dedicated Platforms. Total Spending Control.",
+  subheading:
+    "Monitor overall company activity on our reporting platform, or manage individual card balances and security through the Providus Bank portal.",
+  platforms: [
+    {
+      title: "Reporting Platform",
+      subtitle: "See where every naira went.",
+      image: {
+        src: "/portal-reporting.jpg",
+        alt: "AgileFlex analytics dashboard showing total fleet spend and monthly spend trend",
+      },
+      ctaText: "Log In to Reports",
+      ctaHref:
+        "https://cards.fuelingagilenigeria.com/?_gl=1*1k5vm4m*_ga*NDg0MTA1OTc0LjE3NDM1OTcwNjY.*_ga_56P7EWPZCC*czE3ODYwMTkwNzgkbzkxJGcxJHQxNzg2MDE5MDgxJGo1NyRsMCRoMA..",
+      checklist: [
+        "Real-time fuel spend tracking",
+        "Monthly reports, ready to download",
+        "Spend breakdown per card or driver",
+      ],
+    },
+    {
+      title: "Card Platform",
+      subtitle: "Manage your AgileFlex cards directly",
+      image: {
+        src: "/portal-card-platform.jpg",
+        alt: "Providus Bank MCP Customer Portal login and card management screen",
+      },
+      ctaText: "Log In to Card Platform",
+      ctaHref: "https://mcp-customer.providusbank.com/",
+      checklist: ["Monitor Card Balances", "Block a lost or stolen card in seconds"],
+    },
+  ],
+};
+
+export const portalSupportContent: PortalSupportContent = {
+  eyebrow: "Support",
+  heading: "Are you having Issues Logging in or just have Questions",
+  description: "Our support team is ready to assist you with any platform issues.",
+  ctaText: "Contact Support",
+  ctaHref: "/contact",
+  image: {
+    src: "/portal-support.jpg",
+    alt: "A smiling customer support agent wearing a headset",
+  },
 };
 
 export const faqContent: FaqContent = {
