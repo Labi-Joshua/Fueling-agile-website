@@ -60,19 +60,13 @@ export default function Footer({ content, logoSrc, backgroundImageSrc }: FooterP
           <div className="bg-[#262626] px-6 pb-10 sm:px-12">
             <div className="flex flex-col gap-10 border-t border-white/10 pt-10 text-left md:flex-row md:items-start md:justify-between">
               <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-2">
+                <div className="relative h-8 w-28">
                   <Image
                     src={logoSrc}
                     alt={content.brand}
-                    width={118}
-                    height={142}
-                    className="h-7 w-auto brightness-0 invert"
+                    fill
+                    className="object-contain object-left"
                   />
-                  <span className="flex flex-col text-sm font-medium leading-tight text-white">
-                    {content.brand.split(" ").slice(0, -1).join(" ")}
-                    <br />
-                    {content.brand.split(" ").slice(-1)}
-                  </span>
                 </div>
                 <div className="flex flex-col gap-1 text-xs text-white/50">
                   <p>

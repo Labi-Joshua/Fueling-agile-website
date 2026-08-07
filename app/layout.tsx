@@ -42,7 +42,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
         <Footer
           content={footerContent}
-          logoSrc="/fan-logo-icon.png"
+          logoSrc="/fan-logo-white.png"
           backgroundImageSrc="/hero-background.jpg"
         />
       </body>

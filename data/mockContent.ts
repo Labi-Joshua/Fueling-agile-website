@@ -5,6 +5,24 @@ export interface HeroContent {
   secondaryCtaText: string;
 }
 
+export interface AboutHeroContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  video: {
+    videoSrc?: string;
+    posterSrc?: string;
+    thumbnailAlt: string;
+  };
+}
+
+export interface AboutStoryContent {
+  eyebrow: string;
+  heading: string;
+  paragraphs: string[];
+  signatureName: string;
+}
+
 export interface NavLink {
   label: string;
   href: string;
@@ -167,6 +185,28 @@ export const heroContent: HeroContent = {
     "Load money onto your card, set limits for each driver, and give your team access to over 2,400 fueling stations across Nigeria.",
   primaryCtaText: "Schedule a Demo",
   secondaryCtaText: "Order Fuel Cards",
+};
+
+export const aboutHeroContent: AboutHeroContent = {
+  eyebrow: "About Us",
+  heading: "We're building the infrastructure for smarter fleet management.",
+  subheading:
+    "We are on a mission to help Nigerian businesses protect their profit margins, eliminate overspending, and take complete control of their fuel operations. Rooted in transparency, we build secure systems that keep your fleet on the move.",
+  video: {
+    thumbnailAlt: "City skyline at dusk",
+  },
+};
+
+export const aboutStoryContent: AboutStoryContent = {
+  eyebrow: "About Us",
+  heading: "Fueling Agile is reframing how fleets operate.",
+  paragraphs: [
+    "We believe that fuel management shouldn't be a black box. Fueling Agile wasn't built on guesswork or corporate slogans—it was built to solve the real, everyday bottlenecks businesses face: tracking every litre, stopping leaks before they happen, and ensuring drivers are never stranded.",
+    "Teams do their best work when they have total visibility. That's why we engineered our architecture with a clear division of control: a dedicated fleet operator portal for the client, and a robust internal operations command center to keep everything running smoothly. We focus on real-time tracking, customizable spending limits, and seamless financial security powered by our Providus Bank integrations. Not as marketing features—but because they help business owners make better decisions.",
+    "We move fast, but we build for security. From the QR/NFC technology in our AgileFlex cards to our digital welfare solutions, we care about the details that matter: accurate usage monitoring, transparent market pricing, and access to a network of over 2,400 stations.",
+    "Fueling Agile is our product, but it's also a reflection of our core belief: technology, built thoughtfully, is the engine that protects your profits and quietly powers your growth.",
+  ],
+  signatureName: "The Fueling Agile Team",
 };
 
 export const dashboardImage: DashboardImage = {
