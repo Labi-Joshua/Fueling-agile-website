@@ -45,7 +45,7 @@ function ArrowDownRight() {
 
 export default function FuelPriceBanner({ prices, href }: FuelPriceBannerProps) {
   const trackRef = useRef<HTMLDivElement>(null);
-  const tweenRef = useRef<gsap.core.Tween>(null);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
 
   useGSAP(() => {
     if (!trackRef.current) return;
