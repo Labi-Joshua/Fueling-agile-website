@@ -36,7 +36,7 @@ export default function RootLayout({
           links={navLinks}
           loginText="Access Client Portals"
           loginHref="/login"
-          ctaText="Schedule a Demo"
+          ctaText="Get in touch"
           ctaHref="/request"
         />
         <main className="flex-1">{children}</main>

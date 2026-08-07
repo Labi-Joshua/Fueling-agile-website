@@ -190,14 +190,13 @@ export const navLinks: NavLink[] = [
   },
   { label: "Fuel Prices", href: "/pricing" },
   { label: "Our Blog", href: "/blog" },
-  { label: "Contact Us", href: "/contact" },
 ];
 
 export const heroContent: HeroContent = {
   headline: "One fuel card that stops your business from wasting money.",
   subheadline:
     "Load money onto your card, set limits for each driver, and give your team access to over 2,400 fueling stations across Nigeria.",
-  primaryCtaText: "Schedule a Demo",
+  primaryCtaText: "Get in touch",
   secondaryCtaText: "Order Fuel Cards",
 };
 
@@ -472,7 +471,7 @@ export const faqContent: FaqContent = {
 export const footerContent: FooterContent = {
   ctaEyebrow: "Your Number 1 Fueling Partner",
   ctaHeading: "Na you dey refuel, na we dey show workings.",
-  ctaButtonText: "Schedule a Demo",
+  ctaButtonText: "Get in touch",
   ctaButtonHref: "/request",
   brand: "Fueling Agile Solutions",
   address: "ROA Plaza, Journalist Road, Arepo, Ogun State, Nigeria.",
