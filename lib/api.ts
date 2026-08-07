@@ -6,6 +6,8 @@ export interface PostSummary {
   slug: string;
   excerpt: string;
   date: string;
+  author: string;
+  image?: { src: string; alt: string };
 }
 
 export interface PostDetail {
@@ -33,6 +35,8 @@ function mockAllPosts(): PostSummary[] {
     slug: post.slug,
     excerpt: post.excerpt,
     date: post.date,
+    author: post.author,
+    image: post.image,
   }));
 }
 
@@ -57,6 +61,17 @@ const ALL_POSTS_QUERY = gql`
         slug
         excerpt
         date
+        author {
+          node {
+            name
+          }
+        }
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
       }
     }
   }
@@ -69,6 +84,8 @@ interface AllPostsResponse {
       slug: string;
       excerpt: string;
       date: string;
+      author: { node: { name: string } };
+      featuredImage: { node: { sourceUrl: string; altText: string } } | null;
     }[];
   };
 }
@@ -115,6 +132,10 @@ export async function getAllPosts(): Promise<PostSummary[]> {
       slug: node.slug,
       excerpt: stripHtml(node.excerpt),
       date: node.date,
+      author: node.author.node.name,
+      image: node.featuredImage
+        ? { src: node.featuredImage.node.sourceUrl, alt: node.featuredImage.node.altText }
+        : undefined,
     }));
   } catch (error) {
     console.error("Failed to fetch posts from WordPress, falling back to mock data:", error);

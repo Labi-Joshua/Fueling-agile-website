@@ -170,6 +170,13 @@ export interface BlogPost {
   author: string;
   date: string;
   slug: string;
+  image?: { src: string; alt: string };
+}
+
+export interface BlogIndexHeroContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
 }
 
 export interface BlogSectionContent {
@@ -526,6 +533,7 @@ export const blogPosts: BlogPost[] = [
     author: "Fueling Agile Nigeria Team",
     date: "2026-06-02",
     slug: "trust-is-the-new-currency-in-business",
+    image: { src: "/step-1.jpg", alt: "Support agents onboarding a new fleet account" },
   },
   {
     id: "2",
@@ -537,6 +545,7 @@ export const blogPosts: BlogPost[] = [
     author: "Fueling Agile Nigeria Team",
     date: "2026-06-20",
     slug: "what-is-a-fuel-system",
+    image: { src: "/step-3.jpg", alt: "A vehicle fueling up at a partner gas station" },
   },
   {
     id: "3",
@@ -548,5 +557,13 @@ export const blogPosts: BlogPost[] = [
     author: "Fueling Agile Nigeria Team",
     date: "2026-07-01",
     slug: "agileflex-petrolkaart-smartest-asset",
+    image: { src: "/step-2.jpg", alt: "Loading funds and setting spending limits on a card" },
   },
 ];
+
+export const blogIndexHeroContent: BlogIndexHeroContent = {
+  eyebrow: "Our Blog",
+  heading: "Essential resources for fleets navigating, monitoring, and controlling fuel costs",
+  subheading:
+    "Price analysis, operational efficiency, and the insights that protect your margins.",
+};
