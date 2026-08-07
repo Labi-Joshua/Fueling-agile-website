@@ -16,6 +16,21 @@ export interface AboutHeroContent {
   };
 }
 
+export interface FuelPricesHeroContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+}
+
+export interface DepotPrice {
+  depot: string;
+  verified: boolean;
+  price: number;
+  change: number;
+  changePercent: number;
+  updated: string;
+}
+
 export interface AboutStoryContent {
   eyebrow: string;
   heading: string;
@@ -169,9 +184,8 @@ export const navLinks: NavLink[] = [
     label: "Our Solutions",
     href: "/solutions",
     children: [
-      { label: "Fuel Cards", href: "/solutions/fuel-cards" },
-      { label: "Fleet Tracking", href: "/solutions/fleet-tracking" },
-      { label: "Telematics", href: "/solutions/telematics" },
+      { label: "Agile Flex Petrolkaart", href: "/solutions/fuel-cards" },
+      { label: "Bespoke Tech Solutions", href: "/solutions/telematics" },
     ],
   },
   { label: "Fuel Prices", href: "/pricing" },
@@ -186,6 +200,36 @@ export const heroContent: HeroContent = {
   primaryCtaText: "Schedule a Demo",
   secondaryCtaText: "Order Fuel Cards",
 };
+
+export const fuelPricesHeroContent: FuelPricesHeroContent = {
+  eyebrow: "Fuel Prices",
+  heading: "Monitor Live Fuel Prices Across Nigerian Depots",
+  subheading:
+    "Track live fuel rates across Nigerian depots to eliminate overspending and protect your profit margins.",
+};
+
+export const depotPrices: DepotPrice[] = [
+  { depot: "PPMC", verified: true, price: 1969.0, change: -10.0, changePercent: -0.51, updated: "10:06" },
+  { depot: "Sobomak", verified: true, price: 1980.0, change: -20.0, changePercent: -1.01, updated: "10:04" },
+  { depot: "Optima", verified: true, price: 1975.0, change: -45.0, changePercent: -2.28, updated: "10:02" },
+  { depot: "Techno Oil", verified: true, price: 1216.0, change: -5.0, changePercent: -0.41, updated: "09:54" },
+  { depot: "Aiteo", verified: false, price: 1908.0, change: -8.0, changePercent: -0.42, updated: "10:00" },
+  { depot: "A.A Rano", verified: false, price: 1970.0, change: -6.0, changePercent: -0.30, updated: "09:58" },
+  { depot: "Bulk Strategic", verified: false, price: 1980.0, change: -37.0, changePercent: -1.87, updated: "09:56" },
+  { depot: "Sigmund", verified: false, price: 1980.0, change: -35.0, changePercent: -1.77, updated: "09:55" },
+  { depot: "African Terminal", verified: false, price: 1959.0, change: -3.0, changePercent: -0.15, updated: "09:53" },
+  { depot: "Intergrated", verified: false, price: 1959.0, change: -6.0, changePercent: -0.31, updated: "09:52" },
+  { depot: "Nipco Lagos", verified: false, price: 1968.0, change: -6.0, changePercent: -0.30, updated: "09:50" },
+  { depot: "Mainland", verified: false, price: 1980.0, change: 1.0, changePercent: 0.05, updated: "09:23" },
+  { depot: "Sobaz", verified: false, price: 1965.0, change: -10.0, changePercent: -0.51, updated: "10:00" },
+  { depot: "Pinnacle", verified: false, price: 1965.70, change: -0.30, changePercent: -0.02, updated: "10:00" },
+  { depot: "A.Y.M Shafa", verified: false, price: 1987.00, change: 12.0, changePercent: 0.61, updated: "11:02" },
+  { depot: "Mrs Tincan", verified: false, price: 1972.00, change: 0.0, changePercent: 0.0, updated: "10:00" },
+  { depot: "Dangote", verified: false, price: 1955.00, change: 0.0, changePercent: 0.0, updated: "10:00" },
+  { depot: "Liquid Bulk", verified: false, price: 1987.00, change: 15.0, changePercent: 0.76, updated: "10:00" },
+  { depot: "Nepal", verified: false, price: 1987.00, change: 10.0, changePercent: 0.51, updated: "10:00" },
+  { depot: "Matrix Warri", verified: false, price: 1987.00, change: 12.0, changePercent: 0.61, updated: "10:00" },
+];
 
 export const aboutHeroContent: AboutHeroContent = {
   eyebrow: "About Us",
@@ -240,7 +284,7 @@ export const howItWorksContent: HowItWorksContent = {
 };
 
 export const trustedByContent: TrustedByContent = {
-  heading: "Trusted by the bodies that regulate this industry",
+  heading: "Certified by the bodies that regulate this industry",
   logos: [
     { name: "DPR", subtitle: "Department of Petroleum Resources" },
     { name: "NDPB", subtitle: "Nigeria Data Protection Bureau" },
@@ -439,7 +483,6 @@ export const footerContent: FooterContent = {
       heading: "Product",
       links: [
         { label: "How It Works", href: "/how-it-works" },
-        { label: "Pricing", href: "/pricing" },
         { label: "Our Card", href: "/card" },
         { label: "FAQs", href: "/faqs" },
       ],
@@ -447,8 +490,7 @@ export const footerContent: FooterContent = {
     {
       heading: "Solutions",
       links: [
-        { label: "AgileFlex", href: "/solutions/agileflex" },
-        { label: "Virtual Volume Fuel Up", href: "/solutions/virtual-volume-fuel-up" },
+        { label: "Agile Flex Petrolkaart", href: "/solutions/agileflex" },
         { label: "Bespoke Solutions", href: "/solutions/bespoke" },
       ],
     },
