@@ -65,51 +65,53 @@ export default function FuelPriceBanner({ prices, href }: FuelPriceBannerProps) 
       href={href}
       onMouseEnter={() => tweenRef.current?.pause()}
       onMouseLeave={() => tweenRef.current?.play()}
-      className="flex items-center gap-6 bg-[#262626] px-4 py-2.5 text-white transition-colors hover:bg-[#333333] sm:px-8"
+      className="block bg-[#262626] text-white transition-colors hover:bg-[#333333]"
     >
-      <span className="flex shrink-0 items-center gap-1.5 text-xs font-medium">
-        <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
-        Live Prices
-      </span>
+      <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 py-2.5 sm:px-8">
+        <span className="flex shrink-0 items-center gap-1.5 text-xs font-medium">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
+          Live Prices
+        </span>
 
-      <div className="relative min-w-0 flex-1 overflow-hidden">
-        <div ref={trackRef} className="flex w-max items-center gap-6">
-          {items.map((row, index) => {
-            const isUp = row.change >= 0;
+        <div className="relative min-w-0 flex-1 overflow-hidden">
+          <div ref={trackRef} className="flex w-max items-center gap-6">
+            {items.map((row, index) => {
+              const isUp = row.change >= 0;
 
-            return (
-              <span
-                key={`${row.depot}-${index}`}
-                className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-xs"
-              >
-                <span className="font-semibold uppercase text-white/90">{row.depot}</span>
-                <span className="text-white/70">{formatNaira(row.price)}</span>
+              return (
                 <span
-                  className={`inline-flex items-center gap-0.5 ${
-                    isUp ? "text-brand-500" : "text-red-400"
-                  }`}
+                  key={`${row.depot}-${index}`}
+                  className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-xs"
                 >
-                  {isUp ? <ArrowUpRight /> : <ArrowDownRight />}
-                  {Math.abs(row.changePercent).toFixed(2)}%
+                  <span className="font-semibold uppercase text-white/90">{row.depot}</span>
+                  <span className="text-white/70">{formatNaira(row.price)}</span>
+                  <span
+                    className={`inline-flex items-center gap-0.5 ${
+                      isUp ? "text-brand-500" : "text-red-400"
+                    }`}
+                  >
+                    {isUp ? <ArrowUpRight /> : <ArrowDownRight />}
+                    {Math.abs(row.changePercent).toFixed(2)}%
+                  </span>
                 </span>
-              </span>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
 
-      <span className="ml-auto flex shrink-0 items-center gap-1 text-xs font-semibold text-brand-500">
-        View all prices
-        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-          <path
-            d="M3 1.5L8.5 6L3 10.5"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </span>
+        <span className="ml-auto flex shrink-0 items-center gap-1 text-xs font-semibold text-brand-500">
+          View all prices
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path
+              d="M3 1.5L8.5 6L3 10.5"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+      </div>
     </Link>
   );
 }
