@@ -1,4 +1,5 @@
 import Hero from "@/components/ui/Hero";
+import FuelPriceBanner from "@/components/ui/FuelPriceBanner";
 import ScrollHighlightText from "@/components/ui/ScrollHighlightText";
 import StatsSection from "@/components/ui/StatsSection";
 import HowItWorks from "@/components/ui/HowItWorks";
@@ -18,13 +19,19 @@ import {
   whyUsContent,
   faqContent,
   blogSectionContent,
+  depotPrices,
 } from "@/data/mockContent";
 
 export default async function Home() {
   const posts = await getAllPosts();
+  const topFuelPrices = depotPrices
+    .filter((row) => row.verified)
+    .sort((a, b) => a.price - b.price)
+    .slice(0, 5);
 
   return (
     <>
+      <FuelPriceBanner prices={topFuelPrices} href="/pricing" />
       <Hero content={heroContent} dashboardImage={dashboardImage} />
       <ScrollHighlightText
         text={`${statsContent.headingEmphasis}${statsContent.headingRest}`}
