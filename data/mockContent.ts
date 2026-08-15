@@ -1,3 +1,14 @@
+// Central content file for the entire site. Every page/component receives its copy
+// and image references via typed props sourced from the exported constants below,
+// rather than hardcoding text inline — this keeps content editable in one place and
+// gives every component a clear prop contract (see each interface).
+//
+// File is organized in two halves: TypeScript interfaces first, then the actual
+// exported content constants that implement them, grouped roughly by page/section.
+
+// ==================== TYPE DEFINITIONS ====================
+
+// Homepage hero section
 export interface HeroContent {
   headline: string;
   subheadline: string;
@@ -5,6 +16,7 @@ export interface HeroContent {
   secondaryCtaText: string;
 }
 
+// About page hero section (heading + playable video)
 export interface AboutHeroContent {
   eyebrow: string;
   heading: string;
@@ -16,12 +28,14 @@ export interface AboutHeroContent {
   };
 }
 
+// Fuel Prices page hero section
 export interface FuelPricesHeroContent {
   eyebrow: string;
   heading: string;
   subheading: string;
 }
 
+// A single row in the depot fuel price table on the /pricing page
 export interface DepotPrice {
   depot: string;
   verified: boolean;
@@ -31,6 +45,7 @@ export interface DepotPrice {
   updated: string;
 }
 
+// About page "our story" narrative section (paired with the video from AboutHeroContent)
 export interface AboutStoryContent {
   eyebrow: string;
   heading: string;
@@ -38,17 +53,20 @@ export interface AboutStoryContent {
   signatureName: string;
 }
 
+// A single top-level nav item, optionally with a dropdown of child links
 export interface NavLink {
   label: string;
   href: string;
   children?: { label: string; href: string }[];
 }
 
+// Homepage hero's dashboard/product screenshot mockup image
 export interface DashboardImage {
   src: string;
   alt: string;
 }
 
+// A single step in the homepage "How to Get Started" walkthrough
 export interface HowItWorksStep {
   icon: "truck" | "card" | "fuel";
   description: string;
@@ -61,11 +79,13 @@ export interface HowItWorksContent {
   steps: HowItWorksStep[];
 }
 
+// A single animated stat counter (e.g. "2400+ / Gas Stations Nationwide")
 export interface Stat {
   value: string;
   label: string;
 }
 
+// Homepage stats section: scroll-highlighted heading + row of animated counters
 export interface StatsContent {
   headingEmphasis: string;
   headingRest: string;
@@ -73,6 +93,7 @@ export interface StatsContent {
   ctaText: string;
 }
 
+// A single regulatory-body logo in the "Trusted By" strip
 export interface TrustedLogo {
   name: string;
   subtitle: string;
@@ -83,6 +104,7 @@ export interface TrustedByContent {
   logos: TrustedLogo[];
 }
 
+// A single tab in the homepage's auto-advancing feature showcase
 export interface FeatureTab {
   label: string;
   description: string;
@@ -95,6 +117,7 @@ export interface FeaturesContent {
   tabs: FeatureTab[];
 }
 
+// A single value-proposition card in the "Why Us" section
 export interface TrustPoint {
   title: string;
   description: string;
@@ -107,6 +130,7 @@ export interface WhyUsContent {
   points: TrustPoint[];
 }
 
+// A single platform card on the Access Client Portal page (Reporting / Card platform)
 export interface PortalPlatform {
   title: string;
   subtitle: string;
@@ -123,6 +147,7 @@ export interface PortalPageContent {
   platforms: PortalPlatform[];
 }
 
+// "Need help logging in?" support callout at the bottom of the Portal page
 export interface PortalSupportContent {
   eyebrow: string;
   heading: string;
@@ -132,6 +157,7 @@ export interface PortalSupportContent {
   image: { src: string; alt: string };
 }
 
+// A single question/answer pair in the homepage FAQ accordion
 export interface FaqItem {
   question: string;
   answer: string;
@@ -143,11 +169,13 @@ export interface FaqContent {
   items: FaqItem[];
 }
 
+// A single link column in the site footer (e.g. "Product", "Solutions", "Company")
 export interface FooterLinkColumn {
   heading: string;
   links: { label: string; href: string }[];
 }
 
+// Site-wide footer: CTA panel, brand/contact info, link columns, legal row
 export interface FooterContent {
   ctaEyebrow: string;
   ctaHeading: string;
@@ -162,6 +190,8 @@ export interface FooterContent {
   copyright: string;
 }
 
+// Shape of a mock blog post — mirrors the fields lib/api.ts maps WordPress data into,
+// so mock and live data are interchangeable everywhere a post is consumed.
 export interface BlogPost {
   id: string;
   title: string;
@@ -173,18 +203,22 @@ export interface BlogPost {
   image?: { src: string; alt: string };
 }
 
+// Blog index page (/blog) hero section
 export interface BlogIndexHeroContent {
   eyebrow: string;
   heading: string;
   subheading: string;
 }
 
+// Homepage's "latest posts" preview section header (posts themselves come from lib/api.ts)
 export interface BlogSectionContent {
   eyebrow: string;
   heading: string;
   ctaText: string;
 }
 
+// ==================== CONTENT DATA ====================
+// Top navigation links, shared by every page via app/layout.tsx
 export const navLinks: NavLink[] = [
   { label: "About Us", href: "/about" },
   {
@@ -199,6 +233,7 @@ export const navLinks: NavLink[] = [
   { label: "Our Blog", href: "/blog" },
 ];
 
+// Homepage hero copy
 export const heroContent: HeroContent = {
   headline: "One fuel card that stops your business from wasting money.",
   subheadline:
@@ -207,13 +242,16 @@ export const heroContent: HeroContent = {
   secondaryCtaText: "Order Fuel Cards",
 };
 
+// Fuel Prices page hero copy
 export const fuelPricesHeroContent: FuelPricesHeroContent = {
   eyebrow: "Fuel Prices",
-  heading: "Monitor Live Fuel Prices Across Nigerian Depots",
+  heading: "Monitor Live Fuel Prices Across Nigerian Stations",
   subheading:
-    "Track live fuel rates across Nigerian depots to eliminate overspending and protect your profit margins.",
+    "Track live fuel rates across Nigerian stations to eliminate overspending and protect your profit margins.",
 };
 
+// Mock depot fuel prices. `verified` flags which depots are trustworthy enough to
+// surface on the homepage's price banner (see the filter in app/page.tsx).
 export const depotPrices: DepotPrice[] = [
   { depot: "PPMC", verified: true, price: 1969.0, change: -10.0, changePercent: -0.51, updated: "10:06" },
   { depot: "Sobomak", verified: true, price: 1980.0, change: -20.0, changePercent: -1.01, updated: "10:04" },
@@ -237,6 +275,7 @@ export const depotPrices: DepotPrice[] = [
   { depot: "Matrix Warri", verified: false, price: 1987.00, change: 12.0, changePercent: 0.61, updated: "10:00" },
 ];
 
+// About page hero copy
 export const aboutHeroContent: AboutHeroContent = {
   eyebrow: "About Us",
   heading: "We're building the infrastructure for smarter fleet management.",
@@ -247,6 +286,7 @@ export const aboutHeroContent: AboutHeroContent = {
   },
 };
 
+// About page "our story" narrative copy
 export const aboutStoryContent: AboutStoryContent = {
   eyebrow: "About Us",
   heading: "Fueling Agile is reframing how fleets operate.",
@@ -259,11 +299,13 @@ export const aboutStoryContent: AboutStoryContent = {
   signatureName: "The Fueling Agile Team",
 };
 
+// Homepage hero's dashboard screenshot mockup
 export const dashboardImage: DashboardImage = {
   src: "/platform.png",
   alt: "AgileFlex PetrolKaart fleet overview dashboard showing active vehicles, card balances, and live tracking",
 };
 
+// Homepage "How to Get Started" 3-step walkthrough
 export const howItWorksContent: HowItWorksContent = {
   title: "How to Get Started",
   subtitle: "Start using the AgileFlex PetrolKaart in three simple steps.",
@@ -289,6 +331,7 @@ export const howItWorksContent: HowItWorksContent = {
   ],
 };
 
+// Regulatory body ("Trusted By") logo strip
 export const trustedByContent: TrustedByContent = {
   heading: "Certified by the bodies that regulate this industry",
   logos: [
@@ -297,6 +340,7 @@ export const trustedByContent: TrustedByContent = {
   ],
 };
 
+// Homepage animated stats section
 export const statsContent: StatsContent = {
   headingEmphasis: "Built",
   headingRest:
@@ -309,6 +353,7 @@ export const statsContent: StatsContent = {
   ctaText: "Request fuel cards",
 };
 
+// Homepage auto-advancing feature tabs (AgileFlex / Virtual Volume / Bespoke)
 export const featuresContent: FeaturesContent = {
   title: "What we've built to stop fuel costs from draining you",
   subtitle:
@@ -344,6 +389,7 @@ export const featuresContent: FeaturesContent = {
   ],
 };
 
+// Homepage "Why Fueling Agile?" value-proposition cards
 export const whyUsContent: WhyUsContent = {
   eyebrow: "Why Fueling Agile?",
   heading: "Here's what makes businesses trust us with their fuel budget",
@@ -369,6 +415,7 @@ export const whyUsContent: WhyUsContent = {
   ],
 };
 
+// Access Client Portal page: the two platform cards (Reporting + Card platform)
 export const portalPageContent: PortalPageContent = {
   eyebrow: "Access Client Portal",
   heading: "Two Dedicated Platforms. Total Spending Control.",
@@ -405,6 +452,7 @@ export const portalPageContent: PortalPageContent = {
   ],
 };
 
+// Access Client Portal page: bottom support callout
 export const portalSupportContent: PortalSupportContent = {
   eyebrow: "Support",
   heading: "Are you having Issues Logging in or just have Questions",
@@ -417,6 +465,7 @@ export const portalSupportContent: PortalSupportContent = {
   },
 };
 
+// Homepage FAQ accordion
 export const faqContent: FaqContent = {
   eyebrow: "Frequently Asked Questions",
   heading: "Here are answers to the questions we get asked the most.",
@@ -475,6 +524,7 @@ export const faqContent: FaqContent = {
   ],
 };
 
+// Site-wide footer content (CTA panel, contact info, link columns, legal row)
 export const footerContent: FooterContent = {
   ctaEyebrow: "Your Number 1 Fueling Partner",
   ctaHeading: "Na you dey refuel, na we dey show workings.",
@@ -516,12 +566,14 @@ export const footerContent: FooterContent = {
   copyright: "All rights reserved © 2026 Fueling agile Solutions",
 };
 
+// Homepage "latest posts" section header
 export const blogSectionContent: BlogSectionContent = {
   eyebrow: "Blogs & Newsletters",
   heading: "A few things worth knowing before you spend",
   ctaText: "Read more",
 };
 
+// Mock blog posts, used whenever WORDPRESS_API_URL isn't configured (see lib/api.ts)
 export const blogPosts: BlogPost[] = [
   {
     id: "1",
@@ -561,6 +613,7 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
+// Blog index page (/blog) hero copy
 export const blogIndexHeroContent: BlogIndexHeroContent = {
   eyebrow: "Our Blog",
   heading: "Essential resources for fleets navigating, monitoring, and controlling fuel costs",

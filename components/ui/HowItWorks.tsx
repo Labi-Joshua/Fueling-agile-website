@@ -1,3 +1,5 @@
+// Homepage "How to Get Started" section: 3 illustrated steps, each with an
+// image, a small line icon, and a short description.
 import Image from "next/image";
 import type { HowItWorksContent, HowItWorksStep } from "@/data/mockContent";
 
@@ -5,6 +7,7 @@ export interface HowItWorksProps {
   content: HowItWorksContent;
 }
 
+// Inline SVG icons keyed by the `icon` name set on each step in mockContent.ts
 const icons: Record<HowItWorksStep["icon"], React.ReactNode> = {
   truck: (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -60,7 +63,7 @@ const icons: Record<HowItWorksStep["icon"], React.ReactNode> = {
 
 export default function HowItWorks({ content }: HowItWorksProps) {
   return (
-    <section className="mx-auto max-w-6xl px-4 pt-[180px] text-center sm:px-8">
+    <section className="mx-auto max-w-[1536px] px-4 pt-[180px] text-center sm:px-8">
       <h2 className="text-2xl font-semibold text-brand-900 sm:text-3xl">
         {content.title}
       </h2>
@@ -79,7 +82,7 @@ export default function HowItWorks({ content }: HowItWorksProps) {
             </div>
             <div className="flex items-start gap-3">
               <span className="mt-0.5 text-brand-500">{icons[step.icon]}</span>
-              <p className="text-sm leading-relaxed text-brand-900/70">
+              <p className="text-base leading-relaxed text-brand-900/70">
                 {step.description}
               </p>
             </div>

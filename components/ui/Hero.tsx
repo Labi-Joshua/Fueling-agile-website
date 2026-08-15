@@ -1,5 +1,8 @@
 "use client";
 
+// Homepage hero: headline, subheadline, two CTA buttons, and the dashboard
+// screenshot mockup below it. Elements marked `.hero-animate` fade/slide in on
+// page load via GSAP.
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -14,6 +17,7 @@ export interface HeroProps {
 export default function Hero({ content, dashboardImage }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
+  // Staggered fade/slide-up entrance for the headline, subheadline, and CTA row
   useGSAP(
     () => {
       gsap.from(".hero-animate", {
@@ -29,7 +33,7 @@ export default function Hero({ content, dashboardImage }: HeroProps) {
 
   return (
     <div ref={containerRef}>
-      <section className="mx-auto flex max-w-4xl flex-col items-center gap-8 px-4 py-20 text-center sm:px-8 sm:py-28">
+      <section className="mx-auto flex max-w-5xl flex-col items-center gap-8 px-4 py-20 text-center sm:px-8 sm:py-28">
         <h1 className="hero-animate max-w-3xl font-heading text-4xl font-normal leading-[110%] tracking-[-2px] text-brand-900 sm:text-[64px]">
           {content.headline}
         </h1>
@@ -52,6 +56,7 @@ export default function Hero({ content, dashboardImage }: HeroProps) {
         </div>
       </section>
 
+      {/* Product/dashboard screenshot mockup, framed below the hero copy */}
       <DashboardMockup imageSrc={dashboardImage.src} imageAlt={dashboardImage.alt} />
     </div>
   );

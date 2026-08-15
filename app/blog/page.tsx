@@ -1,3 +1,5 @@
+// Blog index page: lists posts from WordPress (or mock data fallback),
+// with the most recent post shown large as a "featured" post and the rest in a grid.
 import { getAllPosts } from "@/lib/api";
 import BlogIndexHero from "@/components/ui/BlogIndexHero";
 import FeaturedBlogPost from "@/components/ui/FeaturedBlogPost";
@@ -6,6 +8,7 @@ import { blogIndexHeroContent } from "@/data/mockContent";
 
 export default async function BlogIndexPage() {
   const posts = await getAllPosts();
+  // First post (newest) is rendered as the large featured card; the rest fill the grid below.
   const [featuredPost, ...restPosts] = posts;
 
   return (
@@ -13,12 +16,14 @@ export default async function BlogIndexPage() {
       <BlogIndexHero content={blogIndexHeroContent} />
 
       <div className="mx-auto max-w-6xl px-4 pb-24 pt-16 sm:px-8">
+        {/* Featured post — only rendered once there's at least one post */}
         {featuredPost && (
           <div className="border-b border-brand-900/10 pb-16">
             <FeaturedBlogPost post={featuredPost} />
           </div>
         )}
 
+        {/* Remaining posts in a responsive 1/2/3-column grid */}
         {restPosts.length > 0 && (
           <div className="grid grid-cols-1 gap-x-8 gap-y-12 pt-16 sm:grid-cols-2 md:grid-cols-3">
             {restPosts.map((post) => (

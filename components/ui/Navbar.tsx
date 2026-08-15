@@ -1,5 +1,8 @@
 "use client";
 
+// Sticky top navigation bar, shared across every page (rendered once in app/layout.tsx).
+// Handles desktop hover dropdowns for links with children, plus a separate
+// slide-down mobile menu below the lg breakpoint.
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -22,12 +25,15 @@ export default function Navbar({
   ctaText,
   ctaHref,
 }: NavbarProps) {
+  // isOpen: mobile hamburger menu expanded/collapsed
+  // openDropdown: which top-level link's desktop dropdown is currently open (hover-driven)
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-brand-900/10 bg-white">
-      <nav className="mx-auto flex max-w-7xl items-center justify-between gap-8 px-4 py-4 sm:px-8">
+      <nav className="mx-auto flex max-w-[1536px] items-center justify-between gap-8 px-4 py-4 sm:px-8">
+        {/* Logo, links back to the homepage */}
         <Link href="/" className="flex items-center">
           <Image
             src="/fan-logo.png"
@@ -39,6 +45,7 @@ export default function Navbar({
           />
         </Link>
 
+        {/* Desktop nav links (hidden below lg breakpoint) */}
         <ul className="hidden items-center gap-2 rounded-full bg-brand-900/5 px-2 py-2 lg:flex">
           {links.map((link) => (
             <li
@@ -83,6 +90,7 @@ export default function Navbar({
           ))}
         </ul>
 
+        {/* Desktop portal-login link + primary CTA button */}
         <div className="hidden items-center gap-2 rounded-full bg-brand-900/5 py-2 pl-6 pr-2 lg:flex">
           <Link
             href={loginHref}
@@ -98,6 +106,7 @@ export default function Navbar({
           </Link>
         </div>
 
+        {/* Hamburger icon, only visible below lg breakpoint */}
         <button
           type="button"
           onClick={() => setIsOpen((prev) => !prev)}
@@ -111,6 +120,7 @@ export default function Navbar({
         </button>
       </nav>
 
+      {/* Mobile slide-down menu, only rendered while the hamburger is toggled open */}
       {isOpen && (
         <div className="flex flex-col gap-4 px-4 pb-8 lg:hidden">
           <ul className="flex flex-col gap-4">

@@ -1,5 +1,7 @@
 "use client";
 
+// Homepage FAQ accordion. Only one question can be expanded at a time —
+// clicking an already-open question collapses it again.
 import { useState } from "react";
 import type { FaqContent } from "@/data/mockContent";
 
@@ -8,6 +10,7 @@ export interface FaqAccordionProps {
 }
 
 export default function FaqAccordion({ content }: FaqAccordionProps) {
+  // Index of the currently expanded question, or null if all are collapsed.
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (

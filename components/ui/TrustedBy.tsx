@@ -1,3 +1,6 @@
+// Dark "Certified by the bodies that regulate this industry" strip. The logos
+// themselves are a single pre-composed image (logosImageSrc) rather than separate
+// <Image> elements per logo.
 import Image from "next/image";
 import type { TrustedByContent } from "@/data/mockContent";
 
@@ -9,7 +12,7 @@ export interface TrustedByProps {
 export default function TrustedBy({ content, logosImageSrc }: TrustedByProps) {
   return (
     <section className="bg-[#262626] py-24 text-center">
-      <div className="mx-auto max-w-4xl px-4 sm:px-8">
+      <div className="mx-auto max-w-5xl px-4 sm:px-8">
         <h2 className="text-2xl font-semibold text-white sm:text-3xl">
           {content.heading}
         </h2>

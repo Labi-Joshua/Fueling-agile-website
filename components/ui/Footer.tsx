@@ -1,3 +1,8 @@
+// Site-wide footer, rendered once in app/layout.tsx. Made of three stacked panels
+// (all sharing the same dark background so it reads as one continuous block):
+// 1. A centered CTA panel ("Get in touch")
+// 2. A background-image strip
+// 3. The main link/contact grid + legal/social bottom row
 import Image from "next/image";
 import type { FooterContent } from "@/data/mockContent";
 
@@ -5,8 +10,10 @@ export interface FooterProps {
   content: FooterContent;
   logoSrc: string;
   backgroundImageSrc: string;
+  certifications: { src: string; alt: string }[];
 }
 
+// Renders one social icon from a raw SVG path string (X/LinkedIn/Instagram below).
 function SocialIcon({ path }: { path: string }) {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
@@ -15,10 +22,11 @@ function SocialIcon({ path }: { path: string }) {
   );
 }
 
-export default function Footer({ content, logoSrc, backgroundImageSrc }: FooterProps) {
+export default function Footer({ content, logoSrc, backgroundImageSrc, certifications }: FooterProps) {
   return (
     <footer className="relative mt-16">
-      <div className="mx-auto max-w-7xl px-4 sm:px-8">
+      {/* Panel 1: centered "Get in touch" CTA */}
+      <div className="mx-auto max-w-[1536px] px-4 sm:px-8">
         <div className="bg-[#262626] px-6 pt-10 text-center sm:px-12">
           <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
             {content.ctaEyebrow}
@@ -44,10 +52,12 @@ export default function Footer({ content, logoSrc, backgroundImageSrc }: FooterP
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-8">
+      {/* Spacer panel — same dark background, bridges panel 1 into the image strip below */}
+      <div className="mx-auto max-w-[1536px] px-4 sm:px-8">
         <div className="bg-[#262626] px-6 pt-10 sm:px-12" />
       </div>
 
+      {/* Panel 2 + 3: background image strip behind the main link/contact grid */}
       <div className="relative overflow-hidden">
         <Image
           src={backgroundImageSrc}
@@ -56,10 +66,11 @@ export default function Footer({ content, logoSrc, backgroundImageSrc }: FooterP
           className="object-cover"
         />
 
-        <div className="relative mx-auto max-w-7xl px-4 pb-16 sm:px-8">
+        <div className="relative mx-auto max-w-[1536px] px-4 pb-16 sm:px-8">
           <div className="bg-[#262626] px-6 pb-10 sm:px-12">
+            {/* Brand/contact info on the left, link columns on the right */}
             <div className="flex flex-col gap-10 border-t border-white/10 pt-10 text-left md:flex-row md:items-start md:justify-between">
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-8">
                 <div className="relative h-8 w-28">
                   <Image
                     src={logoSrc}
@@ -78,6 +89,23 @@ export default function Footer({ content, logoSrc, backgroundImageSrc }: FooterP
                   <p>
                     <span className="text-white/70">Phone:</span> {content.phone}
                   </p>
+                </div>
+
+                {/* Regulatory certification badges (DPR / NDPB) */}
+                <div className="flex flex-col gap-3">
+                  <span className="text-xs text-white/50">Certified by</span>
+                  <div className="flex flex-wrap items-center gap-3">
+                    {certifications.map((cert) => (
+                      <div
+                        key={cert.src}
+                        className="flex items-center bg-white px-3 py-1.5"
+                      >
+                        <div className="relative h-8 w-28">
+                          <Image src={cert.src} alt={cert.alt} fill className="object-contain" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
 
@@ -102,6 +130,7 @@ export default function Footer({ content, logoSrc, backgroundImageSrc }: FooterP
               </div>
             </div>
 
+            {/* Bottom row: copyright, legal links (Terms/Privacy), social icons */}
             <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 sm:flex-row">
               <p className="text-xs text-white/40">{content.copyright}</p>
 

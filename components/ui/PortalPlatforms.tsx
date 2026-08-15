@@ -1,3 +1,5 @@
+// Access Client Portal page's main section: heading + a 2-column grid of platform
+// cards (Reporting Platform, Card Platform), each linking out to an external login.
 import Image from "next/image";
 import type { PortalPageContent } from "@/data/mockContent";
 
@@ -51,6 +53,7 @@ export default function PortalPlatforms({ content }: PortalPlatformsProps) {
               </div>
             </div>
 
+            {/* External login link — opens the actual reporting/card platform in a new tab */}
             <div className="p-6">
               <a
                 href={platform.ctaHref}

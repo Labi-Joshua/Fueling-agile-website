@@ -1,3 +1,5 @@
+// Homepage "Why Fueling Agile?" section: eyebrow + heading followed by a
+// 3-column grid of value-proposition cards, each with an image, title, and description.
 import Image from "next/image";
 import type { WhyUsContent } from "@/data/mockContent";
 
@@ -7,7 +9,7 @@ export interface WhyUsProps {
 
 export default function WhyUs({ content }: WhyUsProps) {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 text-center sm:px-8">
+    <section className="mx-auto max-w-[1536px] px-4 py-16 text-center sm:px-8">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>
@@ -27,8 +29,8 @@ export default function WhyUs({ content }: WhyUsProps) {
               />
             </div>
             <div>
-              <p className="text-sm font-semibold text-brand-500">{point.title}</p>
-              <p className="mt-1 text-sm leading-relaxed text-brand-900/60">
+              <p className="text-base font-semibold text-brand-500">{point.title}</p>
+              <p className="mt-1 text-base leading-relaxed text-brand-900/60">
                 {point.description}
               </p>
             </div>

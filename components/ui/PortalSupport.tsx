@@ -1,3 +1,5 @@
+// "Are you having Issues Logging in?" support callout at the bottom of the
+// Access Client Portal page: image on the left, text + CTA on the right.
 import Image from "next/image";
 import type { PortalSupportContent } from "@/data/mockContent";
 

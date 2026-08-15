@@ -1,3 +1,5 @@
+// Simple full-width "Powered by ProvidusBank" partner logo banner, used between
+// the platform cards and the support section on the Access Client Portal page.
 import Image from "next/image";
 
 export interface PartnerBannerProps {

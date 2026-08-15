@@ -1,6 +1,13 @@
+// WordPress (WPGraphQL) data-fetching layer for the blog.
+//
+// The live CMS may not be configured (WORDPRESS_API_URL unset) or a request may fail —
+// in either case every exported function here silently falls back to the mock blog
+// posts in data/mockContent.ts, so the rest of the app never has to know which
+// source it's getting data from.
 import { GraphQLClient, gql } from "graphql-request";
 import { blogPosts } from "@/data/mockContent";
 
+// Shape used for the blog index / listing pages (no full HTML content).
 export interface PostSummary {
   title: string;
   slug: string;
@@ -10,6 +17,7 @@ export interface PostSummary {
   image?: { src: string; alt: string };
 }
 
+// Shape used for a single blog post page, including the full rendered HTML body.
 export interface PostDetail {
   title: string;
   slug: string;
@@ -18,6 +26,8 @@ export interface PostDetail {
   author: string;
 }
 
+// `client` is null whenever WORDPRESS_API_URL isn't set — every fetch function
+// below checks this and routes to the mock data functions instead.
 const endpoint = process.env.WORDPRESS_API_URL;
 const client = endpoint ? new GraphQLClient(endpoint) : null;
 
@@ -25,9 +35,12 @@ export function isWordPressConfigured(): boolean {
   return Boolean(endpoint);
 }
 
+// WordPress excerpts come back wrapped in <p> tags; strip markup for plain-text use.
 function stripHtml(html: string): string {
   return html.replace(/<[^>]*>/g, "").trim();
 }
+
+// --- Mock data fallbacks (used whenever WordPress isn't configured or a request fails) ---
 
 function mockAllPosts(): PostSummary[] {
   return blogPosts.map((post) => ({
@@ -52,6 +65,8 @@ function mockPostBySlug(slug: string): PostDetail | null {
     author: post.author,
   };
 }
+
+// --- Live WordPress GraphQL queries ---
 
 const ALL_POSTS_QUERY = gql`
   query AllPosts {
@@ -120,6 +135,8 @@ interface PostBySlugResponse {
   } | null;
 }
 
+// Fetches every post for the blog index page. Falls back to mock data if
+// WordPress isn't configured, or if the live request throws for any reason.
 export async function getAllPosts(): Promise<PostSummary[]> {
   if (!client) {
     return mockAllPosts();
@@ -143,6 +160,8 @@ export async function getAllPosts(): Promise<PostSummary[]> {
   }
 }
 
+// Fetches a single post by slug for the /blog/[slug] page. Returns null if no
+// post matches (triggers a 404 in the calling page).
 export async function getPostBySlug(slug: string): Promise<PostDetail | null> {
   if (!client) {
     return mockPostBySlug(slug);

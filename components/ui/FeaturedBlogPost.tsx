@@ -1,3 +1,5 @@
+// Large hero-style card for the blog index page's single newest post, shown above
+// the regular grid of BlogCard entries.
 import Link from "next/link";
 import Image from "next/image";
 import type { PostSummary } from "@/lib/api";
@@ -6,6 +8,7 @@ export interface FeaturedBlogPostProps {
   post: PostSummary;
 }
 
+// Converts a raw ISO date string (from WordPress or mock data) into "Month Day, Year".
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
   if (isNaN(date.getTime())) return dateString;
@@ -18,6 +21,7 @@ export default function FeaturedBlogPost({ post }: FeaturedBlogPostProps) {
       href={`/blog/${post.slug}`}
       className="group grid grid-cols-1 gap-6 md:grid-cols-2 md:items-center md:gap-10"
     >
+      {/* Featured image, falling back to a plain brand-text placeholder if the post has none */}
       <div className="relative aspect-[4/3] overflow-hidden bg-brand-500/10 md:aspect-[16/11]">
         {post.image ? (
           <Image

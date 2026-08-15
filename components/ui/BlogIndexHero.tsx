@@ -1,3 +1,4 @@
+// Simple heading/subheading hero at the top of the blog index page (/blog).
 import type { BlogIndexHeroContent } from "@/data/mockContent";
 
 export interface BlogIndexHeroProps {
@@ -6,7 +7,7 @@ export interface BlogIndexHeroProps {
 
 export default function BlogIndexHero({ content }: BlogIndexHeroProps) {
   return (
-    <section className="mx-auto max-w-4xl px-4 pt-20 text-center sm:px-8 sm:pt-28">
+    <section className="mx-auto max-w-5xl px-4 pt-20 text-center sm:px-8 sm:pt-28">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>

@@ -1,16 +1,23 @@
 "use client";
 
+// Homepage ticker banner: a continuously auto-scrolling strip of top fuel prices
+// (marquee effect), sitting above the hero and linking through to /pricing.
+// Prices refresh live via TanStack Query (see hooks/useDepotPrices.ts); the page
+// that renders this passes the server-fetched mock/initial list so there's never
+// an empty state while the first live fetch resolves.
 import { useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import type { DepotPrice } from "@/data/mockContent";
+import { useDepotPrices } from "@/hooks/useDepotPrices";
 
 export interface FuelPriceBannerProps {
-  prices: DepotPrice[];
+  initialPrices: DepotPrice[];
   href: string;
 }
 
+// Formats a raw number as a Naira currency string, e.g. 1969 -> "₦1,969.00"
 function formatNaira(value: number): string {
   return `₦${value.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
@@ -43,10 +50,24 @@ function ArrowDownRight() {
   );
 }
 
-export default function FuelPriceBanner({ prices, href }: FuelPriceBannerProps) {
+export default function FuelPriceBanner({ initialPrices, href }: FuelPriceBannerProps) {
+  const { data: prices } = useDepotPrices(initialPrices);
+
+  // Ticker shows the 5 cheapest VERIFIED depots only (not all depots), so
+  // unverified/unreliable price entries never surface on the homepage. Recomputed
+  // from whatever the live query currently holds, so it stays correct as prices refresh.
+  const topPrices = [...prices]
+    .filter((row) => row.verified)
+    .sort((a, b) => a.price - b.price)
+    .slice(0, 5);
+
   const trackRef = useRef<HTMLDivElement>(null);
+  // Holds the running marquee tween so hover handlers below can pause/resume it.
   const tweenRef = useRef<gsap.core.Tween | null>(null);
 
+  // Continuously scrolls the price track left by 50% of its width, then loops
+  // forever (`repeat: -1`). Because `items` below duplicates the price list,
+  // scrolling exactly 50% seamlessly wraps back to an identical starting frame.
   useGSAP(() => {
     if (!trackRef.current) return;
 
@@ -58,16 +79,18 @@ export default function FuelPriceBanner({ prices, href }: FuelPriceBannerProps) 
     });
   });
 
-  const items = [...prices, ...prices];
+  // Prices are duplicated so the marquee can loop seamlessly (see useGSAP comment above)
+  const items = [...topPrices, ...topPrices];
 
   return (
+    // Pausing on hover lets users actually read a price before it scrolls away
     <Link
       href={href}
       onMouseEnter={() => tweenRef.current?.pause()}
       onMouseLeave={() => tweenRef.current?.play()}
       className="block bg-[#262626] text-white transition-colors hover:bg-[#333333]"
     >
-      <div className="mx-auto flex max-w-7xl items-center gap-6 px-4 py-2.5 sm:px-8">
+      <div className="mx-auto flex max-w-[1536px] items-center gap-6 px-4 py-2.5 sm:px-8">
         <span className="flex shrink-0 items-center gap-1.5 text-xs font-medium">
           <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
           Live Prices

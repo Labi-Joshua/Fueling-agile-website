@@ -1,3 +1,5 @@
+// A single post card in the blog index page's grid (all posts except the
+// featured one — see FeaturedBlogPost.tsx for that larger treatment).
 import Link from "next/link";
 import Image from "next/image";
 import type { PostSummary } from "@/lib/api";
@@ -6,6 +8,7 @@ export interface BlogCardProps {
   post: PostSummary;
 }
 
+// Converts a raw ISO date string (from WordPress or mock data) into "Month Day, Year".
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
   if (isNaN(date.getTime())) return dateString;
@@ -15,6 +18,7 @@ function formatDate(dateString: string): string {
 export default function BlogCard({ post }: BlogCardProps) {
   return (
     <Link href={`/blog/${post.slug}`} className="group flex flex-col gap-4">
+      {/* Featured image, falling back to a plain brand-text placeholder if the post has none */}
       <div className="relative aspect-[4/3] overflow-hidden bg-brand-500/10">
         {post.image ? (
           <Image

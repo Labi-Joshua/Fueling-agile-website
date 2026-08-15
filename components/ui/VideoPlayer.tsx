@@ -1,5 +1,8 @@
 "use client";
 
+// Fully custom HTML5 video player (native browser controls are disabled) used on
+// the About page. Wires up play/pause, a seekable progress bar, volume, mute,
+// and fullscreen manually against the underlying <video> element's events/API.
 import { useEffect, useRef, useState } from "react";
 
 export interface VideoPlayerProps {
@@ -63,6 +66,7 @@ function FullscreenIcon() {
   );
 }
 
+// Formats seconds as MM:SS for the current-time / duration labels.
 function formatTime(seconds: number): string {
   if (!isFinite(seconds) || seconds < 0) return "00:00";
   const m = Math.floor(seconds / 60);
@@ -81,6 +85,8 @@ export default function VideoPlayer({ videoSrc, posterSrc, title }: VideoPlayerP
   const [volume, setVolume] = useState(1);
   const [isMuted, setIsMuted] = useState(false);
 
+  // Mirrors the <video> element's native state into React state so the custom
+  // controls UI (play/pause icon, progress bar, time labels) stays in sync.
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -113,6 +119,8 @@ export default function VideoPlayer({ videoSrc, posterSrc, title }: VideoPlayerP
     }
   };
 
+  // Converts a click's screen X position into a point along the progress bar,
+  // then jumps playback to that fraction of the video's total duration.
   const seekTo = (clientX: number) => {
     const video = videoRef.current;
     const bar = progressBarRef.current;
@@ -157,6 +165,8 @@ export default function VideoPlayer({ videoSrc, posterSrc, title }: VideoPlayerP
       ref={containerRef}
       className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-brand-900 via-slate-700 to-brand-900 shadow-2xl"
     >
+      {/* Native video element — has no `controls` attribute, since the custom
+          control bar below fully replaces the browser's default chrome. */}
       <video
         ref={videoRef}
         src={videoSrc}
@@ -167,6 +177,7 @@ export default function VideoPlayer({ videoSrc, posterSrc, title }: VideoPlayerP
         <track kind="captions" />
       </video>
 
+      {/* Large center play/pause button, click-through overlay on the whole video */}
       <button
         type="button"
         aria-label={isPlaying ? "Pause video" : "Play video"}
@@ -178,6 +189,7 @@ export default function VideoPlayer({ videoSrc, posterSrc, title }: VideoPlayerP
         </span>
       </button>
 
+      {/* Bottom control bar: progress/seek, play/pause, volume, fullscreen */}
       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent px-4 pb-4 pt-10">
         <div className="flex items-center gap-3 text-xs text-white/80">
           <span>{formatTime(currentTime)}</span>

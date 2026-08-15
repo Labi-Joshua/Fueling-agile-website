@@ -1,3 +1,5 @@
+// Homepage "latest posts" preview grid, showing up to a few post cards with a
+// "Read more" CTA below (links out to the full /blog index).
 import type { BlogSectionContent } from "@/data/mockContent";
 
 export interface BlogListPost {
@@ -14,7 +16,7 @@ export interface BlogListProps {
 
 export default function BlogList({ content, posts }: BlogListProps) {
   return (
-    <section className="mx-auto max-w-6xl px-4 pb-16 pt-[180px] sm:px-8">
+    <section className="mx-auto max-w-[1536px] px-4 pb-16 pt-[180px] sm:px-8">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>
@@ -25,6 +27,7 @@ export default function BlogList({ content, posts }: BlogListProps) {
       <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
         {posts.map((post) => (
           <article key={post.slug} className="flex flex-col gap-4">
+            {/* Placeholder brand-mark thumbnail (posts here don't carry featured images) */}
             <div className="relative aspect-[3/2] overflow-hidden rounded-xl bg-brand-500/10 p-4 sm:p-5">
               <span className="flex items-center gap-1.5">
                 <svg width="16" height="16" viewBox="0 0 28 28" fill="none">

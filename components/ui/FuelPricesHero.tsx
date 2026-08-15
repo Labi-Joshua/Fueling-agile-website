@@ -1,3 +1,4 @@
+// Simple heading/subheading hero at the top of the Fuel Prices page (/pricing).
 import type { FuelPricesHeroContent } from "@/data/mockContent";
 
 export interface FuelPricesHeroProps {
@@ -6,7 +7,7 @@ export interface FuelPricesHeroProps {
 
 export default function FuelPricesHero({ content }: FuelPricesHeroProps) {
   return (
-    <section className="mx-auto max-w-4xl px-4 pt-20 text-center sm:px-8 sm:pt-28">
+    <section className="mx-auto max-w-5xl px-4 pt-20 text-center sm:px-8 sm:pt-28">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>

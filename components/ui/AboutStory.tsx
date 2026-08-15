@@ -1,3 +1,5 @@
+// About page's "our story" narrative card: eyebrow, heading, a few paragraphs,
+// and a signature line at the bottom.
 import Image from "next/image";
 import type { AboutStoryContent } from "@/data/mockContent";
 

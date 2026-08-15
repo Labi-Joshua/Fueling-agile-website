@@ -1,5 +1,9 @@
 "use client";
 
+// Row of stat counters (e.g. "2400+ Gas Stations") that count up from 0 to their
+// target value once scrolled into view. Each stat's numeric prefix is parsed out
+// of its string value (e.g. "2400+" -> target 2400, suffix "+") so any non-numeric
+// trailing text (like "+" or " mins") is preserved during the count-up animation.
 import { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,11 +18,13 @@ export interface StatsRowProps {
 
 export default function StatsRow({ stats }: StatsRowProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  // One ref per stat's numeric <span>, so each can be updated independently during count-up.
   const valueRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   useGSAP(
     () => {
       stats.forEach((stat, index) => {
+        // Split e.g. "2400+" into numeric target (2400) and trailing suffix ("+")
         const match = stat.value.match(/^(\d+)(.*)$/);
         if (!match) return;
 
@@ -27,6 +33,8 @@ export default function StatsRow({ stats }: StatsRowProps) {
         const el = valueRefs.current[index];
         if (!el) return;
 
+        // Tween a plain object from 0 -> target, writing the rounded value into
+        // the DOM on every frame (GSAP has no built-in "tween a number into text" helper).
         const proxy = { val: 0 };
 
         gsap.to(proxy, {

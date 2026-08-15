@@ -1,14 +1,19 @@
 "use client";
 
+// Searchable, paginated table of depot fuel prices on the /pricing page. Prices
+// refresh live via TanStack Query (see hooks/useDepotPrices.ts); all searching/
+// filtering/pagination below runs client-side against whatever the query currently holds.
 import { useMemo, useState } from "react";
 import type { DepotPrice } from "@/data/mockContent";
+import { useDepotPrices } from "@/hooks/useDepotPrices";
 
 export interface DepotPriceTableProps {
-  prices: DepotPrice[];
+  initialPrices: DepotPrice[];
 }
 
 const PAGE_SIZE = 10;
 
+// Formats a raw number as a Naira currency string, e.g. 1969 -> "₦1,969.00"
 function formatNaira(value: number): string {
   return `₦${value.toLocaleString("en-NG", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
@@ -69,31 +74,35 @@ function ArrowDownRight() {
   );
 }
 
-export default function DepotPriceTable({ prices }: DepotPriceTableProps) {
+export default function DepotPriceTable({ initialPrices }: DepotPriceTableProps) {
+  const { data: prices } = useDepotPrices(initialPrices);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
 
+  // Depots whose name matches the search query (case-insensitive substring match)
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return prices;
     return prices.filter((row) => row.depot.toLowerCase().includes(q));
   }, [prices, query]);
 
+  // Slice the filtered results down to just the current page's rows
   const pageCount = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
   const currentPage = Math.min(page, pageCount);
   const pageStart = (currentPage - 1) * PAGE_SIZE;
   const pageRows = filtered.slice(pageStart, pageStart + PAGE_SIZE);
 
+  // Typing a new search resets back to page 1 so results aren't hidden on a stale page
   const handleQueryChange = (value: string) => {
     setQuery(value);
     setPage(1);
   };
 
   return (
-    <section className="mx-auto max-w-4xl px-4 pb-24 pt-24 sm:px-8">
+    <section className="mx-auto max-w-5xl px-4 pb-24 pt-24 sm:px-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2.5">
-          <span className="text-sm font-semibold text-brand-900">Depot Prices</span>
+          <span className="text-sm font-semibold text-brand-900">Fuel Prices</span>
           <span className="flex items-center gap-1.5 rounded-full bg-brand-500/10 px-2.5 py-1 text-xs font-medium text-brand-500">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
             Live
@@ -101,6 +110,7 @@ export default function DepotPriceTable({ prices }: DepotPriceTableProps) {
           <span className="text-xs text-brand-900/40">{prices.length} depots</span>
         </div>
 
+        {/* Fuel type filter (AGO/PMS) — display-only for now, doesn't filter `prices` yet */}
         <select
           aria-label="Filter by fuel type"
           className="border border-brand-900/10 bg-white px-4 py-2 text-xs text-brand-900/70"
@@ -182,6 +192,7 @@ export default function DepotPriceTable({ prices }: DepotPriceTableProps) {
         </table>
       </div>
 
+      {/* Pagination controls: prev/next + numbered page buttons */}
       <div className="mt-4 flex flex-col items-center justify-between gap-4 sm:flex-row">
         <span className="text-xs text-brand-900/40">
           Showing {filtered.length === 0 ? 0 : pageStart + 1}-
