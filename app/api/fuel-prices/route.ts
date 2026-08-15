@@ -58,6 +58,7 @@ function mapUpstreamPrices(rows: UpstreamPriceRow[]): DepotPrice[] {
     change: parseFloat(row.price_change),
     changePercent: parseFloat(row.percent_change),
     updated: formatUpdatedTime(row.recorded_at),
+    updatedAt: row.recorded_at,
   }));
 }
 

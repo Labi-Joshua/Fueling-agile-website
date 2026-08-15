@@ -1,10 +1,11 @@
 "use client";
 
-// Homepage ticker banner: a continuously auto-scrolling strip of top fuel prices
-// (marquee effect), sitting above the hero and linking through to /pricing.
-// Prices refresh live via TanStack Query (see hooks/useDepotPrices.ts); the page
-// that renders this passes the server-fetched mock/initial list so there's never
-// an empty state while the first live fetch resolves.
+// Homepage ticker banner: a continuously auto-scrolling strip of the 10 most
+// recently updated depot prices across both PMS and AGO (marquee effect),
+// sitting above the hero and linking through to /pricing. Prices refresh live
+// via TanStack Query (see hooks/useDepotPrices.ts); the page that renders this
+// passes the server-fetched mock/initial list so there's never an empty state
+// while the first live fetch resolves.
 import { useRef } from "react";
 import Link from "next/link";
 import gsap from "gsap";
@@ -16,6 +17,8 @@ export interface FuelPriceBannerProps {
   initialPrices: DepotPrice[];
   href: string;
 }
+
+const TICKER_SIZE = 10;
 
 // Formats a raw number as a Naira currency string, e.g. 1969 -> "₦1,969.00"
 function formatNaira(value: number): string {
@@ -51,15 +54,20 @@ function ArrowDownRight() {
 }
 
 export default function FuelPriceBanner({ initialPrices, href }: FuelPriceBannerProps) {
-  const { data: prices } = useDepotPrices(initialPrices);
+  // "all" merges PMS and AGO into one list (see lib/fuelPrices.ts), tagging each
+  // row with its product so the ticker can show both fuel types at once.
+  const { data: prices = [] } = useDepotPrices(initialPrices, "all");
 
-  // Ticker shows the 5 cheapest VERIFIED depots only (not all depots), so
-  // unverified/unreliable price entries never surface on the homepage. Recomputed
-  // from whatever the live query currently holds, so it stays correct as prices refresh.
+  // Ticker shows the TICKER_SIZE most recently updated rows across both fuel
+  // types. Rows without a real `updatedAt` (mock/placeholder data, which has no
+  // upstream timestamp) sort to the back rather than crashing the comparison.
   const topPrices = [...prices]
-    .filter((row) => row.verified)
-    .sort((a, b) => a.price - b.price)
-    .slice(0, 5);
+    .sort((a, b) => {
+      const aTime = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+      const bTime = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+      return bTime - aTime;
+    })
+    .slice(0, TICKER_SIZE);
 
   const trackRef = useRef<HTMLDivElement>(null);
   // Holds the running marquee tween so hover handlers below can pause/resume it.
@@ -93,7 +101,7 @@ export default function FuelPriceBanner({ initialPrices, href }: FuelPriceBanner
       <div className="mx-auto flex max-w-[1536px] items-center gap-6 px-4 py-2.5 sm:px-8">
         <span className="flex shrink-0 items-center gap-1.5 text-xs font-medium">
           <span className="h-1.5 w-1.5 rounded-full bg-brand-500" />
-          Live Prices
+          Recent Fuel Prices
         </span>
 
         <div className="relative min-w-0 flex-1 overflow-hidden">
@@ -107,6 +115,7 @@ export default function FuelPriceBanner({ initialPrices, href }: FuelPriceBanner
                   className="flex shrink-0 items-center gap-1.5 whitespace-nowrap text-xs"
                 >
                   <span className="font-semibold uppercase text-white/90">{row.depot}</span>
+                  <span className="uppercase text-white/40">{row.product}</span>
                   <span className="text-white/70">{formatNaira(row.price)}</span>
                   <span
                     className={`inline-flex items-center gap-0.5 ${

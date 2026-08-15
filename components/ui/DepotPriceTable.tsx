@@ -6,6 +6,7 @@
 import { useMemo, useState } from "react";
 import type { DepotPrice } from "@/data/mockContent";
 import { useDepotPrices } from "@/hooks/useDepotPrices";
+import type { FuelFilter } from "@/lib/fuelPrices";
 
 export interface DepotPriceTableProps {
   initialPrices: DepotPrice[];
@@ -75,9 +76,17 @@ function ArrowDownRight() {
 }
 
 export default function DepotPriceTable({ initialPrices }: DepotPriceTableProps) {
-  const { data: prices } = useDepotPrices(initialPrices);
+  const [fuelType, setFuelType] = useState<FuelFilter>("pms");
+  const { data: prices = [] } = useDepotPrices(initialPrices, fuelType);
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
+
+  // Switching fuel type re-fetches an entirely different price list, so jump back
+  // to page 1 — otherwise the user could land on a page past the new list's end.
+  const handleFuelTypeChange = (value: string) => {
+    setFuelType(value as FuelFilter);
+    setPage(1);
+  };
 
   // Depots whose name matches the search query (case-insensitive substring match)
   const filtered = useMemo(() => {
@@ -110,16 +119,20 @@ export default function DepotPriceTable({ initialPrices }: DepotPriceTableProps)
           <span className="text-xs text-brand-900/40">{prices.length} depots</span>
         </div>
 
-        {/* Fuel type filter (AGO/PMS) — display-only for now, doesn't filter `prices` yet */}
-        <select
-          aria-label="Filter by fuel type"
-          className="border border-brand-900/10 bg-white px-4 py-2 text-xs text-brand-900/70"
-          defaultValue="pms"
-        >
-          <option value="">Fuel Type</option>
-          <option value="pms">PMS</option>
-          <option value="ago">AGO</option>
-        </select>
+        {/* Fuel type filter — switches which product's price list the query fetches */}
+        <div className="flex items-center gap-2">
+          <span className="text-xs text-brand-900/50">Fuel Type</span>
+          <select
+            aria-label="Filter by fuel type"
+            className="border border-brand-900/10 bg-white px-4 py-2 text-xs text-brand-900/70"
+            value={fuelType}
+            onChange={(e) => handleFuelTypeChange(e.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="pms">PMS</option>
+            <option value="ago">AGO</option>
+          </select>
+        </div>
       </div>
 
       <input
@@ -134,7 +147,8 @@ export default function DepotPriceTable({ initialPrices }: DepotPriceTableProps)
         <table className="w-full text-left text-sm">
           <thead>
             <tr className="border-b border-brand-900/10 text-xs uppercase tracking-wide text-brand-900/40">
-              <th className="py-3 pr-4 font-medium">Depot</th>
+              <th className="py-3 pr-4 font-medium">Station</th>
+              <th className="px-4 py-3 font-medium">Fuel Type</th>
               <th className="px-4 py-3 text-right font-medium">Price</th>
               <th className="px-4 py-3 text-right font-medium">Change</th>
               <th className="py-3 pl-4 text-right font-medium">Updated</th>
@@ -146,7 +160,9 @@ export default function DepotPriceTable({ initialPrices }: DepotPriceTableProps)
               const isFlat = row.change === 0;
 
               return (
-                <tr key={row.depot}>
+                // Keyed by depot+product, not just depot — the same depot can appear
+                // twice under the "All" filter (once per fuel type it sells).
+                <tr key={`${row.depot}-${row.product}`}>
                   <td className="py-3 pr-4">
                     <span className="flex items-center gap-2 text-xs font-semibold uppercase text-brand-900">
                       {row.depot}
@@ -156,6 +172,9 @@ export default function DepotPriceTable({ initialPrices }: DepotPriceTableProps)
                         </span>
                       )}
                     </span>
+                  </td>
+                  <td className="px-4 py-3 text-xs uppercase text-brand-900/60">
+                    {row.product}
                   </td>
                   <td className="px-4 py-3 text-right text-brand-900">
                     {formatNaira(row.price)}
@@ -183,7 +202,7 @@ export default function DepotPriceTable({ initialPrices }: DepotPriceTableProps)
 
             {pageRows.length === 0 && (
               <tr>
-                <td colSpan={4} className="px-4 py-8 text-center text-sm text-brand-900/40">
+                <td colSpan={5} className="px-4 py-8 text-center text-sm text-brand-900/40">
                   No depots match your search.
                 </td>
               </tr>

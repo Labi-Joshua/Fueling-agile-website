@@ -43,6 +43,10 @@ export interface DepotPrice {
   change: number;
   changePercent: number;
   updated: string;
+  // Raw ISO timestamp backing `updated`'s "HH:MM" display string — needed to sort
+  // rows by actual recency (the display string alone can't be compared across days).
+  // Only ever populated by the live API; mock rows leave it undefined.
+  updatedAt?: string;
 }
 
 // About page "our story" narrative section (paired with the video from AboutHeroContent)
