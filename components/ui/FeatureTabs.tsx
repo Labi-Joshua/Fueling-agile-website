@@ -8,6 +8,7 @@ import Image from "next/image";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import type { FeaturesContent } from "@/data/mockContent";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 export interface FeatureTabsProps {
   content: FeaturesContent;
@@ -19,6 +20,7 @@ export default function FeatureTabs({ content }: FeatureTabsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const activeTab = content.tabs[activeIndex];
   const progressBarRef = useRef<HTMLSpanElement>(null);
+  const sectionRef = useFadeInOnScroll<HTMLElement>();
 
   // Animates the active tab's progress bar from empty to full; when it completes,
   // advances to the next tab (wrapping back to the first after the last).
@@ -45,7 +47,7 @@ export default function FeatureTabs({ content }: FeatureTabsProps) {
   );
 
   return (
-    <section className="mx-auto max-w-[1536px] px-4 pt-[180px] text-center sm:px-8">
+    <section ref={sectionRef} className="mx-auto max-w-[1536px] px-4 pt-[64px] text-center sm:px-8">
       <h2 className="text-2xl font-semibold text-brand-900 sm:text-3xl">
         {content.title}
       </h2>

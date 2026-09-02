@@ -4,6 +4,7 @@
 // clicking an already-open question collapses it again.
 import { useState } from "react";
 import type { FaqContent } from "@/data/mockContent";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 export interface FaqAccordionProps {
   content: FaqContent;
@@ -12,9 +13,10 @@ export interface FaqAccordionProps {
 export default function FaqAccordion({ content }: FaqAccordionProps) {
   // Index of the currently expanded question, or null if all are collapsed.
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+  const sectionRef = useFadeInOnScroll<HTMLElement>();
 
   return (
-    <section className="mx-auto max-w-3xl px-4 pt-[180px] text-center sm:px-8">
+    <section ref={sectionRef} className="mx-auto max-w-3xl px-4 pt-36 text-center sm:px-8 sm:pt-44">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>

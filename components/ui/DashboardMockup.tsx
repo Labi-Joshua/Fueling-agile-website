@@ -1,5 +1,7 @@
-// Renders the homepage hero's product screenshot "floating" over a full-width
-// background image, cropped at the top like a browser window peeking into view.
+// Renders a product screenshot "floating" over a full-width background image,
+// cropped at the top like a browser window peeking into view.
+// Not currently used on any page — Hero.tsx moved to a two-column layout with
+// the dashboard graphic rendered directly — but kept available for reuse.
 import Image from "next/image";
 
 export interface DashboardMockupProps {

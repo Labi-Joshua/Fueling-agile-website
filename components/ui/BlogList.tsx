@@ -1,6 +1,9 @@
+"use client";
+
 // Homepage "latest posts" preview grid, showing up to a few post cards with a
 // "Read more" CTA below (links out to the full /blog index).
 import type { BlogSectionContent } from "@/data/mockContent";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 export interface BlogListPost {
   slug: string;
@@ -15,8 +18,10 @@ export interface BlogListProps {
 }
 
 export default function BlogList({ content, posts }: BlogListProps) {
+  const sectionRef = useFadeInOnScroll<HTMLElement>();
+
   return (
-    <section className="mx-auto max-w-[1536px] px-4 pb-16 pt-[180px] sm:px-8">
+    <section ref={sectionRef} className="mx-auto max-w-[1536px] px-4 pb-16 pt-36 sm:px-8 sm:pt-44">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>

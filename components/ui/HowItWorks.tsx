@@ -1,93 +1,67 @@
-// Homepage "How to Get Started" section: 3 illustrated steps, each with an
-// image, a small line icon, and a short description.
+"use client";
+
+// Homepage "How to Get Started" section: a 2x2 grid of colored cards, each
+// pairing a short title/description with an illustration or product
+// screenshot bleeding out of the bottom of the card.
 import Image from "next/image";
 import type { HowItWorksContent, HowItWorksStep } from "@/data/mockContent";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 export interface HowItWorksProps {
   content: HowItWorksContent;
 }
 
-// Inline SVG icons keyed by the `icon` name set on each step in mockContent.ts
-const icons: Record<HowItWorksStep["icon"], React.ReactNode> = {
-  truck: (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M2 7h11v9H2z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M13 10h4l4 3.5V16h-8z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <circle cx="6" cy="17.5" r="1.75" stroke="currentColor" strokeWidth="1.5" />
-      <circle cx="17" cy="17.5" r="1.75" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  ),
-  card: (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-      <rect
-        x="2"
-        y="5"
-        width="20"
-        height="14"
-        rx="2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path d="M2 9.5h20" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
-  ),
-  fuel: (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-      <path
-        d="M4 21V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v15"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path d="M2 21h12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-      <path
-        d="M14 10h1.5a1.5 1.5 0 0 1 1.5 1.5V13a1.5 1.5 0 0 0 1.5 1.5v0A1.5 1.5 0 0 0 20 13v-4l-2-2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-      <path d="M6 6h6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  ),
+// Background + text color treatment per card theme (see HowItWorksStep in mockContent.ts)
+const THEME_STYLES: Record<HowItWorksStep["theme"], { bg: string; heading: string; body: string }> = {
+  green: { bg: "bg-brand-500", heading: "text-white", body: "text-white/80" },
+  lavender: { bg: "bg-[#E7E2F7]", heading: "text-brand-900", body: "text-brand-900/60" },
+  mint: { bg: "bg-[#E4EFE6]", heading: "text-brand-900", body: "text-brand-900/60" },
 };
 
 export default function HowItWorks({ content }: HowItWorksProps) {
+  const sectionRef = useFadeInOnScroll<HTMLElement>();
+
   return (
-    <section className="mx-auto max-w-[1536px] px-4 pt-[180px] text-center sm:px-8">
-      <h2 className="text-2xl font-semibold text-brand-900 sm:text-3xl">
+    <section ref={sectionRef} className="mx-auto max-w-[1536px] px-4 pt-36 text-center sm:px-8 sm:pt-44">
+      <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
+        {content.eyebrow}
+      </span>
+      <h2 className="mt-3 text-2xl font-semibold text-brand-900 sm:text-3xl">
         {content.title}
       </h2>
       <p className="mt-2 text-sm text-brand-900/50">{content.subtitle}</p>
 
-      <div className="mt-12 grid grid-cols-1 gap-8 text-left md:grid-cols-3">
-        {content.steps.map((step) => (
-          <div key={step.description} className="flex flex-col gap-4">
-            <div className="relative aspect-[4/3] overflow-hidden bg-brand-500/10">
-              <Image
-                src={step.image.src}
-                alt={step.image.alt}
-                fill
-                className="object-cover"
-              />
+      <div className="mt-12 grid grid-cols-1 gap-6 text-left md:grid-cols-2">
+        {content.steps.map((step) => {
+          const theme = THEME_STYLES[step.theme];
+
+          return (
+            <div
+              key={step.title}
+              className={`relative aspect-[4/3] overflow-hidden rounded-2xl sm:aspect-[16/11] ${theme.bg}`}
+            >
+              <div className="relative z-10 p-8">
+                <h3 className={`text-xl font-semibold ${theme.heading}`}>{step.title}</h3>
+                <p className={`mt-2 max-w-xs text-sm leading-relaxed ${theme.body}`}>
+                  {step.description}
+                </p>
+              </div>
+
+              {/* Illustration/screenshot. Confined to the bottom two-thirds of the
+                  card (never above top-1/3) so it can never overlap the text above,
+                  regardless of description length or breakpoint — while still
+                  bleeding past the card's right/bottom edges via overflow-hidden. */}
+              <div className="absolute inset-x-0 bottom-0 top-1/3">
+                <Image
+                  src={step.image.src}
+                  alt={step.image.alt}
+                  fill
+                  className="object-contain object-right-bottom"
+                />
+              </div>
             </div>
-            <div className="flex items-start gap-3">
-              <span className="mt-0.5 text-brand-500">{icons[step.icon]}</span>
-              <p className="text-base leading-relaxed text-brand-900/70">
-                {step.description}
-              </p>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

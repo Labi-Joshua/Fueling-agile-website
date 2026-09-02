@@ -10,6 +10,7 @@
 
 // Homepage hero section
 export interface HeroContent {
+  eyebrow: string;
   headline: string;
   subheadline: string;
   primaryCtaText: string;
@@ -70,14 +71,19 @@ export interface DashboardImage {
   alt: string;
 }
 
-// A single step in the homepage "How to Get Started" walkthrough
+// A single card in the homepage "How to Get Started" grid. `theme` picks the
+// card's background/text treatment (see THEME_STYLES in HowItWorks.tsx):
+// "green" = solid brand green with white text, "lavender"/"mint" = pastel
+// background with dark text.
 export interface HowItWorksStep {
-  icon: "truck" | "card" | "fuel";
+  title: string;
   description: string;
   image: { src: string; alt: string };
+  theme: "green" | "lavender" | "mint";
 }
 
 export interface HowItWorksContent {
+  eyebrow: string;
   title: string;
   subtitle: string;
   steps: HowItWorksStep[];
@@ -108,10 +114,11 @@ export interface TrustedByContent {
   logos: TrustedLogo[];
 }
 
-// A single tab in the homepage's auto-advancing feature showcase
+// A single row in the homepage's alternating feature showcase
 export interface FeatureTab {
   label: string;
   description: string;
+  ctaText: string;
   image: { src: string; alt: string };
 }
 
@@ -214,11 +221,35 @@ export interface BlogIndexHeroContent {
   subheading: string;
 }
 
+// "Get in touch" page (route: /request) — a lead-capture form linked from the
+// navbar/footer "Get in touch" CTAs, alongside a phone-mockup graphic.
+export interface GetInTouchContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  namePlaceholder: string;
+  fleetSizeOptions: string[];
+  phonePlaceholder: string;
+  emailPlaceholder: string;
+  ctaText: string;
+  image: { src: string; alt: string };
+}
+
 // Homepage's "latest posts" preview section header (posts themselves come from lib/api.ts)
 export interface BlogSectionContent {
   eyebrow: string;
   heading: string;
   ctaText: string;
+}
+
+// Homepage newsletter signup section (last section, after the blog list)
+export interface NewsletterContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  placeholder: string;
+  buttonText: string;
+  consentText: string;
 }
 
 // ==================== CONTENT DATA ====================
@@ -239,11 +270,12 @@ export const navLinks: NavLink[] = [
 
 // Homepage hero copy
 export const heroContent: HeroContent = {
-  headline: "One fuel card that stops your business from wasting money.",
+  eyebrow: "A smarter way for businesses to manage fleet fueling",
+  headline: "Protect and Grow Your Profit Margins Today",
   subheadline:
-    "Load money onto your card, set limits for each driver, and give your team access to over 2,400 fueling stations across Nigeria.",
-  primaryCtaText: "Get in touch",
-  secondaryCtaText: "Order Fuel Cards",
+    "We help businesses boost profits with smarter fuel solutions and cost-control systems.",
+  primaryCtaText: "Request fuel cards",
+  secondaryCtaText: "Schedule a demo",
 };
 
 // Fuel Prices page hero copy
@@ -303,34 +335,50 @@ export const aboutStoryContent: AboutStoryContent = {
   signatureName: "The Fueling Agile Team",
 };
 
-// Homepage hero's dashboard screenshot mockup
+// Homepage hero's graphic: fleet dashboard screenshots with a hand holding an
+// AgileFlex PetrolKaart card
 export const dashboardImage: DashboardImage = {
-  src: "/platform.png",
-  alt: "AgileFlex PetrolKaart fleet overview dashboard showing active vehicles, card balances, and live tracking",
+  src: "/hero-fleet-card.png",
+  alt: "A hand holding an AgileFlex PetrolKaart card in front of the fleet vehicle dashboard, showing vehicle status, card balances, and transaction history",
 };
 
 // Homepage "How to Get Started" 3-step walkthrough
 export const howItWorksContent: HowItWorksContent = {
+  eyebrow: "Get started",
   title: "How to Get Started",
   subtitle: "Start using the AgileFlex PetrolKaart in three simple steps.",
   steps: [
     {
-      icon: "truck",
+      theme: "green",
+      title: "Tell us about your fleet",
       description:
-        "Tell us about your fleet. We'll set up your account and assign a card to each driver or vehicle in minutes.",
-      image: { src: "/step-1.jpg", alt: "Support agents onboarding a new fleet account" },
+        "We'll set up your account and assign a card to each driver or vehicle in minutes.",
+      // TODO: swap in the real phone/chat mockup once provided
+      image: { src: "/how-it-works-fleet-chat.png", alt: "Chat conversation setting up a new fleet account" },
     },
     {
-      icon: "card",
+      theme: "lavender",
+      title: "Fund & Control",
       description:
-        "Load money onto your cards and set spending limits so drivers can only spend what you allow.",
-      image: { src: "/step-2.jpg", alt: "Loading funds and setting spending limits on a card" },
+        "You decide how much each card can spend, and when. No card spends more than you allow.",
+      // TODO: swap in the real cash/wallet illustration once provided
+      image: { src: "/how-it-works-fund-control.png", alt: "Illustration of cash, a wallet, and coins representing card funding limits" },
     },
     {
-      icon: "fuel",
+      theme: "mint",
+      title: "Fuel Anywhere",
       description:
-        "Your drivers fuel up at any of our 2,400+ stations across Nigeria while you watch every transaction on your dashboard in real time.",
-      image: { src: "/step-3.jpg", alt: "A vehicle fueling up at a partner gas station" },
+        "Your card works at 2,400+ stations across the country. Wherever the job takes your team, they can fuel up.",
+      // TODO: swap in the real gas station illustration once provided
+      image: { src: "/how-it-works-fuel-anywhere.png", alt: "Illustration of vehicles fueling up at a gas station" },
+    },
+    {
+      theme: "green",
+      title: "See Everything, Instantly",
+      description:
+        "The Reporting Platform turns every fill-up into a line you can see, the second it happens. No end-of-month surprises.",
+      // TODO: swap in the real analytics dashboard screenshot once provided
+      image: { src: "/how-it-works-reporting.png", alt: "Reporting platform dashboard showing fleet spend analytics" },
     },
   ],
 };
@@ -367,6 +415,7 @@ export const featuresContent: FeaturesContent = {
       label: "AgileFlex PetrolKaart",
       description:
         "AgileFlex PetrolKaart is a prepaid card that pays for fuel, works like a debit card, so you always see exactly what your business spent and where.",
+      ctaText: "Read more",
       image: {
         src: "/tab-agileflex.jpg",
         alt: "AgileFlex PetrolKaart dashboard and physical fuel card",
@@ -376,6 +425,7 @@ export const featuresContent: FeaturesContent = {
       label: "Virtual Volume Fuel-Up",
       description:
         "Virtual Volume Fuel-Up lets you order fuel online the way you'd order anything else, then track it until it gets to you.",
+      ctaText: "Coming soon",
       image: {
         src: "/tab-virtual-volume.jpg",
         alt: "Virtual Volume Fuel-Up success screen showing a generated redemption code and QR code",
@@ -385,6 +435,7 @@ export const featuresContent: FeaturesContent = {
       label: "Bespoke Solutions",
       description:
         "Bespoke Tech Solutions is where we build custom fuel and business tools designed around exactly how your business runs.",
+      ctaText: "Read more",
       image: {
         src: "/tab-bespoke.jpg",
         alt: "Code editor illustration representing custom-built fuel and business tools",
@@ -558,15 +609,11 @@ export const footerContent: FooterContent = {
       heading: "Company",
       links: [
         { label: "About Us", href: "/about" },
-        { label: "Our Partners", href: "/partners" },
         { label: "Get in touch", href: "/contact" },
       ],
     },
   ],
-  legalLinks: [
-    { label: "Terms of service", href: "/terms" },
-    { label: "Privacy Policy", href: "/privacy" },
-  ],
+  legalLinks: [{ label: "Privacy Policy", href: "/privacy" }],
   copyright: "All rights reserved © 2026 Fueling agile Solutions",
 };
 
@@ -575,6 +622,18 @@ export const blogSectionContent: BlogSectionContent = {
   eyebrow: "Blogs & Newsletters",
   heading: "A few things worth knowing before you spend",
   ctaText: "Read more",
+};
+
+// Homepage newsletter signup, the last section before the footer
+export const newsletterContent: NewsletterContent = {
+  eyebrow: "Join our newsletter",
+  heading: "Get fuel-saving tips before everyone else",
+  subheading:
+    "Join our newsletter for fuel price updates, money-saving tips, and offers built for businesses like yours.",
+  placeholder: "Enter your email",
+  buttonText: "Subscribe now",
+  consentText:
+    "Yes, I'd like to receive newsletters, product updates, and promotional emails from Fueling Agile Solutions.",
 };
 
 // Mock blog posts, used whenever WORDPRESS_API_URL isn't configured (see lib/api.ts)
@@ -623,4 +682,22 @@ export const blogIndexHeroContent: BlogIndexHeroContent = {
   heading: "Essential resources for fleets navigating, monitoring, and controlling fuel costs",
   subheading:
     "Price analysis, operational efficiency, and the insights that protect your margins.",
+};
+
+// "Get in touch" page copy — reuses the same phone/chat mockup image as the
+// "Tell us about your fleet" How to Get Started card.
+export const getInTouchContent: GetInTouchContent = {
+  eyebrow: "Get in touch",
+  heading: "Talk to a real person about your fuel costs",
+  subheading:
+    "Tell us about your business. We'll show you exactly where you could be saving.",
+  namePlaceholder: "Name",
+  fleetSizeOptions: ["1–10 vehicles", "11–49 vehicles", "50–100+ vehicles"],
+  phonePlaceholder: "Phone",
+  emailPlaceholder: "Company email",
+  ctaText: "Talk to our team",
+  image: {
+    src: "/get-in-touch-phone.png",
+    alt: "Chat conversation about setting up a fleet fuel card account",
+  },
 };

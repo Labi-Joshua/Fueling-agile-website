@@ -4,11 +4,11 @@ import FuelPriceBanner from "@/components/ui/FuelPriceBanner";
 import ScrollHighlightText from "@/components/ui/ScrollHighlightText";
 import StatsSection from "@/components/ui/StatsSection";
 import HowItWorks from "@/components/ui/HowItWorks";
-import FeatureTabs from "@/components/ui/FeatureTabs";
-import TrustedBy from "@/components/ui/TrustedBy";
+import FeatureRows from "@/components/ui/FeatureRows";
 import WhyUs from "@/components/ui/WhyUs";
 import FaqAccordion from "@/components/ui/FaqAccordion";
 import BlogList from "@/components/ui/BlogList";
+import Newsletter from "@/components/ui/Newsletter";
 import { getAllPosts } from "@/lib/api";
 import {
   heroContent,
@@ -16,10 +16,10 @@ import {
   statsContent,
   howItWorksContent,
   featuresContent,
-  trustedByContent,
   whyUsContent,
   faqContent,
   blogSectionContent,
+  newsletterContent,
   depotPrices,
 } from "@/data/mockContent";
 
@@ -38,6 +38,9 @@ export default async function Home() {
       {/* Main hero: headline, CTAs, dashboard screenshot mockup */}
       <Hero content={heroContent} dashboardImage={dashboardImage} />
 
+      {/* "How to Get Started" 2x2 illustrated card grid */}
+      <HowItWorks content={howItWorksContent} />
+
       {/* Scroll-scrubbed headline that highlights word-by-word as the user scrolls */}
       <ScrollHighlightText
         text={`${statsContent.headingEmphasis}${statsContent.headingRest}`}
@@ -46,14 +49,8 @@ export default async function Home() {
       {/* Animated stat counters (2,400+ stations, 24/7 support, etc.) + CTA */}
       <StatsSection content={statsContent} />
 
-      {/* 3-step "How to Get Started" illustrated walkthrough */}
-      <HowItWorks content={howItWorksContent} />
-
-      {/* Auto-advancing tabs showcasing each product/solution */}
-      <FeatureTabs content={featuresContent} />
-
-      {/* Regulatory body logos (DPR / NDPB) trust strip */}
-      <TrustedBy content={trustedByContent} logosImageSrc="/trusted-logos-frame.png" />
+      {/* Alternating image/text rows showcasing each product/solution */}
+      <FeatureRows content={featuresContent} />
 
       {/* "Why Fueling Agile" value-proposition cards */}
       <WhyUs content={whyUsContent} />
@@ -63,6 +60,9 @@ export default async function Home() {
 
       {/* Latest blog posts preview grid */}
       <BlogList content={blogSectionContent} posts={posts} />
+
+      {/* Newsletter signup card, last section before the footer */}
+      <Newsletter content={newsletterContent} />
     </>
   );
 }

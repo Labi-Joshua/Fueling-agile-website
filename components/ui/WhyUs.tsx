@@ -1,15 +1,20 @@
+"use client";
+
 // Homepage "Why Fueling Agile?" section: eyebrow + heading followed by a
 // 3-column grid of value-proposition cards, each with an image, title, and description.
 import Image from "next/image";
 import type { WhyUsContent } from "@/data/mockContent";
+import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
 export interface WhyUsProps {
   content: WhyUsContent;
 }
 
 export default function WhyUs({ content }: WhyUsProps) {
+  const sectionRef = useFadeInOnScroll<HTMLElement>();
+
   return (
-    <section className="mx-auto max-w-[1536px] px-4 py-16 text-center sm:px-8">
+    <section ref={sectionRef} className="mx-auto max-w-[1536px] px-4 pt-36 text-center sm:px-8 sm:pt-44">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>
