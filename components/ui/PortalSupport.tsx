@@ -9,7 +9,7 @@ export interface PortalSupportProps {
 
 export default function PortalSupport({ content }: PortalSupportProps) {
   return (
-    <section className="mx-auto max-w-5xl px-4 py-16 sm:px-8">
+    <section className="mx-auto max-w-5xl px-4 pb-16 pt-64 sm:px-8">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr] md:items-stretch">
         <div className="group relative aspect-[1200/794] overflow-hidden bg-brand-500/10">
           <Image

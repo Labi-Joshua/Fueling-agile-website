@@ -34,9 +34,17 @@ export default function PortalPlatforms({ content }: PortalPlatformsProps) {
         {content.subheading}
       </p>
 
-      <div className="mt-16 grid grid-cols-1 gap-8 text-left md:grid-cols-2">
+      <div className="relative mt-16">
+        {/* Decorative interlocking rings, matching the accent used behind the
+            homepage newsletter card — purely background flourish, sits behind
+            the platform cards. */}
+        <div className="pointer-events-none absolute -inset-x-40 -inset-y-24 -z-10 h-[calc(100%+12rem)] w-[calc(100%+20rem)]">
+          <Image src="/newsletter-rings.png" alt="" fill loading="eager" sizes="(min-width: 1024px) 1280px, 100vw" className="object-contain" />
+        </div>
+
+        <div className="grid grid-cols-1 gap-8 text-left md:grid-cols-2">
         {content.platforms.map((platform) => (
-          <div key={platform.title} className="group flex flex-col border border-brand-900/10">
+          <div key={platform.title} className="group relative flex flex-col border border-brand-900/10 bg-white">
             <div className="p-6">
               <h2 className="text-lg font-semibold text-brand-900">{platform.title}</h2>
               <p className="mt-1 text-sm text-brand-900/50">{platform.subtitle}</p>
@@ -60,7 +68,7 @@ export default function PortalPlatforms({ content }: PortalPlatformsProps) {
                 href={platform.ctaHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 rounded-full bg-brand-900 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-black"
+                className="flex items-center justify-center gap-2 rounded-full bg-brand-500 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
               >
                 {platform.ctaText}
                 <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
@@ -85,6 +93,7 @@ export default function PortalPlatforms({ content }: PortalPlatformsProps) {
             </ul>
           </div>
         ))}
+        </div>
       </div>
     </section>
   );

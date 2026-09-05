@@ -518,7 +518,7 @@ export const aboutStoryContent: AboutStoryContent = {
 // Homepage hero's graphic: fleet dashboard screenshots with a hand holding an
 // AgileFlex PetrolKaart card
 export const dashboardImage: DashboardImage = {
-  src: "/hero-fleet-card.png",
+  src: "/hero-fleet-dashboard.png",
   alt: "A hand holding an AgileFlex PetrolKaart card in front of the fleet vehicle dashboard, showing vehicle status, card balances, and transaction history",
 };
 
@@ -596,7 +596,7 @@ export const featuresContent: FeaturesContent = {
         "AgileFlex PetrolKaart is a prepaid card that pays for fuel, works like a debit card, so you always see exactly what your business spent and where.",
       ctaText: "Read more",
       image: {
-        src: "/tab-agileflex.jpg",
+        src: "/tab-agileflex.png",
         alt: "AgileFlex PetrolKaart dashboard and physical fuel card",
       },
     },
@@ -606,7 +606,7 @@ export const featuresContent: FeaturesContent = {
         "Virtual Volume Fuel-Up lets you order fuel online the way you'd order anything else, then track it until it gets to you.",
       ctaText: "Coming soon",
       image: {
-        src: "/tab-virtual-volume.jpg",
+        src: "/tab-virtual-volume.png",
         alt: "Virtual Volume Fuel-Up success screen showing a generated redemption code and QR code",
       },
     },
@@ -616,8 +616,8 @@ export const featuresContent: FeaturesContent = {
         "Bespoke Tech Solutions is where we build custom fuel and business tools designed around exactly how your business runs.",
       ctaText: "Read more",
       image: {
-        src: "/tab-bespoke.jpg",
-        alt: "Code editor illustration representing custom-built fuel and business tools",
+        src: "/tab-bespoke.png",
+        alt: "Isometric illustration of custom dashboards, charts, and integrations",
       },
     },
   ],
@@ -1312,10 +1312,8 @@ export const fuelCardHeroContent: HeroContent = {
 };
 
 // Agile Flex solutions page hero's two-card graphic.
-// TODO: this reuses the homepage's dashboard+card image as a placeholder —
-// swap in a dedicated two-card graphic once one is provided.
 export const fuelCardHeroImage: DashboardImage = {
-  src: "/hero-fleet-card.png",
+  src: "/hero-agileflex-cards.png",
   alt: "Two AgileFlex PetrolKaart cards",
 };
 
@@ -1414,13 +1412,11 @@ export const bespokeHeroContent: BespokeHeroContent = {
   secondaryCtaText: "See how it works",
   secondaryCtaHref: "#how-it-works",
   image: {
-    src: "/tab-bespoke.jpg",
+    src: "/hero-bespoke-isometric.png",
     alt: "Isometric illustration of custom dashboards, charts, and integrations",
   },
 };
 
-// TODO: reuses the homepage feature tab's image as a placeholder hero visual —
-// swap in the dedicated isometric dashboard graphic once that file is provided.
 export const capabilitiesContent: CapabilitiesGridContent = {
   eyebrow: "What we build",
   heading: "Custom tools built around exactly how your business runs",

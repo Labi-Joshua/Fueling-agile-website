@@ -41,6 +41,19 @@ const THEME_PANEL: Record<HowItWorksStep["theme"], string> = {
 // All 4 steps in mockContent.ts ship a finished image, so all 4 render here.
 const VISIBLE_STEPS = 4;
 
+// The 4 step images share one canvas size but not one composition — the fleet
+// chat mockup fills its frame edge-to-edge, while the fund-control and
+// fuel-anywhere illustrations are small graphics on a lot of empty themed
+// canvas, and the reporting screenshot's content runs to its right/bottom
+// edge with padding only on the left/top. A single object-fit/position can't
+// suit all four, so each step gets its own crop tuned to its source image.
+const IMAGE_FIT = [
+  "object-cover object-bottom",
+  "object-cover object-bottom scale-150",
+  "object-cover object-bottom origin-bottom scale-[1.35]",
+  "object-cover object-right-bottom origin-bottom-right scale-110",
+];
+
 // Scroll distance dedicated to each step while the section is pinned,
 // expressed as a fraction of the viewport height so the pace feels the same
 // on any screen size.
@@ -151,8 +164,8 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
         </h2>
         <p className="mt-2 text-sm text-brand-900/50">{content.subtitle}</p>
 
-        <div className="mt-16 grid grid-cols-1 items-center gap-12 text-left lg:grid-cols-2 lg:gap-16">
-          <div className="flex flex-col items-start">
+        <div className="mt-16 grid grid-cols-1 items-center gap-12 text-left lg:grid-cols-[1fr_544px] lg:gap-16">
+          <div className="flex flex-col items-start lg:pr-20">
             {/* Step indicator: a pill-shaped track holding the active step as an
                 elongated pill and the rest as dots */}
             <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-900/5 p-2">
@@ -175,7 +188,7 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
             </h3>
             {/* Fixed height (tall enough for the longest step's copy) so the
                 CTAs below don't shift up/down as descriptions swap length. */}
-            <p className="mt-3 h-20 max-w-sm text-sm leading-relaxed text-brand-900/50">
+            <p className="mt-3 h-12 max-w-xl text-sm leading-relaxed text-brand-900/50">
               {activeStep.description}
             </p>
 
@@ -222,7 +235,7 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
                   alt={step.image.alt}
                   fill
                   sizes="(min-width: 1024px) 544px, 100vw"
-                  className="object-cover object-bottom"
+                  className={IMAGE_FIT[index]}
                 />
               </div>
             ))}
