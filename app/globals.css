@@ -13,7 +13,19 @@
   --foreground: #171717;
 }
 
+/* Several sections (Newsletter's decorative rings, AboutHero's stroke
+   graphic, ...) intentionally render decorative artwork wider than their
+   container and let it bleed past the edges on large screens. Clipping at
+   the html/body level (rather than inside each section) crops that bleed at
+   the viewport edge without touching the components' own intentional
+   oversizing, and keeps the page from gaining a horizontal scrollbar on
+   narrow/mobile viewports. */
+html {
+  overflow-x: hidden;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
 }

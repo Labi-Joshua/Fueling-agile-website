@@ -26,7 +26,7 @@ export default function GetInTouchForm({ content }: GetInTouchFormProps) {
   }
 
   return (
-    <section className="mx-auto grid max-w-[1536px] grid-cols-1 items-center gap-16 px-24 pt-20 sm:pt-28 lg:grid-cols-[620px_1fr]">
+    <section className="mx-auto grid max-w-[1536px] grid-cols-1 items-center gap-16 px-4 pt-20 sm:px-8 sm:pt-28 lg:grid-cols-[620px_1fr] lg:px-24">
       <div className="flex w-full flex-col items-start text-left">
         <span className="text-xs font-semibold uppercase tracking-wide text-orange-500">
           {content.eyebrow}

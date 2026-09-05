@@ -222,7 +222,7 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
                   alt={step.image.alt}
                   fill
                   sizes="(min-width: 1024px) 544px, 100vw"
-                  className="object-contain object-bottom"
+                  className="object-cover object-bottom"
                 />
               </div>
             ))}

@@ -198,7 +198,7 @@ export default function WhyUs({ content }: WhyUsProps) {
                 alt={point.image.alt}
                 fill
                 sizes="(min-width: 1024px) 544px, 100vw"
-                className="object-contain object-bottom"
+                className="object-cover object-bottom"
               />
             </div>
           ))}

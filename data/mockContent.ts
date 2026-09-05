@@ -388,6 +388,50 @@ export interface PersonaGridContent {
   personas: Persona[];
 }
 
+// Bespoke Solutions page (/solutions/bespoke) hero: centered heading/subheading
+// over a supporting image, plus two link-based CTAs — this page has no fuel
+// card product to route into the sitewide "Request fuel cards" modal, so its
+// CTAs are plain links instead of Hero.tsx's modal-opening button.
+export interface BespokeHeroContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  primaryCtaText: string;
+  primaryCtaHref: string;
+  secondaryCtaText: string;
+  secondaryCtaHref: string;
+  image: { src: string; alt: string };
+}
+
+// A single capability card on the Bespoke Solutions page (e.g. "Custom Dashboards")
+export interface Capability {
+  title: string;
+  description: string;
+}
+
+export interface CapabilitiesGridContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  capabilities: Capability[];
+}
+
+// A single numbered step in the Bespoke Solutions page's "how we build it"
+// process. `theme` reuses the same green/lavender/mint palette as
+// HowItWorksStep/TrustPoint (see THEME_STYLES-style maps in those components).
+export interface ProcessStep {
+  title: string;
+  description: string;
+  theme: "green" | "lavender" | "mint";
+}
+
+export interface ProcessStepsContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  steps: ProcessStep[];
+}
+
 // ==================== CONTENT DATA ====================
 // Top navigation links, shared by every page via app/layout.tsx
 export const navLinks: NavLink[] = [
@@ -397,7 +441,7 @@ export const navLinks: NavLink[] = [
     href: "/solutions",
     children: [
       { label: "Agile Flex Petrolkaart", href: "/solutions/fuel-cards" },
-      { label: "Bespoke Tech Solutions", href: "/solutions/telematics" },
+      { label: "Bespoke Tech Solutions", href: "/solutions/bespoke" },
     ],
   },
   { label: "Fuel Prices", href: "/pricing" },
@@ -1356,4 +1400,142 @@ export const personaGridContent: PersonaGridContent = {
       image: { src: "/persona-procurement.jpg", alt: "Enterprise procurement staff reviewing inventory in a warehouse" },
     },
   ],
+};
+
+// ==================== BESPOKE SOLUTIONS PAGE (/solutions/bespoke) ====================
+
+export const bespokeHeroContent: BespokeHeroContent = {
+  eyebrow: "Bespoke Tech Solutions",
+  heading: "If it doesn't exist yet, we'll build it.",
+  subheading:
+    "Every business runs differently. When AgileFlex PetrolKaart isn't the right shape for how yours works, we design and build the custom fuel and business tools that are — from the ground up.",
+  primaryCtaText: "Get in touch",
+  primaryCtaHref: "/request",
+  secondaryCtaText: "See our other solutions",
+  secondaryCtaHref: "/solutions/fuel-cards",
+  image: {
+    src: "/tab-bespoke.jpg",
+    alt: "Code editor illustration representing custom-built fuel and business tools",
+  },
+};
+
+// TODO: reuses the homepage feature tab's image as a placeholder hero visual —
+// swap in a dedicated graphic once one is provided.
+export const capabilitiesContent: CapabilitiesGridContent = {
+  eyebrow: "What we build",
+  heading: "Custom tools built around exactly how your business runs",
+  subheading:
+    "Think of us as your in-house tech team for everything fuel and payments related — without the overhead of hiring one.",
+  capabilities: [
+    {
+      title: "Custom Fuel Dashboards",
+      description:
+        "Purpose-built reporting and analytics screens that show your fuel spend exactly the way your team already thinks about it.",
+    },
+    {
+      title: "API & POS Integrations",
+      description:
+        "We connect your existing point-of-sale, ERP, or accounting software directly to your fuel data, no more manual reconciliation.",
+    },
+    {
+      title: "Loyalty & Rewards Engines",
+      description:
+        "Custom-built loyalty programs and redemption systems that keep your drivers and customers coming back.",
+    },
+    {
+      title: "Automated Reporting",
+      description:
+        "Scheduled, self-reconciling reports delivered straight to finance, no spreadsheets, no chasing receipts.",
+    },
+    {
+      title: "Hardware & IoT Integrations",
+      description:
+        "From pump-level sensors to vehicle telematics, we build the middleware that gets your hardware talking to your software.",
+    },
+    {
+      title: "Workflow Automation",
+      description:
+        "We map out the repetitive, manual parts of running your fuel operation and replace them with tools that run themselves.",
+    },
+  ],
+};
+
+export const processStepsContent: ProcessStepsContent = {
+  eyebrow: "How we work",
+  heading: "From idea to shipped product",
+  subheading:
+    "A bespoke build doesn't mean a slow one. Here's how we take a business problem and turn it into a working tool.",
+  steps: [
+    {
+      title: "Discover",
+      description:
+        "We start by understanding how your business actually operates today, the workarounds, the spreadsheets, the manual steps, before writing a single line of code.",
+      theme: "green",
+    },
+    {
+      title: "Design",
+      description:
+        "We map out exactly what the tool needs to do and how it should feel to use, then walk you through it before any building starts.",
+      theme: "lavender",
+    },
+    {
+      title: "Build",
+      description:
+        "Our engineers build the solution in focused sprints, with regular check-ins so you're never surprised by what comes out the other end.",
+      theme: "mint",
+    },
+    {
+      title: "Launch & Support",
+      description:
+        "We roll it out to your team, then stay on to monitor, maintain, and extend it as your business keeps changing.",
+      theme: "green",
+    },
+  ],
+};
+
+// TODO: dedicated persona photos haven't been provided yet, so these currently
+// point at placeholder image paths that don't exist yet (see PersonaGrid.tsx,
+// which renders a neutral fallback block when an image 404s) — same situation
+// as personaGridContent above.
+export const bespokePersonaGridContent: PersonaGridContent = {
+  eyebrow: "Who we build for",
+  heading: "If your fuel operation is one-of-a-kind, so is our solution",
+  personas: [
+    {
+      title: "Retail & Fuel Station Chains",
+      description:
+        "Custom point-of-sale integrations and loyalty systems that fit the way your stations already run, not the other way around.",
+      image: { src: "/persona-retail-chain.jpg", alt: "A fuel station attendant serving a customer at a retail chain location" },
+    },
+    {
+      title: "Financial Institutions & Fintechs",
+      description:
+        "White-labeled fuel payment infrastructure and reconciliation tools you can build your own product on top of.",
+      image: { src: "/persona-fintech.jpg", alt: "A fintech team reviewing payment infrastructure on a laptop" },
+    },
+    {
+      title: "Logistics & Distribution Companies",
+      description:
+        "Route-aware fuel tracking and hardware integrations built for fleets that don't fit a one-size-fits-all card program.",
+      image: { src: "/persona-logistics.jpg", alt: "A logistics coordinator tracking distribution vehicles" },
+    },
+    {
+      title: "Enterprises with Legacy Systems",
+      description:
+        "Middleware and integrations that connect your existing ERP or accounting stack to modern fuel data, without a rip-and-replace.",
+      image: { src: "/persona-enterprise-legacy.jpg", alt: "An enterprise IT team reviewing legacy system integrations" },
+    },
+  ],
+};
+
+// Bespoke Solutions page: newsletter signup card, last section before the footer
+export const bespokeNewsletterContent: NewsletterContent = {
+  eyebrow: "Stay in the loop",
+  heading: "Curious what we could build for you?",
+  subheading:
+    "Join our newsletter for product updates, engineering deep-dives, and the occasional look behind the scenes of what we're building next.",
+  placeholder: "Enter your email",
+  buttonText: "Subscribe now",
+  consentText:
+    "By subscribing, you agree to receive emails from Fueling Agile Solutions. You can unsubscribe at any time.",
 };

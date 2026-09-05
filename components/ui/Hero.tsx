@@ -41,7 +41,7 @@ export default function Hero({ content, dashboardImage, showActiveCardsBadge = t
       ref={containerRef}
       className="mx-auto grid max-w-[1536px] grid-cols-1 items-center gap-12 px-4 pt-20 sm:px-8 sm:pt-28 lg:grid-cols-[1fr_1.4fr] lg:gap-8"
     >
-      <div className="flex flex-col items-start px-8 text-left">
+      <div className="flex flex-col items-start text-left lg:px-8">
         <span className="hero-animate text-xs font-semibold uppercase tracking-wide text-orange-500">
           {content.eyebrow}
         </span>
