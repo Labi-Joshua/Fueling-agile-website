@@ -1406,21 +1406,21 @@ export const personaGridContent: PersonaGridContent = {
 
 export const bespokeHeroContent: BespokeHeroContent = {
   eyebrow: "Bespoke Tech Solutions",
-  heading: "If it doesn't exist yet, we'll build it.",
+  heading: "We build the thing you actually need for your business",
   subheading:
-    "Every business runs differently. When AgileFlex PetrolKaart isn't the right shape for how yours works, we design and build the custom fuel and business tools that are — from the ground up.",
-  primaryCtaText: "Get in touch",
+    "Tell us the problem. We'll build the tool, system, or integration that solves it, made for your business, not a template.",
+  primaryCtaText: "Discuss your project",
   primaryCtaHref: "/request",
-  secondaryCtaText: "See our other solutions",
-  secondaryCtaHref: "/solutions/fuel-cards",
+  secondaryCtaText: "See how it works",
+  secondaryCtaHref: "#how-it-works",
   image: {
     src: "/tab-bespoke.jpg",
-    alt: "Code editor illustration representing custom-built fuel and business tools",
+    alt: "Isometric illustration of custom dashboards, charts, and integrations",
   },
 };
 
 // TODO: reuses the homepage feature tab's image as a placeholder hero visual —
-// swap in a dedicated graphic once one is provided.
+// swap in the dedicated isometric dashboard graphic once that file is provided.
 export const capabilitiesContent: CapabilitiesGridContent = {
   eyebrow: "What we build",
   heading: "Custom tools built around exactly how your business runs",

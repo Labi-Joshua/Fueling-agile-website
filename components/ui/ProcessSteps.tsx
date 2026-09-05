@@ -40,7 +40,11 @@ export default function ProcessSteps({ content }: ProcessStepsProps) {
   const sectionRef = useFadeInOnScroll<HTMLElement>();
 
   return (
-    <section ref={sectionRef} className="mx-auto max-w-[1536px] px-4 pt-36 text-center sm:px-8 sm:pt-44">
+    <section
+      ref={sectionRef}
+      id="how-it-works"
+      className="mx-auto max-w-[1536px] px-4 pt-36 text-center sm:px-8 sm:pt-44"
+    >
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>
