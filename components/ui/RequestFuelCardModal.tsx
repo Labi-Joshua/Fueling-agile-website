@@ -5,7 +5,7 @@
 // yet — submitting just prevents the native page reload until one is
 // connected. Renders via a portal to document.body so it always sits above
 // whatever page/section happened to open it.
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { RequestFuelCardModalContent } from "@/data/mockContent";
 import { useLenis } from "@/components/providers/SmoothScrollProvider";
@@ -27,6 +27,13 @@ function RequiredMark() {
 
 export default function RequestFuelCardModal({ isOpen, onClose, content }: RequestFuelCardModalProps) {
   const lenis = useLenis();
+  const bodyRef = useRef<HTMLDivElement>(null);
+  // Drives the custom scroll-position indicator below (a plain styled div,
+  // not native scrollbar theming — iOS Safari never renders
+  // ::-webkit-scrollbar, and it's not guaranteed to render as a persistent
+  // element in other browsers either, so a real element is the only way to
+  // reliably show "this form scrolls" everywhere).
+  const [scrollThumb, setScrollThumb] = useState({ canScroll: false, heightPct: 100, topPct: 0 });
 
   // Locks background scroll (both native and Lenis-driven) while the modal is
   // open, and closes it on Escape.
@@ -48,6 +55,38 @@ export default function RequestFuelCardModal({ isOpen, onClose, content }: Reque
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen, lenis, onClose]);
+
+  // Measures the form body once it's mounted (and on resize) to size/hide
+  // the scroll indicator, then keeps its position in sync while scrolling.
+  useEffect(() => {
+    if (!isOpen) return;
+
+    function measure() {
+      const el = bodyRef.current;
+      if (!el) return;
+      const { scrollTop, scrollHeight, clientHeight } = el;
+      const canScroll = scrollHeight > clientHeight + 1;
+      const heightPct = canScroll ? Math.max((clientHeight / scrollHeight) * 100, 10) : 100;
+      const maxScroll = scrollHeight - clientHeight;
+      const topPct = canScroll && maxScroll > 0 ? (scrollTop / maxScroll) * (100 - heightPct) : 0;
+      setScrollThumb({ canScroll, heightPct, topPct });
+    }
+
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [isOpen]);
+
+  function handleBodyScroll() {
+    const el = bodyRef.current;
+    if (!el) return;
+    const { scrollTop, scrollHeight, clientHeight } = el;
+    const maxScroll = scrollHeight - clientHeight;
+    setScrollThumb((prev) => ({
+      ...prev,
+      topPct: maxScroll > 0 ? (scrollTop / maxScroll) * (100 - prev.heightPct) : 0,
+    }));
+  }
 
   // isOpen only ever becomes true from a client-side click (see
   // RequestFuelCardModalProvider's useState(false) default), never from SSR'd
@@ -105,11 +144,14 @@ export default function RequestFuelCardModal({ isOpen, onClose, content }: Reque
             without it, Lenis intercepts them for the page's own (stopped)
             scroll instead of letting them scroll this div natively.
             On desktop the backdrop itself scrolls instead, as before. */}
-        <div
-          data-lenis-prevent
-          className="flex-1 overflow-y-auto overscroll-contain px-6 pb-6 text-center sm:flex-none sm:overflow-visible sm:px-10 sm:pb-10"
-        >
-          <form onSubmit={handleSubmit} className="mt-6 text-left sm:mt-8">
+        <div className="relative min-h-0 flex-1 sm:flex-none">
+          <div
+            ref={bodyRef}
+            onScroll={handleBodyScroll}
+            data-lenis-prevent
+            className="h-full overflow-y-auto overscroll-contain px-6 pb-6 text-center sm:h-auto sm:overflow-visible sm:px-10 sm:pb-10"
+          >
+            <form onSubmit={handleSubmit} className="mt-6 text-left sm:mt-8">
             <div className="flex flex-col gap-5 rounded-2xl bg-[#EEF3DE] p-5 sm:p-8">
               <div>
                 <label className={labelClassName}>{content.companyNameLabel}</label>
@@ -196,6 +238,19 @@ export default function RequestFuelCardModal({ isOpen, onClose, content }: Reque
               </button>
             </div>
           </form>
+          </div>
+
+          {/* Scroll-position indicator, mobile only — a plain track+thumb
+              rather than native scrollbar theming (see the note above), so
+              it renders identically on iOS, Android, and desktop browsers. */}
+          {scrollThumb.canScroll && (
+            <div className="pointer-events-none absolute bottom-2 right-1.5 top-2 w-1 rounded-full bg-brand-900/10 sm:hidden">
+              <div
+                className="absolute inset-x-0 rounded-full bg-brand-900/30"
+                style={{ height: `${scrollThumb.heightPct}%`, top: `${scrollThumb.topPct}%` }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>,
