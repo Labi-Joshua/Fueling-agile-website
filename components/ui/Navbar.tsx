@@ -3,7 +3,7 @@
 // Sticky top navigation bar, shared across every page (rendered once in app/layout.tsx).
 // Handles desktop hover dropdowns for links with children, plus a separate
 // slide-down mobile menu below the lg breakpoint.
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { NavLink } from "@/data/mockContent";
@@ -17,10 +17,6 @@ export interface NavbarProps {
   ctaHref: string;
 }
 
-// Below this scroll depth the navbar always stays shown, regardless of
-// direction — avoids it hiding itself over tiny jitters right at the top.
-const HIDE_THRESHOLD_PX = 80;
-
 export default function Navbar({
   brand,
   links,
@@ -33,34 +29,9 @@ export default function Navbar({
   // openDropdown: which top-level link's desktop dropdown is currently open (hover-driven)
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  // Slides the navbar off-screen while scrolling down past HIDE_THRESHOLD_PX,
-  // and back into view as soon as the user scrolls up (or nears the top).
-  const [hidden, setHidden] = useState(false);
-  const lastScrollY = useRef(0);
-
-  useEffect(() => {
-    function handleScroll() {
-      const currentY = window.scrollY;
-      const scrollingDown = currentY > lastScrollY.current;
-
-      if (currentY < HIDE_THRESHOLD_PX) {
-        setHidden(false);
-      } else {
-        setHidden(scrollingDown);
-      }
-
-      lastScrollY.current = currentY;
-    }
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
-    <header
-      className={`sticky top-0 z-50 w-full border-b border-brand-900/10 bg-white transition-transform duration-300 ${
-        hidden && !isOpen ? "-translate-y-full" : "translate-y-0"
-      }`}
-    >
+    <header className="sticky top-0 z-50 w-full border-b border-brand-900/10 bg-white">
       <nav className="mx-auto flex max-w-[1536px] items-center justify-between gap-8 px-4 py-4 sm:px-8">
         {/* Logo, links back to the homepage */}
         <Link href="/" className="flex items-center">
