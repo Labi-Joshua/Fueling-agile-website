@@ -86,6 +86,8 @@ export interface HowItWorksContent {
   eyebrow: string;
   title: string;
   subtitle: string;
+  primaryCtaText: string;
+  secondaryCtaText: string;
   steps: HowItWorksStep[];
 }
 
@@ -123,21 +125,28 @@ export interface FeatureTab {
 }
 
 export interface FeaturesContent {
+  eyebrow: string;
   title: string;
   subtitle: string;
   tabs: FeatureTab[];
 }
 
-// A single value-proposition card in the "Why Us" section
+// A single value-proposition card in the "Why Us" section. `theme` picks the
+// panel's background treatment, same palette as HowItWorksStep (see
+// THEME_PANEL in WhyUs.tsx).
 export interface TrustPoint {
   title: string;
   description: string;
   image: { src: string; alt: string };
+  theme: "green" | "lavender" | "mint";
 }
 
 export interface WhyUsContent {
   eyebrow: string;
   heading: string;
+  subtitle: string;
+  primaryCtaText: string;
+  secondaryCtaText: string;
   points: TrustPoint[];
 }
 
@@ -252,6 +261,133 @@ export interface NewsletterContent {
   consentText: string;
 }
 
+// A single sub-bullet nested inside a lettered PrivacyPolicyListItem, e.g.
+// "Contact Information: Name, email address..." under the lettered "Personal
+// Information" item — always rendered with a bullet, one level deeper than
+// its lettered parent.
+export interface PrivacyPolicyListSubitem {
+  label?: string;
+  text: string;
+}
+
+// A single item in a Privacy Policy list block, e.g. "a. Personal
+// Information: This refers to..." — `label` is the bold lead-in, `subitems`
+// covers the cases (Personal Information, Usage Information, Service
+// Providers) where a lettered item has its own nested bulleted list.
+export interface PrivacyPolicyListItem {
+  label?: string;
+  text: string;
+  subitems?: PrivacyPolicyListSubitem[];
+}
+
+// A single content block within a Privacy Policy section, in source-document
+// order: a plain paragraph, a bold standalone lead-in (e.g. "Legal Basis"), or
+// a list. Lists are lettered (a, b, c...) by default, matching the source
+// document, except the closing "Contact Us" list, which has no markers.
+export interface PrivacyPolicyBlock {
+  type: "paragraph" | "subheading" | "list";
+  label?: string; // paragraph only — bold lead-in before the paragraph text, e.g. "Personal Information"
+  text?: string; // paragraph and subheading
+  listStyle?: "lettered" | "plain"; // list only; defaults to "lettered"
+  items?: PrivacyPolicyListItem[]; // list only
+}
+
+// A single section of the Privacy Policy page (e.g. "Information We Collect").
+// `number` is omitted for the unnumbered Terms of Usage sections that follow
+// the 11 numbered Privacy Policy sections in the source document.
+export interface PrivacyPolicySection {
+  heading: string;
+  number?: number;
+  blocks: PrivacyPolicyBlock[];
+}
+
+// A run of intro text that's either plain or bold, e.g. ["This Privacy Policy
+// explains how ", {bold: "Fueling Agile Solutions"}, " or ", ...] — lets the
+// intro paragraphs carry the same inline emphasis as the source document.
+export type PrivacyPolicyTextRun = string | { bold: string };
+
+// Privacy Policy page (route: /privacy) — linked from the footer's legal row.
+// Content is transcribed verbatim from the company's official Terms of
+// Service & Privacy Policy document (effective November 11, 2025) so it must
+// be updated here, not paraphrased, if that source document changes.
+export interface PrivacyPolicyContent {
+  eyebrow: string;
+  heading: string;
+  effectiveDate: string;
+  intro: PrivacyPolicyTextRun[][]; // one array of runs per paragraph
+  sections: PrivacyPolicySection[];
+}
+
+// "Request fuel cards" modal — opened from every "Request fuel cards" CTA
+// button site-wide (Hero, HowItWorks, WhyUs, StatsSection) via
+// RequestFuelCardModalProvider. No backend wired up yet — submitting just
+// prevents the native page reload until one is connected.
+export interface RequestFuelCardModalContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  companyNameLabel: string;
+  companyNamePlaceholder: string;
+  representativeNameLabel: string;
+  firstNamePlaceholder: string;
+  lastNamePlaceholder: string;
+  emailLabel: string;
+  emailPlaceholder: string;
+  phoneLabel: string;
+  phonePlaceholder: string;
+  cardTypeLabel: string;
+  cardTypePlaceholder: string;
+  cardTypeOptions: string[];
+  vehicleCountLabel: string;
+  vehicleCountOptions: string[];
+  vehicleInfoLabel: string;
+  vehicleMakePlaceholder: string;
+  vehicleModelPlaceholder: string;
+  registrationPlaceholder: string;
+  submitText: string;
+}
+
+// Agile Flex solutions page (/solutions/fuel-cards): "See it all in one
+// place" reporting-platform showcase — eyebrow/heading/subheading above a
+// single dashboard screenshot in a colored panel (same visual language as a
+// single HowItWorks step, but static).
+export interface ReportingShowcaseContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  image: { src: string; alt: string };
+}
+
+// A single pricing tier card on the Agile Flex solutions page.
+export interface PricingTier {
+  name: string;
+  vehicleRange: string;
+  pricePercent: string;
+  features: string[];
+  ctaText: string;
+  highlighted: boolean;
+}
+
+export interface PricingTiersContent {
+  eyebrow: string;
+  heading: string;
+  subheading: string;
+  tiers: PricingTier[];
+}
+
+// A single persona card in the Agile Flex solutions page's "who it's for" grid.
+export interface Persona {
+  title: string;
+  description: string;
+  image: { src: string; alt: string };
+}
+
+export interface PersonaGridContent {
+  eyebrow: string;
+  heading: string;
+  personas: Persona[];
+}
+
 // ==================== CONTENT DATA ====================
 // Top navigation links, shared by every page via app/layout.tsx
 export const navLinks: NavLink[] = [
@@ -346,38 +482,36 @@ export const dashboardImage: DashboardImage = {
 export const howItWorksContent: HowItWorksContent = {
   eyebrow: "Get started",
   title: "How to Get Started",
-  subtitle: "Start using the AgileFlex PetrolKaart in three simple steps.",
+  subtitle: "Start using the AgileFlex PetrolKaart in four simple steps.",
+  primaryCtaText: "Request fuel cards",
+  secondaryCtaText: "Schedule a demo",
   steps: [
     {
       theme: "green",
       title: "Tell us about your fleet",
       description:
-        "We'll set up your account and assign a card to each driver or vehicle in minutes.",
-      // TODO: swap in the real phone/chat mockup once provided
+        "Share how many vehicles or drivers you have, and we'll set up your account and assign a card to each one in minutes. No paperwork pile-up, no waiting weeks to get started.",
       image: { src: "/how-it-works-fleet-chat.png", alt: "Chat conversation setting up a new fleet account" },
     },
     {
       theme: "lavender",
       title: "Fund & Control",
       description:
-        "You decide how much each card can spend, and when. No card spends more than you allow.",
-      // TODO: swap in the real cash/wallet illustration once provided
+        "Load money onto each card, then set exactly how much it can spend, daily, weekly, or monthly. Once the limit is set, no card can go past it, so your budget stays your budget.",
       image: { src: "/how-it-works-fund-control.png", alt: "Illustration of cash, a wallet, and coins representing card funding limits" },
     },
     {
       theme: "mint",
       title: "Fuel Anywhere",
       description:
-        "Your card works at 2,400+ stations across the country. Wherever the job takes your team, they can fuel up.",
-      // TODO: swap in the real gas station illustration once provided
+        "Your card works at 2,400+ stations across the country, so wherever a delivery, trip, or job takes your team, they can fuel up without detours or delays.",
       image: { src: "/how-it-works-fuel-anywhere.png", alt: "Illustration of vehicles fueling up at a gas station" },
     },
     {
       theme: "green",
       title: "See Everything, Instantly",
       description:
-        "The Reporting Platform turns every fill-up into a line you can see, the second it happens. No end-of-month surprises.",
-      // TODO: swap in the real analytics dashboard screenshot once provided
+        "The moment a card is used, it shows up on your dashboard, who spent it, where, and how much. No chasing receipts, no waiting until month-end to find out what happened.",
       image: { src: "/how-it-works-reporting.png", alt: "Reporting platform dashboard showing fleet spend analytics" },
     },
   ],
@@ -396,7 +530,7 @@ export const trustedByContent: TrustedByContent = {
 export const statsContent: StatsContent = {
   headingEmphasis: "Built",
   headingRest:
-    " for Nigerian businesses that are tired of guessing how much they spend on fuel every month.",
+    " for Nigerian businesses that want to have accurate visibility into how much they spend on fuel every month.",
   stats: [
     { value: "2400+", label: "Gas Stations Nationwide" },
     { value: "24/7", label: "Customer Support" },
@@ -407,6 +541,7 @@ export const statsContent: StatsContent = {
 
 // Homepage auto-advancing feature tabs (AgileFlex / Virtual Volume / Bespoke)
 export const featuresContent: FeaturesContent = {
+  eyebrow: "Our Solutions",
   title: "What we've built to stop fuel costs from draining you",
   subtitle:
     "We offer complete fueling services and custom IT solutions built for your business.",
@@ -447,25 +582,39 @@ export const featuresContent: FeaturesContent = {
 // Homepage "Why Fueling Agile?" value-proposition cards
 export const whyUsContent: WhyUsContent = {
   eyebrow: "Why Fueling Agile?",
-  heading: "Here's what makes businesses trust us with their fuel budget",
+  heading: "Here's why businesses trust us",
+  subtitle:
+    "It's not only in how we protect your fuel money, but also in how far we reach, how fast we show up, and how honest our numbers are.",
+  primaryCtaText: "Request fuel cards",
+  secondaryCtaText: "Schedule a demo",
   points: [
     {
+      theme: "green",
       title: "Nationwide Coverage",
       description:
         "Wherever your business operates, our card works there too, at 2,400+ stations across the country.",
       image: { src: "/trust-1.png", alt: "Map of Nigeria highlighting nationwide coverage" },
     },
     {
+      theme: "green",
       title: "Fast, Reliable Support",
       description:
         "When something goes wrong, we don't leave you waiting. Quick, dependable help, every time.",
       image: { src: "/trust-2.png", alt: "Illustration representing fast, reliable support" },
     },
     {
+      theme: "green",
       title: "Real Security",
       description:
         "PIN protection, instant card blocking, and bonded operations, so your money stays safe.",
       image: { src: "/trust-3.png", alt: "Illustration representing account and card security" },
+    },
+    {
+      theme: "green",
+      title: "Transparent Pricing, No Surprises",
+      description:
+        "No hidden charges, no fine-print deductions. What you see on your tier is what you pay, and your rate only gets better as your fleet grows.",
+      image: { src: "/trust-4.png", alt: "Illustration representing transparent, tiered pricing" },
     },
   ],
 };
@@ -512,7 +661,7 @@ export const portalSupportContent: PortalSupportContent = {
   eyebrow: "Support",
   heading: "Are you having Issues Logging in or just have Questions",
   description: "Our support team is ready to assist you with any platform issues.",
-  ctaText: "Contact Support",
+  ctaText: "Contact us",
   ctaHref: "/contact",
   image: {
     src: "/portal-support.jpg",
@@ -583,7 +732,7 @@ export const faqContent: FaqContent = {
 export const footerContent: FooterContent = {
   ctaEyebrow: "Your Number 1 Fueling Partner",
   ctaHeading: "Na you dey refuel, na we dey show workings.",
-  ctaButtonText: "Get in touch",
+  ctaButtonText: "Contact us",
   ctaButtonHref: "/request",
   brand: "Fueling Agile Solutions",
   address: "ROA Plaza, Journalist Road, Arepo, Ogun State, Nigeria.",
@@ -609,7 +758,7 @@ export const footerContent: FooterContent = {
       heading: "Company",
       links: [
         { label: "About Us", href: "/about" },
-        { label: "Get in touch", href: "/contact" },
+        { label: "Contact us", href: "/contact" },
       ],
     },
   ],
@@ -695,9 +844,516 @@ export const getInTouchContent: GetInTouchContent = {
   fleetSizeOptions: ["1–10 vehicles", "11–49 vehicles", "50–100+ vehicles"],
   phonePlaceholder: "Phone",
   emailPlaceholder: "Company email",
-  ctaText: "Talk to our team",
+  ctaText: "Contact us",
   image: {
     src: "/get-in-touch-phone.png",
     alt: "Chat conversation about setting up a fleet fuel card account",
   },
+};
+
+// Privacy Policy page copy (route: /privacy), linked from the footer's legal row.
+// Transcribed verbatim, section-for-section, from the company's official
+// "Terms of Service & Privacy Policy" document (effective November 11, 2025)
+// — both halves of that document, in its exact order: the 11 numbered Privacy
+// Policy sections, followed by the unnumbered Terms of Usage sections. Update
+// this to match if that source document changes; don't paraphrase it here.
+const privacyPolicyContactEmail = footerContent.email;
+const privacyPolicyContactPhone = "07066991030";
+
+export const privacyPolicyContent: PrivacyPolicyContent = {
+  eyebrow: "Terms of Service & Privacy Policy",
+  heading: "Privacy Policy",
+  effectiveDate: "11th November, 2025",
+  intro: [
+    [
+      "This Privacy Policy explains how ",
+      { bold: "Fueling Agile Solutions" },
+      " or ",
+      { bold: "Fueling Agile Nigeria Limited" },
+      " (\"Fueling Agile\", \"we\", \"us\", or \"our\") collects, uses, discloses, stores, and protects personal data belonging to individuals who interact with us, including those who visit our website, use our fuel card and real-time fuel management platform, engage our customer support channels, or otherwise access our products and services.",
+    ],
+    [
+      "Fueling Agile is committed to handling your personal information responsibly and in compliance with the ",
+      { bold: "Nigeria Data Protection Act (NDPA) 2023" },
+      ", as well as other applicable data protection and privacy laws within Nigeria. By accessing our website, using our services, or communicating with us, ",
+      { bold: "you acknowledge that you have read, understood, and agree to the practices described in this Privacy Policy" },
+      " regarding the collection, processing, storage, and disclosure of your personal data.",
+    ],
+  ],
+  sections: [
+    {
+      number: 1,
+      heading: "Information We Collect",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "We collect Personal Data from You when You interact with us, such as when You visit our website, complete an inquiry form, request our services, subscribe to our communications, or participate in a survey. In the course of delivering our Services, we may also collect additional information necessary for Service delivery.",
+        },
+        { type: "paragraph", text: "The Personal Data we collect and use may include, amongst other things:" },
+        {
+          type: "list",
+          items: [
+            {
+              label: "Personal Information",
+              text: "This refers to any information that identifies you as an individual. Examples include:",
+              subitems: [
+                { label: "Contact Information", text: "Name, email address, postal address, phone number, company name." },
+                { label: "Professional Information", text: "Job title, industry, company size, professional certifications, skills, and experience." },
+                { label: "Demographic Information", text: "Age, gender, location (city, state, country)." },
+                {
+                  label: "Financial Information",
+                  text: "(If applicable, and with explicit consent and security measures) Credit card details, bank account information, billing address (for paid services only). We use secure payment gateways and do not store sensitive financial information directly on our servers.",
+                },
+                { label: "Communications Data", text: "Records of communications you have with us, including emails, phone calls, chat logs, and social media interactions." },
+                { label: "Feedback and Survey Responses", text: "Information you provide in surveys, feedback forms, and reviews." },
+                {
+                  label: "Training and Event Data",
+                  text: "Information related to your participation in our training courses, workshops, conferences, and other events, including attendance records, course completion certificates, and performance data.",
+                },
+                { label: "Application Data", text: "Information provided when applying for a job or internship with Fueling Agile, including your resume/CV, cover letter, and references." },
+              ],
+            },
+            {
+              label: "Usage Information",
+              text: "This refers to data automatically collected about your interactions with our website and services. Examples include:",
+              subitems: [
+                { label: "Log Data", text: "IP address, browser type, operating system, referring URL, pages visited, date and time of visit, and search terms." },
+                {
+                  label: "Cookies and Similar Technologies",
+                  text: "We use cookies, web beacons, and other tracking technologies to collect information about your browsing activity on our website. This may include information about the links you click, the pages you view, and the length of time you spend on our website. We use this information to personalize your experience, analyze trends, and improve our website and services. You can control cookies through your browser settings (see section 6 below).",
+                },
+                { label: "Device Information", text: "Type of device, device ID, operating system version, and unique device identifiers." },
+                {
+                  label: "Location Information",
+                  text: "(If applicable, and with explicit consent) We may collect your location information through your device's location services if you provide consent. This information may be used to provide location-based services or personalize your experience.",
+                },
+              ],
+            },
+            {
+              label: "Aggregated and Anonymized Data",
+              text: "We may collect, use, and share aggregated and anonymized data for various purposes. This data does not identify you individually.",
+            },
+          ],
+        },
+      ],
+    },
+    {
+      number: 2,
+      heading: "How We Use Your Information",
+      blocks: [
+        { type: "paragraph", text: "We use your personal information for the following purposes:" },
+        { type: "subheading", text: "Legal Basis" },
+        {
+          type: "list",
+          items: [
+            { label: "Contractual obligations", text: "We collect data that are necessary to fulfil our contractual obligations entered or to be entered into with you." },
+            {
+              label: "Legitimate interests",
+              text: "We may use your personal data where it is necessary to conduct our business and pursue our legitimate interests, for example to prevent fraud and enable us to give you the best and most secure customer experience. Your fundamental rights, freedoms and the interests are considered primarily, consequently data collection is compatible with other lawful basis of processing as provided under the NDPA 2023.",
+            },
+            { label: "Legal obligation", text: "We may use your personal data where it is necessary for compliance with a legal obligation that we are subject to. We will identify the relevant legal obligation when we rely on this legal basis." },
+            { label: "Consent", text: "We rely on consent only where we have obtained your active agreement to use your personal data for a specified purpose, for example if you subscribe to an email newsletter." },
+          ],
+        },
+        { type: "paragraph", text: "The following are the legal basis for the use of your personal data:" },
+        {
+          type: "list",
+          items: [
+            {
+              label: "Providing and Improving Our Services",
+              text: "To operate, maintain, and improve our website and services; to personalize your experience; to provide customer support; to process payments; to fulfil your requests; and to develop new features and functionalities.",
+            },
+            {
+              label: "Communication",
+              text: "To communicate with you about our services, events, updates, promotions, and other information that may be of interest to you. We may use email, phone, SMS, or postal mail to contact you. You can opt out of receiving marketing communications from us at any time.",
+            },
+            {
+              label: "Marketing and Advertising",
+              text: "To display targeted advertisements and personalized content on our website and other platforms. We may use your information to create custom audiences for marketing campaigns.",
+            },
+            { label: "Analytics", text: "To analyze trends and usage patterns on our website and services. This helps us understand how our services are being used and how we can improve them." },
+            { label: "Recruitment", text: "To process your job application and assess your qualifications for employment with Fueling Agile." },
+            { label: "Legal Compliance", text: "To comply with applicable laws, regulations, and legal processes." },
+            { label: "Security", text: "To protect the security and integrity of our website and services; to prevent fraud and abuse; and to enforce our terms of service." },
+            {
+              label: "Training and Development",
+              text: "To manage and deliver training courses, workshops, and events; to track attendance and performance; and to issue course completion certificates.",
+            },
+            { label: "Business Operations", text: "To conduct internal business operations, such as accounting, auditing, and data analysis." },
+          ],
+        },
+      ],
+    },
+    {
+      number: 3,
+      heading: "How We Share Your Information",
+      blocks: [
+        { type: "paragraph", text: "We may share your personal information with the following categories of recipients:" },
+        {
+          type: "list",
+          items: [
+            {
+              label: "Service Providers",
+              text: "We share your information with third-party service providers who help us operate our website, provide our services, process payments, send communications, and perform other business functions. These service providers are contractually obligated to protect your information and use it only for the purposes for which we disclose it to them. Examples include:",
+              subitems: [
+                { text: "Payment processors (e.g., Verve)" },
+                { text: "Email marketing providers (e.g., Mailchimp, SendGrid)" },
+                { text: "Hosting providers (e.g., AWS, Google Cloud)" },
+                { text: "Analytics providers (e.g., Google Analytics)" },
+                { text: "Customer relationship management (CRM) systems (e.g., Salesforce, HubSpot)" },
+              ],
+            },
+            {
+              label: "Business Partners",
+              text: "We may share your information with our business partners to offer you joint products or services, or to conduct joint marketing activities. We will only share your information with business partners who have agreed to protect your information in accordance with this Privacy Policy.",
+            },
+            { label: "Affiliates", text: "We may share your information with our affiliates for internal business purposes, such as data analysis and marketing." },
+            {
+              label: "Legal Authorities",
+              text: "We may disclose your information to legal authorities if required by law or legal process, or if we believe that such disclosure is necessary to protect our rights, property, or safety, or the rights, property, or safety of others.",
+            },
+            {
+              label: "Business Transfers",
+              text: "In the event that we are involved in a merger, acquisition, or sale of all or a portion of our assets, your information may be transferred as part of that transaction. We will notify you via email and/or a prominent notice on our website of any change in ownership or control of your personal information.",
+            },
+            { label: "With Your Consent", text: "We may share your information with other parties with your consent." },
+          ],
+        },
+      ],
+    },
+    {
+      number: 4,
+      heading: "Data Security",
+      blocks: [
+        { type: "paragraph", text: "We take reasonable measures to protect your personal information from unauthorized access, use, or disclosure. These measures include:" },
+        {
+          type: "list",
+          items: [
+            { label: "Encryption", text: "We use encryption to protect sensitive information transmitted online." },
+            { label: "Firewalls", text: "We use firewalls to protect our servers from unauthorized access." },
+            { label: "Access Controls", text: "We restrict access to personal information to authorized employees and service providers." },
+            { label: "Regular Security Assessments", text: "We conduct regular security assessments to identify and address potential vulnerabilities." },
+            { label: "Data Minimization", text: "We only collect and retain the minimum amount of personal information necessary to achieve the purposes described in this Privacy Policy." },
+          ],
+        },
+        {
+          type: "paragraph",
+          text: "However, no method of transmission over the internet, or method of electronic storage, is 100% secure. Therefore, while we strive to use commercially acceptable means to protect your personal information, we cannot guarantee its absolute security.",
+        },
+      ],
+    },
+    {
+      number: 5,
+      heading: "Data Retention",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "We retain your personal information for as long as necessary to fulfil the purposes described in this Privacy Policy, unless a longer retention period is required or permitted by law. We will securely delete or anonymize your personal information when it is no longer needed.",
+        },
+        {
+          type: "paragraph",
+          text: "The retention period will vary depending on the type of information and the purpose for which it was collected. For example, we may retain your contact information for as long as you remain a customer or subscriber, and we may retain your financial information for as long as required by accounting and tax laws.",
+        },
+      ],
+    },
+    {
+      number: 6,
+      heading: "Cookies and Similar Technologies",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "We use cookies and similar technologies to collect information about your browsing activity on our website. Cookies are small text files that are stored on your computer or mobile device when you visit a website. They are used to remember your preferences, personalize your experience, and track your browsing activity.",
+        },
+        { type: "paragraph", text: "We use the following types of cookies:" },
+        {
+          type: "list",
+          items: [
+            { label: "Essential Cookies", text: "These cookies are necessary for the operation of our website and services. They enable you to access secure areas of our website, use shopping carts, and make payments." },
+            {
+              label: "Performance Cookies",
+              text: "These cookies collect information about how you use our website, such as the pages you visit and the links you click. This information is used to improve the performance of our website and services.",
+            },
+            {
+              label: "Functionality Cookies",
+              text: "These cookies are used to remember your preferences and personalize your experience. For example, they may remember your language preferences or your login information.",
+            },
+            {
+              label: "Targeting Cookies",
+              text: "These cookies are used to display targeted advertisements and personalized content on our website and other platforms. They may also be used to track your browsing activity across different websites.",
+            },
+          ],
+        },
+        {
+          type: "paragraph",
+          text: "You can control cookies through your browser settings. Most browsers allow you to block or delete cookies, or to be notified when a cookie is being placed on your computer. However, please note that blocking or deleting cookies may affect the functionality of our website and services.",
+        },
+      ],
+    },
+    {
+      number: 7,
+      heading: "Your Rights",
+      blocks: [
+        { type: "paragraph", text: "You have the following rights regarding your personal information:" },
+        {
+          type: "list",
+          items: [
+            { label: "Access", text: "You have the right to request access to the personal information we hold about you." },
+            { label: "Correction", text: "You have the right to request that we correct any inaccurate or incomplete personal information we hold about you." },
+            { text: "Request erasure of your Personal Data. This enables You to ask us to delete or remove Personal Data where there is no good reason for us continuing to Process it." },
+            { label: "Restriction of Processing", text: "You have the right to request that we restrict the processing of your personal information." },
+            { label: "Data Portability", text: "You have the right to request that we transfer your personal information to another organization." },
+            { label: "Objection", text: "You have the right to object to the processing of your personal information." },
+            { label: "Withdrawal of Consent", text: "If we are processing your personal information based on your consent, you have the right to withdraw your consent at any time." },
+          ],
+        },
+        {
+          type: "paragraph",
+          text: "To exercise any of these rights, please contact us at contact@fuelingagilenigeria.com. We will respond to your request within a reasonable timeframe. We may require you to provide proof of identity before we can fulfil your request.",
+        },
+      ],
+    },
+    {
+      number: 8,
+      heading: "Links to Third-Party Websites",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "Our website may contain links to third-party websites. We are not responsible for the privacy practices of these websites. We encourage you to review the privacy policies of these websites before providing them with your personal information.",
+        },
+      ],
+    },
+    {
+      number: 9,
+      heading: "Children's Privacy",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "Our website and services are not directed to children under the age of 18. We do not knowingly collect personal information from children under the age of 18. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us immediately.",
+        },
+      ],
+    },
+    {
+      number: 10,
+      heading: "Changes to This Privacy Policy",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "We may update this Privacy Policy from time to time. We will post any changes on our website and update the Effective Date at the top of this Privacy Policy. Your continued use of our website and services after the posting of any changes constitutes your acceptance of the revised Privacy Policy. We encourage you to review this Privacy Policy periodically.",
+        },
+      ],
+    },
+    {
+      number: 11,
+      heading: "Contact Us",
+      blocks: [
+        { type: "paragraph", text: "If you have any questions or concerns about this Privacy Policy or our privacy practices, please contact us at:" },
+        {
+          type: "list",
+          listStyle: "plain",
+          items: [
+            { text: "Fueling Agile Nigeria Limited" },
+            { text: privacyPolicyContactEmail },
+            { text: privacyPolicyContactPhone },
+          ],
+        },
+        {
+          type: "paragraph",
+          text: "By using our website and services, you acknowledge that you have read and understood this Privacy Policy and agree to be bound by its terms.",
+        },
+      ],
+    },
+    {
+      heading: "Terms of Usage",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "This website is primarily intended for general information and linked to our primary products; card monitoring platform and the Reporting Platform. These platforms are only accessible to businesses registered with the Fueling Agile Solutions.",
+        },
+      ],
+    },
+    {
+      heading: "Ownership of Website",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "This website belongs to Fueling Agile Nigerian Ltd a private limited company incorporated under CAMA 2020 with the Corporate Affairs Commission (CAC) in Nigeria. Registered Office: ROA Plaza, Journalist Road, Arepo, Ogun State, Nigeria.",
+        },
+      ],
+    },
+    {
+      heading: "Intellectual Property",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "All website design, text, graphics, images, icons, trademarks, software compilations, underlying source code, and all other materials available on this website (collectively referred to as \"Content\") are the intellectual property of Fueling Agile Solutions or Fueling Agile Nigeria Limited (\"Fueling Agile\"), or are used under valid license from third-party rights holders. All such rights are protected under applicable copyright, trademark, and intellectual property laws.",
+        },
+        { type: "paragraph", text: "Except as expressly permitted in these Terms of Use or with our prior written consent:" },
+        {
+          type: "list",
+          items: [
+            { text: "No part of the Content may be copied, reproduced, republished, uploaded, posted, publicly displayed, encoded, translated, transmitted or distributed in any manner, including for commercial purposes." },
+            { text: "You may not modify, reverse engineer, decompile, disassemble, alter, remove, obscure, or tamper with any Content or any security technology embedded within this website." },
+            { text: "You may only access and use this website for lawful purposes and solely for non-commercial, personal, informational use." },
+          ],
+        },
+        {
+          type: "paragraph",
+          text: "All products, features, services, and technologies described on this website are subject to intellectual property rights reserved by Fueling Agile or our licensors.",
+        },
+        {
+          type: "paragraph",
+          text: "All names, images, logos, product names, and branding identifying Fueling Agile are proprietary marks and trademarks of Fueling Agile Solutions or Fueling Agile Nigeria Ltd. Nothing contained on this website grants or should be interpreted as granting any license or right to use any Fueling Agile intellectual property without explicit prior written authorisation.",
+        },
+        {
+          type: "paragraph",
+          text: "Any unauthorized use of our intellectual property may result in civil and criminal liability under applicable laws.",
+        },
+      ],
+    },
+    {
+      heading: "Disclaimer and Limitation of Liability",
+      blocks: [
+        {
+          type: "paragraph",
+          text: "Whilst Fueling Agile Solutions or Fueling Agile Nigeria Ltd has taken care in preparing the contents of this website, all information, names, images, pictures, logos and icons relating to Fueling Agile Nigeria Ltd and its products and services are provided without any representation, endorsement or warranty of any kind, whether express or implied, including but not limited to warranties of satisfactory quality, fitness for a particular purpose, non-infringement, compatibility, security, or accuracy. To the extent permitted by law, all such warranties are excluded.",
+        },
+        {
+          type: "paragraph",
+          text: "Fueling Agile Solutions or Fueling Agile Nigeria Ltd shall not be liable, whether in contract, tort (including negligence) or otherwise, for any loss arising out of or in connection with the use of this website. This includes, without limitation, indirect or consequential losses, loss of profit, loss of anticipated savings, loss of data, loss of revenue, loss of business, loss of opportunity, loss of or damage to property, wasted expenditure, and any third-party claims.",
+        },
+      ],
+    },
+  ],
+};
+
+// "Request fuel cards" modal copy. Card-type tiers reuse the same
+// Starter/Growth/Enterprise names as faqContent's pricing answer so the two
+// never describe the tiers differently.
+export const requestFuelCardModalContent: RequestFuelCardModalContent = {
+  eyebrow: "Request fuel card",
+  heading: "Get the AgileFlex PetrolKaart",
+  subheading: "Fill the form below to set up your corporate fuel card account in minutes.",
+  companyNameLabel: "Name of company or organization",
+  companyNamePlaceholder: "Enter name of company or organization",
+  representativeNameLabel: "Name of company representative",
+  firstNamePlaceholder: "First Name",
+  lastNamePlaceholder: "Last Name",
+  emailLabel: "Enter a company email address",
+  emailPlaceholder: "Email address",
+  phoneLabel: "Enter your 11-digit phone number",
+  phonePlaceholder: "Mobile number",
+  cardTypeLabel: "Choose the type of fuel card",
+  cardTypePlaceholder: "Click on the drop down",
+  cardTypeOptions: ["Starter (1–10 cards)", "Growth (11–49 cards)", "Enterprise (50–100+ cards)"],
+  vehicleCountLabel: "Enter the number of vehicles",
+  vehicleCountOptions: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"],
+  vehicleInfoLabel: "Vehicle information",
+  vehicleMakePlaceholder: "Vehicle make",
+  vehicleModelPlaceholder: "Vehicle model",
+  registrationPlaceholder: "Registration number",
+  submitText: "Submit form",
+};
+
+// Agile Flex solutions page (/solutions/fuel-cards) hero copy — reuses
+// HeroContent's shape since it's the same eyebrow/headline/subheadline/CTA
+// pattern as the homepage hero, just with page-specific copy and no
+// ActiveCardsBadge underneath.
+export const fuelCardHeroContent: HeroContent = {
+  eyebrow: "The Agile Flex Fuel Card",
+  headline: "A smarter way to pay for fuel.",
+  subheadline:
+    "Load money onto your card. Give it to your drivers. Every time they buy fuel, you see it right away, on your phone or computer.",
+  primaryCtaText: "Request fuel cards",
+  secondaryCtaText: "Schedule a demo",
+};
+
+// Agile Flex solutions page hero's two-card graphic.
+// TODO: this reuses the homepage's dashboard+card image as a placeholder —
+// swap in a dedicated two-card graphic once one is provided.
+export const fuelCardHeroImage: DashboardImage = {
+  src: "/hero-fleet-card.png",
+  alt: "Two AgileFlex PetrolKaart cards",
+};
+
+// Agile Flex solutions page: "See it all in one place" reporting showcase
+export const reportingShowcaseContent: ReportingShowcaseContent = {
+  eyebrow: "The reporting solution",
+  heading: "See it all in one place.",
+  subheading:
+    "One screen shows you every fill-up, by every driver, as it happens. Download a report anytime, with one click. No sign-up needed. No extra fee. It just comes with your card.",
+  image: {
+    src: "/platform.png",
+    alt: "AgileFlex PetrolKaart fleet overview dashboard showing active vehicles, total balance, live tracking, and card balance status",
+  },
+};
+
+// Agile Flex solutions page: pricing tiers. Reuses the same tier names as
+// faqContent's pricing answer, though the per-tier rates shown here reflect
+// this page's own design and take precedence if the two ever disagree.
+export const pricingTiersContent: PricingTiersContent = {
+  eyebrow: "Find what's right for you",
+  heading: "However big your fleet is, there's a plan that fits",
+  subheading:
+    "Whether you're running 5 vehicles or 500, we've got a pricing plan that fits. The more cards you get, the less you pay per card",
+  tiers: [
+    {
+      name: "Starter",
+      vehicleRange: "1–10 vehicles",
+      pricePercent: "5%",
+      features: ["Real-time fuel tracking", "Monthly reports included", "Access to 2,400+ stations"],
+      ctaText: "Schedule a demo",
+      highlighted: false,
+    },
+    {
+      name: "Growth",
+      vehicleRange: "11–49 vehicles",
+      pricePercent: "4%",
+      features: ["Everything in Starter, plus:", "Lower rate as you grow", "Priority support"],
+      ctaText: "Schedule a demo",
+      highlighted: true,
+    },
+    {
+      name: "Enterprise",
+      vehicleRange: "50–100+ vehicles",
+      pricePercent: "3%",
+      features: ["Everything in Growth, plus:", "Custom branded cards", "Dedicated account manager"],
+      ctaText: "Schedule a demo",
+      highlighted: false,
+    },
+  ],
+};
+
+// Agile Flex solutions page: "who it's for" persona grid.
+// TODO: each persona needs a dedicated photo — these currently point at
+// placeholder image paths that don't exist yet (see PersonaGrid.tsx, which
+// renders a neutral fallback block when an image 404s).
+export const personaGridContent: PersonaGridContent = {
+  eyebrow: "Built for how you work",
+  heading: "A fuel solution for whoever's watching the budget",
+  personas: [
+    {
+      title: "Business Owners",
+      description:
+        "Stop guessing if your fuel budget is being respected. See what was spent, by who, and where. No need to chase anyone for a receipt.",
+      image: { src: "/persona-business-owner.jpg", alt: "A business owner standing in his showroom" },
+    },
+    {
+      title: "Fleet & Operations Managers",
+      description:
+        "Set the rules once, daily limits, role-based access, station restrictions, and let the system enforce them automatically. No more policing every fill-up by hand.",
+      image: { src: "/persona-fleet-manager.jpg", alt: "A fleet operations manager reviewing a clipboard near a truck" },
+    },
+    {
+      title: "Finance Teams",
+      description:
+        "Get monthly electronic reports that reconcile themselves. Painless bookkeeping, transparent fuel structure, no hidden charges.",
+      image: { src: "/persona-finance-team.jpg", alt: "Two finance team members reviewing documents at a desk" },
+    },
+    {
+      title: "Enterprise Procurement",
+      description:
+        "Custom-branded cards, dedicated account managers, and pricing that gets better as your fleet grows. Built to handle 50, 100, or more vehicles without breaking down.",
+      image: { src: "/persona-procurement.jpg", alt: "Enterprise procurement staff reviewing inventory in a warehouse" },
+    },
+  ],
 };

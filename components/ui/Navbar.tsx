@@ -54,12 +54,9 @@ export default function Navbar({
               onMouseEnter={() => link.children && setOpenDropdown(link.label)}
               onMouseLeave={() => link.children && setOpenDropdown(null)}
             >
-              <Link
-                href={link.href}
-                className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-normal text-brand-900/80 transition-colors hover:text-brand-500"
-              >
-                {link.label}
-                {link.children && (
+              {link.children ? (
+                <span className="flex cursor-default items-center gap-1 rounded-full px-4 py-2 text-sm font-normal text-brand-900/80">
+                  {link.label}
                   <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
                     <path
                       d="M3 4.5L6 7.5L9 4.5"
@@ -69,8 +66,15 @@ export default function Navbar({
                       strokeLinejoin="round"
                     />
                   </svg>
-                )}
-              </Link>
+                </span>
+              ) : (
+                <Link
+                  href={link.href}
+                  className="flex items-center gap-1 rounded-full px-4 py-2 text-sm font-normal text-brand-900/80 transition-colors hover:text-brand-500"
+                >
+                  {link.label}
+                </Link>
+              )}
 
               {link.children && openDropdown === link.label && (
                 <ul className="absolute left-0 top-full flex w-56 flex-col gap-1 rounded-xl border border-brand-900/10 bg-white p-2 shadow-lg">
@@ -126,13 +130,17 @@ export default function Navbar({
           <ul className="flex flex-col gap-4">
             {links.map((link) => (
               <li key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className="block text-sm font-normal text-brand-900 hover:text-brand-500"
-                >
-                  {link.label}
-                </Link>
+                {link.children ? (
+                  <span className="block text-sm font-normal text-brand-900">{link.label}</span>
+                ) : (
+                  <Link
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className="block text-sm font-normal text-brand-900 hover:text-brand-500"
+                  >
+                    {link.label}
+                  </Link>
+                )}
                 {link.children && (
                   <ul className="mt-2 flex flex-col gap-2 pl-4">
                     {link.children.map((child) => (

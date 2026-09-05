@@ -36,7 +36,7 @@ export default function PortalPlatforms({ content }: PortalPlatformsProps) {
 
       <div className="mt-16 grid grid-cols-1 gap-8 text-left md:grid-cols-2">
         {content.platforms.map((platform) => (
-          <div key={platform.title} className="flex flex-col border border-brand-900/10">
+          <div key={platform.title} className="group flex flex-col border border-brand-900/10">
             <div className="p-6">
               <h2 className="text-lg font-semibold text-brand-900">{platform.title}</h2>
               <p className="mt-1 text-sm text-brand-900/50">{platform.subtitle}</p>
@@ -48,7 +48,8 @@ export default function PortalPlatforms({ content }: PortalPlatformsProps) {
                   src={platform.image.src}
                   alt={platform.image.alt}
                   fill
-                  className="object-cover object-top"
+                  sizes="(min-width: 768px) 480px, 100vw"
+                  className="object-cover object-top transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
             </div>

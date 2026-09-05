@@ -9,25 +9,28 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import type { HeroContent, DashboardImage } from "@/data/mockContent";
 import ActiveCardsBadge from "@/components/ui/ActiveCardsBadge";
+import { useRequestFuelCardModal } from "@/components/providers/RequestFuelCardModalProvider";
 
 export interface HeroProps {
   content: HeroContent;
   dashboardImage: DashboardImage;
+  showActiveCardsBadge?: boolean;
 }
 
-export default function Hero({ content, dashboardImage }: HeroProps) {
+export default function Hero({ content, dashboardImage, showActiveCardsBadge = true }: HeroProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const { open: openRequestFuelCardModal } = useRequestFuelCardModal();
 
   // Staggered fade/slide-up entrance for the eyebrow, headline, subheadline,
   // CTA row, and graphic
   useGSAP(
     () => {
       gsap.from(".hero-animate", {
-        y: 24,
+        y: 12,
         opacity: 0,
-        duration: 0.8,
+        duration: 0.35,
         ease: "power3.out",
-        stagger: 0.15,
+        stagger: 0.1,
       });
     },
     { scope: containerRef }
@@ -51,6 +54,7 @@ export default function Hero({ content, dashboardImage }: HeroProps) {
         <div className="hero-animate mt-16 flex flex-row gap-3 sm:gap-4">
           <button
             type="button"
+            onClick={openRequestFuelCardModal}
             className="flex items-center justify-center gap-2 rounded-full bg-brand-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600 sm:px-8 sm:py-4"
           >
             {content.primaryCtaText}
@@ -72,9 +76,11 @@ export default function Hero({ content, dashboardImage }: HeroProps) {
           </button>
         </div>
 
-        <div className="hero-animate mt-6">
-          <ActiveCardsBadge />
-        </div>
+        {showActiveCardsBadge && (
+          <div className="hero-animate mt-6">
+            <ActiveCardsBadge />
+          </div>
+        )}
       </div>
 
       {/* Fleet dashboard + card graphic — its background/shadow/circular

@@ -11,12 +11,13 @@ export default function PortalSupport({ content }: PortalSupportProps) {
   return (
     <section className="mx-auto max-w-5xl px-4 py-16 sm:px-8">
       <div className="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr] md:items-stretch">
-        <div className="relative aspect-[1200/794] overflow-hidden bg-brand-500/10">
+        <div className="group relative aspect-[1200/794] overflow-hidden bg-brand-500/10">
           <Image
             src={content.image.src}
             alt={content.image.alt}
             fill
-            className="object-cover"
+            sizes="(min-width: 768px) 640px, 100vw"
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         </div>
 

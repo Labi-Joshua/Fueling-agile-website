@@ -5,6 +5,7 @@
 // a consent checkbox, and the same active-cards trust badge used in the hero.
 // The form has no backend wired up yet — submitting just prevents the page reload.
 import { useState } from "react";
+import Image from "next/image";
 import type { NewsletterContent } from "@/data/mockContent";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 import ActiveCardsBadge from "@/components/ui/ActiveCardsBadge";
@@ -27,26 +28,22 @@ export default function Newsletter({ content }: NewsletterProps) {
   return (
     <section
       ref={sectionRef}
-      className="mx-auto max-w-[1536px] px-4 pb-24 pt-36 sm:px-8 sm:pt-44"
+      className="mx-auto max-w-[1536px] px-4 pb-40 pt-36 sm:px-8 sm:pb-48 sm:pt-44"
     >
       <div className="relative mx-auto max-w-2xl overflow-visible">
-        {/* Decorative swirl, matching the accent color/style used behind other
-            homepage graphics — purely background flourish, sits behind the card. */}
-        <svg
-          viewBox="0 0 500 400"
-          className="pointer-events-none absolute -inset-x-16 -inset-y-16 -z-10 h-[calc(100%+8rem)] w-[calc(100%+8rem)]"
-          fill="none"
-        >
-          <ellipse
-            cx="250"
-            cy="200"
-            rx="230"
-            ry="150"
-            stroke="#7C8F2E"
-            strokeWidth="10"
-            transform="rotate(-8 250 200)"
+        {/* Decorative interlocking rings, matching the accent color/style used
+            behind other homepage graphics — purely background flourish, sits
+            behind the card. */}
+        <div className="pointer-events-none absolute -inset-x-40 -inset-y-16 -z-10 h-[calc(100%+8rem)] w-[calc(100%+20rem)]">
+          <Image
+            src="/newsletter-rings.png"
+            alt=""
+            fill
+            loading="eager"
+            sizes="(min-width: 672px) 992px, 100vw"
+            className="object-contain"
           />
-        </svg>
+        </div>
 
         <div className="relative rounded-3xl border border-brand-900/10 bg-white px-6 py-12 text-center shadow-sm sm:px-16">
           <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
@@ -61,7 +58,7 @@ export default function Newsletter({ content }: NewsletterProps) {
 
           <form
             onSubmit={handleSubmit}
-            className="mx-auto mt-6 flex max-w-md flex-col gap-3 sm:flex-row"
+            className="mx-auto mt-6 flex max-w-md items-center gap-1.5 rounded-full border border-brand-900/10 bg-white p-1.5 pl-5"
           >
             <input
               type="email"
@@ -69,7 +66,7 @@ export default function Newsletter({ content }: NewsletterProps) {
               placeholder={content.placeholder}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="flex-1 rounded-full border border-brand-900/10 bg-white px-5 py-3 text-sm text-brand-900 placeholder:text-brand-900/40 focus:border-brand-500/50 focus:outline-none"
+              className="min-w-0 flex-1 bg-transparent text-sm text-brand-900 placeholder:text-brand-900/40 focus:outline-none"
             />
             <button
               type="submit"
@@ -88,7 +85,7 @@ export default function Newsletter({ content }: NewsletterProps) {
             </button>
           </form>
 
-          <label className="mx-auto mt-4 flex max-w-md items-start gap-2 text-left text-xs text-brand-900/50">
+          <label className="mx-auto mt-4 flex max-w-sm items-start justify-center gap-2 text-center text-xs text-brand-900/50">
             <input
               type="checkbox"
               checked={consent}

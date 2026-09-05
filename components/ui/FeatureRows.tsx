@@ -18,16 +18,19 @@ export default function FeatureRows({ content }: FeatureRowsProps) {
   return (
     <section
       ref={sectionRef}
-      className="mx-auto max-w-[1536px] px-4 pt-36 text-center sm:px-8 sm:pt-44"
+      className="mx-auto max-w-[1536px] px-4 pt-[233px] text-center sm:px-8 sm:pt-[285px]"
     >
-      <h2 className="text-2xl font-semibold text-brand-900 sm:text-3xl">
+      <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
+        {content.eyebrow}
+      </span>
+      <h2 className="mt-3 text-2xl font-semibold text-brand-900 sm:text-3xl">
         {content.title}
       </h2>
       <p className="mx-auto mt-2 max-w-xl text-sm text-brand-900/50">
         {content.subtitle}
       </p>
 
-      <div className="mt-16 flex flex-col gap-20">
+      <div className="mt-16 flex flex-col gap-16">
         {content.tabs.map((tab, index) => {
           // Even rows: image on the left. Odd rows: image on the right.
           const imageFirst = index % 2 === 0;

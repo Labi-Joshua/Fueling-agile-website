@@ -1,9 +1,15 @@
+/* Required by Lenis (see SmoothScrollProvider.tsx) — without this, the
+   library's own overflow/height handling for the pinned/stopped scroll
+   states isn't applied, which can cause the page to stop scrolling short
+   of its true bottom in some browsers. */
+@import "lenis/dist/lenis.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #fdfff8;
   --foreground: #171717;
 }
 

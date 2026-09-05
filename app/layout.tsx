@@ -5,6 +5,9 @@ import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import Footer from "@/components/ui/Footer";
 import QueryProvider from "@/components/providers/QueryProvider";
+import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
+import RequestFuelCardModalProvider from "@/components/providers/RequestFuelCardModalProvider";
+import BackToTopButton from "@/components/ui/BackToTopButton";
 import { navLinks, footerContent } from "@/data/mockContent";
 
 // Body font (Manrope) — loaded via next/font and exposed as a CSS variable
@@ -41,29 +44,42 @@ export default function RootLayout({
         {/* Provides the TanStack Query client used by client components (e.g. the
             live fuel-price widgets) to fetch and cache data from our API routes. */}
         <QueryProvider>
-          {/* Sticky top navigation, shared across all pages */}
-          <Navbar
-            brand="Fueling Agile Solutions"
-            links={navLinks}
-            loginText="Access Client Portals"
-            loginHref="/login"
-            ctaText="Get in touch"
-            ctaHref="/request"
-          />
+          {/* Drives every scroll on the site through Lenis instead of native
+              scroll, synced with GSAP's ticker so ScrollTrigger's pinned/scrubbed
+              sections (HowItWorks, WhyUs, ScrollHighlightText, ...) stay smooth. */}
+          <SmoothScrollProvider>
+            {/* Owns the single shared "Request fuel cards" modal instance that
+                every matching CTA button site-wide opens via
+                useRequestFuelCardModal() (see RequestFuelCardModalProvider). */}
+            <RequestFuelCardModalProvider>
+              {/* Sticky top navigation, shared across all pages */}
+              <Navbar
+                brand="Fueling Agile Solutions"
+                links={navLinks}
+                loginText="Access Client Portals"
+                loginHref="/login"
+                ctaText="Contact us"
+                ctaHref="/request"
+              />
 
-          {/* Actual page content is injected here by Next.js's App Router */}
-          <main className="flex-1">{children}</main>
+              {/* Actual page content is injected here by Next.js's App Router */}
+              <main className="flex-1">{children}</main>
 
-          {/* Shared footer with CTA panel, link columns, and legal/social row */}
-          <Footer
-            content={footerContent}
-            logoSrc="/fan-logo-white.png"
-            backgroundImageSrc="/hero-background.jpg"
-            certifications={[
-              { src: "/dpr-logo.png", alt: "Department of Petroleum Resources" },
-              { src: "/ndpb-logo.png", alt: "Nigeria Data Protection Bureau" },
-            ]}
-          />
+              {/* Shared footer with CTA panel, link columns, and legal/social row */}
+              <Footer
+                content={footerContent}
+                logoSrc="/fan-logo-white.png"
+                backgroundImageSrc="/footer-pattern.png"
+                certifications={[
+                  { src: "/dpr-logo.png", alt: "Department of Petroleum Resources" },
+                  { src: "/ndpb-logo.png", alt: "Nigeria Data Protection Bureau" },
+                ]}
+              />
+
+              {/* Floating "back to top" button, appears once the page has scrolled a bit */}
+              <BackToTopButton />
+            </RequestFuelCardModalProvider>
+          </SmoothScrollProvider>
         </QueryProvider>
       </body>
     </html>

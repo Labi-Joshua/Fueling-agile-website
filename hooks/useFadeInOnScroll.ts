@@ -18,9 +18,9 @@ export function useFadeInOnScroll<T extends HTMLElement>() {
       if (!ref.current) return;
 
       gsap.from(ref.current, {
-        y: 24,
+        y: 12,
         opacity: 0,
-        duration: 0.8,
+        duration: 0.35,
         ease: "power3.out",
         scrollTrigger: {
           trigger: ref.current,

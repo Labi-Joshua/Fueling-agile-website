@@ -16,7 +16,7 @@ export default function FaqAccordion({ content }: FaqAccordionProps) {
   const sectionRef = useFadeInOnScroll<HTMLElement>();
 
   return (
-    <section ref={sectionRef} className="mx-auto max-w-3xl px-4 pt-36 text-center sm:px-8 sm:pt-44">
+    <section ref={sectionRef} className="mx-auto max-w-3xl px-4 pt-[233px] text-center sm:px-8 sm:pt-[285px]">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>

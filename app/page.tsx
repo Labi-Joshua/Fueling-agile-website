@@ -2,7 +2,6 @@
 import Hero from "@/components/ui/Hero";
 import FuelPriceBanner from "@/components/ui/FuelPriceBanner";
 import ScrollHighlightText from "@/components/ui/ScrollHighlightText";
-import StatsSection from "@/components/ui/StatsSection";
 import HowItWorks from "@/components/ui/HowItWorks";
 import FeatureRows from "@/components/ui/FeatureRows";
 import WhyUs from "@/components/ui/WhyUs";
@@ -38,21 +37,22 @@ export default async function Home() {
       {/* Main hero: headline, CTAs, dashboard screenshot mockup */}
       <Hero content={heroContent} dashboardImage={dashboardImage} />
 
-      {/* "How to Get Started" 2x2 illustrated card grid */}
-      <HowItWorks content={howItWorksContent} />
-
       {/* Scroll-scrubbed headline that highlights word-by-word as the user scrolls */}
       <ScrollHighlightText
         text={`${statsContent.headingEmphasis}${statsContent.headingRest}`}
       />
 
-      {/* Animated stat counters (2,400+ stations, 24/7 support, etc.) + CTA */}
-      <StatsSection content={statsContent} />
+      {/* Animated stat counters (2,400+ stations, 24/7 support, etc.) + CTA,
+          then the "How to Get Started" walkthrough — HowItWorks renders
+          StatsSection itself so both can pin together as one block while the
+          walkthrough's steps cycle (see HowItWorks.tsx for why). */}
+      <HowItWorks content={howItWorksContent} statsContent={statsContent} />
 
       {/* Alternating image/text rows showcasing each product/solution */}
       <FeatureRows content={featuresContent} />
 
-      {/* "Why Fueling Agile" value-proposition cards */}
+      {/* "Why Fueling Agile?" trust-point walkthrough — same pinned
+          scroll-crossfade mechanism as the "How to Get Started" section above. */}
       <WhyUs content={whyUsContent} />
 
       {/* Frequently asked questions accordion */}

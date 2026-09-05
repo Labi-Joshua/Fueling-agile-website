@@ -55,6 +55,8 @@ export default function Footer({ content, logoSrc, backgroundImageSrc, certifica
           src={backgroundImageSrc}
           alt=""
           fill
+          loading="eager"
+          sizes="100vw"
           className="object-cover"
         />
 
@@ -68,6 +70,7 @@ export default function Footer({ content, logoSrc, backgroundImageSrc, certifica
                     src={logoSrc}
                     alt={content.brand}
                     fill
+                    sizes="112px"
                     className="object-contain object-left"
                   />
                 </div>
@@ -93,7 +96,7 @@ export default function Footer({ content, logoSrc, backgroundImageSrc, certifica
                         className="flex items-center bg-white px-3 py-1.5"
                       >
                         <div className="relative h-8 w-28">
-                          <Image src={cert.src} alt={cert.alt} fill className="object-contain" />
+                          <Image src={cert.src} alt={cert.alt} fill sizes="112px" className="object-contain" />
                         </div>
                       </div>
                     ))}

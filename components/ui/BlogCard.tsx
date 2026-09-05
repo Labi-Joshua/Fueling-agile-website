@@ -25,6 +25,7 @@ export default function BlogCard({ post }: BlogCardProps) {
             src={post.image.src}
             alt={post.image.alt}
             fill
+            sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
