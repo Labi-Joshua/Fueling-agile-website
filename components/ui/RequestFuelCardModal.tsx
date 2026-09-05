@@ -100,8 +100,15 @@ export default function RequestFuelCardModal({ isOpen, onClose, content }: Reque
 
         {/* Body: the only part that scrolls on mobile (overscroll-contain
             keeps that scroll from rubber-banding into the page behind it).
+            data-lenis-prevent stops Lenis's global wheel/touch hijacking from
+            swallowing scroll gestures inside this nested scroll container —
+            without it, Lenis intercepts them for the page's own (stopped)
+            scroll instead of letting them scroll this div natively.
             On desktop the backdrop itself scrolls instead, as before. */}
-        <div className="flex-1 overflow-y-auto overscroll-contain px-6 pb-6 text-center sm:flex-none sm:overflow-visible sm:px-10 sm:pb-10">
+        <div
+          data-lenis-prevent
+          className="flex-1 overflow-y-auto overscroll-contain px-6 pb-6 text-center sm:flex-none sm:overflow-visible sm:px-10 sm:pb-10"
+        >
           <form onSubmit={handleSubmit} className="mt-6 text-left sm:mt-8">
             <div className="flex flex-col gap-5 rounded-2xl bg-[#EEF3DE] p-5 sm:p-8">
               <div>
