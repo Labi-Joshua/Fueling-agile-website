@@ -9,8 +9,8 @@ export interface AboutStoryProps {
 
 export default function AboutStory({ content }: AboutStoryProps) {
   return (
-    <section className="mx-auto max-w-2xl px-4 pb-16 pt-32 text-left sm:px-8">
-      <div className="rounded-2xl border border-brand-900/10 p-10 sm:p-12">
+    <section className="mx-auto max-w-4xl px-4 pb-16 pt-32 text-left sm:px-8">
+      <div className="rounded-2xl border border-brand-900/10 bg-white p-10 sm:p-12">
         <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
           {content.eyebrow}
         </span>

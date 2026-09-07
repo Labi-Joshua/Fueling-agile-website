@@ -14,6 +14,7 @@ export interface PostSummary {
   excerpt: string;
   date: string;
   author: string;
+  category: string;
   image?: { src: string; alt: string };
 }
 
@@ -49,6 +50,7 @@ function mockAllPosts(): PostSummary[] {
     excerpt: post.excerpt,
     date: post.date,
     author: post.author,
+    category: post.category,
     image: post.image,
   }));
 }
@@ -81,6 +83,11 @@ const ALL_POSTS_QUERY = gql`
             name
           }
         }
+        categories {
+          nodes {
+            name
+          }
+        }
         featuredImage {
           node {
             sourceUrl
@@ -100,10 +107,14 @@ interface AllPostsResponse {
       excerpt: string;
       date: string;
       author: { node: { name: string } };
+      categories: { nodes: { name: string }[] } | null;
       featuredImage: { node: { sourceUrl: string; altText: string } } | null;
     }[];
   };
 }
+
+// WordPress posts can have zero or many categories — the card UI only shows one.
+const DEFAULT_CATEGORY = "Guide";
 
 const POST_BY_SLUG_QUERY = gql`
   query PostBySlug($slug: ID!) {
@@ -150,6 +161,7 @@ export async function getAllPosts(): Promise<PostSummary[]> {
       excerpt: stripHtml(node.excerpt),
       date: node.date,
       author: node.author.node.name,
+      category: node.categories?.nodes[0]?.name ?? DEFAULT_CATEGORY,
       image: node.featuredImage
         ? { src: node.featuredImage.node.sourceUrl, alt: node.featuredImage.node.altText }
         : undefined,

@@ -12,14 +12,46 @@ export interface GetInTouchFormProps {
   content: GetInTouchContent;
 }
 
-const inputClassName =
-  "w-full rounded-lg border border-brand-900/10 bg-white px-4 py-3 text-sm text-brand-900 placeholder:text-brand-900/40 focus:border-brand-500/50 focus:outline-none";
+// A required-field label sitting inside its own bordered box, e.g. "Full name *".
+function Field({
+  value,
+  onChange,
+  placeholder,
+  required = true,
+  type = "text",
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  placeholder: string;
+  required?: boolean;
+  type?: string;
+}) {
+  return (
+    <label className="flex flex-col gap-1 rounded-lg border border-brand-900/10 bg-white px-4 py-2.5">
+      <span className="text-xs text-brand-900/50">
+        {placeholder}
+        {required && <span className="text-orange-500"> *</span>}
+      </span>
+      <input
+        type={type}
+        required={required}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full text-sm text-brand-900 focus:outline-none"
+      />
+    </label>
+  );
+}
 
 export default function GetInTouchForm({ content }: GetInTouchFormProps) {
   const [name, setName] = useState("");
-  const [fleetSize, setFleetSize] = useState("");
-  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [companyName, setCompanyName] = useState("");
+  const [companyAddress, setCompanyAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [message, setMessage] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,65 +69,26 @@ export default function GetInTouchForm({ content }: GetInTouchFormProps) {
         <p className="mt-4 text-sm text-brand-900/50">{content.subheading}</p>
 
         <form onSubmit={handleSubmit} className="mt-8 flex w-full flex-col gap-3">
-          <input
-            type="text"
-            required
-            placeholder={content.namePlaceholder}
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className={inputClassName}
-          />
+          <Field value={name} onChange={setName} placeholder={content.namePlaceholder} />
+          <Field value={email} onChange={setEmail} placeholder={content.emailPlaceholder} type="email" />
+          <Field value={phone} onChange={setPhone} placeholder={content.phonePlaceholder} type="tel" />
+          <Field value={companyName} onChange={setCompanyName} placeholder={content.companyNamePlaceholder} />
+          <Field value={companyAddress} onChange={setCompanyAddress} placeholder={content.companyAddressPlaceholder} />
 
-          <div className="relative">
-            <select
-              required
-              value={fleetSize}
-              onChange={(e) => setFleetSize(e.target.value)}
-              className={`${inputClassName} appearance-none pr-10 ${fleetSize ? "" : "text-brand-900/40"}`}
-            >
-              <option value="" disabled>
-                Fleet size
-              </option>
-              {content.fleetSizeOptions.map((option) => (
-                <option key={option} value={option} className="text-brand-900">
-                  {option}
-                </option>
-              ))}
-            </select>
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 12 12"
-              fill="none"
-              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-brand-900/50"
-            >
-              <path
-                d="M3 4.5L6 7.5L9 4.5"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+          <div className="grid grid-cols-2 gap-3">
+            <Field value={city} onChange={setCity} placeholder={content.cityPlaceholder} />
+            <Field value={state} onChange={setState} placeholder={content.statePlaceholder} />
           </div>
 
-          <input
-            type="tel"
-            required
-            placeholder={content.phonePlaceholder}
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className={inputClassName}
-          />
-
-          <input
-            type="email"
-            required
-            placeholder={content.emailPlaceholder}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className={inputClassName}
-          />
+          <label className="flex flex-col gap-1 rounded-lg border border-brand-900/10 bg-white px-4 py-2.5">
+            <textarea
+              rows={3}
+              placeholder={content.messagePlaceholder}
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              className="w-full resize-none text-sm text-brand-900 placeholder:text-brand-900/50 focus:outline-none"
+            />
+          </label>
 
           <button
             type="submit"

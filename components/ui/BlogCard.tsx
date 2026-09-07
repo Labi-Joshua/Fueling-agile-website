@@ -1,5 +1,6 @@
-// A single post card in the blog index page's grid (all posts except the
-// featured one — see FeaturedBlogPost.tsx for that larger treatment).
+// A single post card in the blog index page's "Recent stories" grid (all
+// posts except the ones in the featured carousel — see
+// FeaturedPostCarousel.tsx for that larger treatment).
 import Link from "next/link";
 import Image from "next/image";
 import type { PostSummary } from "@/lib/api";
@@ -8,24 +9,17 @@ export interface BlogCardProps {
   post: PostSummary;
 }
 
-// Converts a raw ISO date string (from WordPress or mock data) into "Month Day, Year".
-function formatDate(dateString: string): string {
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return dateString;
-  return date.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
-}
-
 export default function BlogCard({ post }: BlogCardProps) {
   return (
-    <Link href={`/blog/${post.slug}`} className="group flex flex-col gap-4">
+    <Link href={`/blog/${post.slug}`} className="group flex flex-col gap-3">
       {/* Featured image, falling back to a plain brand-text placeholder if the post has none */}
-      <div className="relative aspect-[4/3] overflow-hidden bg-brand-500/10">
+      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-brand-500/10">
         {post.image ? (
           <Image
             src={post.image.src}
             alt={post.image.alt}
             fill
-            sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+            sizes="(min-width: 768px) 25vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-300 group-hover:scale-105"
           />
         ) : (
@@ -35,36 +29,26 @@ export default function BlogCard({ post }: BlogCardProps) {
         )}
       </div>
 
-      <div className="flex flex-col gap-2">
-        <h2 className="text-base font-semibold leading-snug text-brand-900 group-hover:text-brand-500">
-          {post.title}
-        </h2>
-        <p className="line-clamp-2 text-sm leading-relaxed text-brand-900/50">{post.excerpt}</p>
+      <span className="inline-flex w-fit items-center rounded-full bg-orange-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-orange-600">
+        {post.category}
+      </span>
 
-        <div className="mt-2 flex items-center gap-2">
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-500/10 text-[10px] font-semibold text-brand-500">
-            {post.author.charAt(0)}
-          </span>
-          <span className="text-xs text-brand-900/60">{post.author}</span>
-          <span className="text-xs text-brand-900/30">&middot;</span>
-          <time dateTime={post.date} className="text-xs text-brand-900/40">
-            {formatDate(post.date)}
-          </time>
-        </div>
+      <h3 className="text-base font-semibold leading-snug text-brand-900 group-hover:text-brand-500">
+        {post.title}
+      </h3>
 
-        <span className="mt-1 flex items-center gap-1 text-xs font-semibold text-orange-500">
-          Read more
-          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-            <path
-              d="M3 1.5L8.5 6L3 10.5"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </span>
-      </div>
+      <span className="flex w-fit items-center gap-1 text-xs font-semibold uppercase tracking-wide text-brand-900/50">
+        Read article
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path
+            d="M3 1.5L8.5 6L3 10.5"
+            stroke="currentColor"
+            strokeWidth="1.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </span>
     </Link>
   );
 }

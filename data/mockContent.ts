@@ -220,6 +220,7 @@ export interface BlogPost {
   author: string;
   date: string;
   slug: string;
+  category: string;
   image?: { src: string; alt: string };
 }
 
@@ -237,9 +238,13 @@ export interface GetInTouchContent {
   heading: string;
   subheading: string;
   namePlaceholder: string;
-  fleetSizeOptions: string[];
-  phonePlaceholder: string;
   emailPlaceholder: string;
+  phonePlaceholder: string;
+  companyNamePlaceholder: string;
+  companyAddressPlaceholder: string;
+  cityPlaceholder: string;
+  statePlaceholder: string;
+  messagePlaceholder: string;
   ctaText: string;
   image: { src: string; alt: string };
 }
@@ -841,6 +846,7 @@ export const blogPosts: BlogPost[] = [
     author: "Fueling Agile Nigeria Team",
     date: "2026-06-02",
     slug: "trust-is-the-new-currency-in-business",
+    category: "Trust & Security",
     image: { src: "/step-1.jpg", alt: "Support agents onboarding a new fleet account" },
   },
   {
@@ -853,6 +859,7 @@ export const blogPosts: BlogPost[] = [
     author: "Fueling Agile Nigeria Team",
     date: "2026-06-20",
     slug: "what-is-a-fuel-system",
+    category: "Fuel Management",
     image: { src: "/step-3.jpg", alt: "A vehicle fueling up at a partner gas station" },
   },
   {
@@ -865,7 +872,60 @@ export const blogPosts: BlogPost[] = [
     author: "Fueling Agile Nigeria Team",
     date: "2026-07-01",
     slug: "agileflex-petrolkaart-smartest-asset",
+    category: "Product",
     image: { src: "/step-2.jpg", alt: "Loading funds and setting spending limits on a card" },
+  },
+  {
+    id: "4",
+    title: "2,400+ stations and counting: how far your card actually reaches.",
+    excerpt:
+      "Lorem ipsum dolor sit amet. Libero potenti posuere et quisque amet lacinia ac pulvinar.",
+    content:
+      "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero potenti posuere et quisque amet lacinia ac pulvinar.</p><p>Nationwide coverage only matters if it holds up on the routes your drivers actually run — here's how the network stacks up.</p>",
+    author: "Fueling Agile Nigeria Team",
+    date: "2026-07-10",
+    slug: "nationwide-station-coverage",
+    category: "Coverage",
+    image: { src: "/trust-1.png", alt: "Map of Nigeria highlighting nationwide coverage" },
+  },
+  {
+    id: "5",
+    title: "What happens when a card goes missing, and how fast you can lock it down.",
+    excerpt:
+      "Lorem ipsum dolor sit amet. Libero potenti posuere et quisque amet lacinia ac pulvinar.",
+    content:
+      "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero potenti posuere et quisque amet lacinia ac pulvinar.</p><p>A lost card shouldn't mean a lost afternoon. Here's the exact sequence for freezing spend the moment something looks wrong.</p>",
+    author: "Fueling Agile Nigeria Team",
+    date: "2026-07-18",
+    slug: "lost-card-response-guide",
+    category: "Trust & Security",
+    image: { src: "/trust-3.png", alt: "Illustration representing account and card security" },
+  },
+  {
+    id: "6",
+    title: "Flat rate vs. tiered pricing: which one actually saves your fleet money.",
+    excerpt:
+      "Lorem ipsum dolor sit amet. Libero potenti posuere et quisque amet lacinia ac pulvinar.",
+    content:
+      "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero potenti posuere et quisque amet lacinia ac pulvinar.</p><p>The right pricing tier depends less on fleet size than on how predictable your monthly spend already is.</p>",
+    author: "Fueling Agile Nigeria Team",
+    date: "2026-07-25",
+    slug: "flat-rate-vs-tiered-pricing",
+    category: "Pricing",
+    image: { src: "/trust-4.png", alt: "Illustration representing transparent, tiered pricing" },
+  },
+  {
+    id: "7",
+    title: "Why response time is the metric fleet managers underrate the most.",
+    excerpt:
+      "Lorem ipsum dolor sit amet. Libero potenti posuere et quisque amet lacinia ac pulvinar.",
+    content:
+      "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Libero potenti posuere et quisque amet lacinia ac pulvinar.</p><p>A stranded driver costs more than the fuel they didn't get — it costs the delivery, the client call, and the afternoon.</p>",
+    author: "Fueling Agile Nigeria Team",
+    date: "2026-08-02",
+    slug: "why-response-time-matters",
+    category: "Support",
+    image: { src: "/trust-2.png", alt: "Illustration representing fast, reliable support" },
   },
 ];
 
@@ -881,14 +941,18 @@ export const blogIndexHeroContent: BlogIndexHeroContent = {
 // "Tell us about your fleet" How to Get Started card.
 export const getInTouchContent: GetInTouchContent = {
   eyebrow: "Get in touch",
-  heading: "Talk to a real person about your fuel costs",
+  heading: "Talk to a real person about your fueling concerns",
   subheading:
     "Tell us about your business. We'll show you exactly where you could be saving.",
-  namePlaceholder: "Name",
-  fleetSizeOptions: ["1–10 vehicles", "11–49 vehicles", "50–100+ vehicles"],
-  phonePlaceholder: "Phone",
-  emailPlaceholder: "Company email",
-  ctaText: "Contact us",
+  namePlaceholder: "Full name",
+  emailPlaceholder: "Official email address",
+  phonePlaceholder: "Phone number",
+  companyNamePlaceholder: "Name of company",
+  companyAddressPlaceholder: "Company address",
+  cityPlaceholder: "City",
+  statePlaceholder: "State",
+  messagePlaceholder: "Please provide more information, if any",
+  ctaText: "Talk to our team",
   image: {
     src: "/get-in-touch-phone.png",
     alt: "Chat conversation about setting up a fleet fuel card account",
