@@ -22,7 +22,7 @@ function TierCard({ tier }: { tier: PricingTier }) {
     <div
       className={`flex flex-col overflow-hidden rounded-2xl border p-1.5 pb-0 text-left sm:rounded-[28px] sm:p-3 ${
         tier.highlighted
-          ? "border-brand-600 bg-brand-600 shadow-xl sm:-my-6"
+          ? "border-brand-600 bg-brand-600 shadow-xl"
           : "border-[#C2DB86] bg-[#F3F9E1]"
       }`}
     >
