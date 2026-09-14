@@ -113,7 +113,7 @@ export default function PricingTiers({ content }: PricingTiersProps) {
       </h2>
       <p className="mx-auto mt-2 max-w-xl text-sm text-brand-900/50">{content.subheading}</p>
 
-      <div className="mt-12 grid grid-cols-3 items-start gap-2 sm:gap-6">
+      <div className="mt-12 grid grid-cols-3 gap-2 sm:gap-6">
         {content.tiers.map((tier) => (
           <TierCard key={tier.name} tier={tier} />
         ))}
