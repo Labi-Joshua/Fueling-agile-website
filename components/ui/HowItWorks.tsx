@@ -13,6 +13,7 @@
 // page. Clicking a step in the indicator smooth-scrolls straight to it.
 import { useRef, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -211,12 +212,12 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
                   />
                 </svg>
               </button>
-              <button
-                type="button"
-                className="rounded-full border border-brand-500 px-5 py-3 text-sm font-semibold text-brand-500 transition-colors hover:bg-brand-500/5 sm:px-8 sm:py-4"
+              <Link
+                href="/request"
+                className="flex items-center justify-center rounded-full border border-brand-500 px-5 py-3 text-sm font-semibold text-brand-500 transition-colors hover:bg-brand-500/5 sm:px-8 sm:py-4"
               >
                 {content.secondaryCtaText}
-              </button>
+              </Link>
             </div>
           </div>
 

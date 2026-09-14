@@ -2,6 +2,7 @@
 
 // Agile Flex solutions page: 3-column pricing tier cards (Starter/Growth/
 // Enterprise), with the middle tier visually highlighted as the recommended plan.
+import Link from "next/link";
 import type { PricingTiersContent, PricingTier } from "@/data/mockContent";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
@@ -89,12 +90,12 @@ function TierCard({ tier }: { tier: PricingTier }) {
           )}
         </ul>
 
-        <button
-          type="button"
-          className="mt-auto w-full rounded-full border border-[#C2DB86] bg-white px-2 py-2 text-[10px] font-semibold text-brand-600 transition-colors hover:bg-white/90 sm:px-6 sm:py-3 sm:text-sm"
+        <Link
+          href="/request"
+          className="mt-auto flex w-full items-center justify-center rounded-full border border-[#C2DB86] bg-white px-2 py-2 text-[10px] font-semibold text-brand-600 transition-colors hover:bg-white/90 sm:px-6 sm:py-3 sm:text-sm"
         >
           {tier.ctaText}
-        </button>
+        </Link>
       </div>
     </div>
   );

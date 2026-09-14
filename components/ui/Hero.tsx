@@ -5,6 +5,7 @@
 // column on mobile). Elements marked `.hero-animate` fade/slide in on page load via GSAP.
 import { useRef } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import type { HeroContent, DashboardImage } from "@/data/mockContent";
@@ -68,12 +69,12 @@ export default function Hero({ content, dashboardImage, showActiveCardsBadge = t
               />
             </svg>
           </button>
-          <button
-            type="button"
-            className="rounded-full border border-brand-500 px-5 py-3 text-sm font-semibold text-brand-500 transition-colors hover:bg-brand-500/5 sm:px-8 sm:py-4"
+          <Link
+            href="/request"
+            className="flex items-center justify-center rounded-full border border-brand-500 px-5 py-3 text-sm font-semibold text-brand-500 transition-colors hover:bg-brand-500/5 sm:px-8 sm:py-4"
           >
             {content.secondaryCtaText}
-          </button>
+          </Link>
         </div>
 
         {showActiveCardsBadge && (
