@@ -30,7 +30,7 @@ function TierCard({ tier }: { tier: PricingTier }) {
           corners reveal the frame color peeking out on either side. */}
       <div
         className={`rounded-2xl px-6 py-6 ${
-          tier.highlighted ? "bg-brand-500" : "border border-[#C2DB86] bg-white"
+          tier.highlighted ? "border border-white/30 bg-brand-500" : "border border-[#C2DB86] bg-white"
         }`}
       >
         <p
