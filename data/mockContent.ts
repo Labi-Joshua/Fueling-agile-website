@@ -1493,11 +1493,6 @@ export const capabilitiesContent: CapabilitiesGridContent = {
         "Purpose-built reporting and analytics screens that show your fuel spend exactly the way your team already thinks about it.",
     },
     {
-      title: "API & POS Integrations",
-      description:
-        "We connect your existing point-of-sale, ERP, or accounting software directly to your fuel data, no more manual reconciliation.",
-    },
-    {
       title: "Loyalty & Rewards Engines",
       description:
         "Custom-built loyalty programs and redemption systems that keep your drivers and customers coming back.",

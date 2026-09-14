@@ -84,29 +84,6 @@ function IotIcon() {
   );
 }
 
-function IntegrationIcon() {
-  return (
-    <svg {...ICON_PROPS} className="h-20 w-24">
-      {/* left: POS terminal */}
-      <rect x="6" y="16" width="30" height="42" rx="6" className={LINE} strokeWidth="2" />
-      <rect x="12" y="22" width="18" height="14" rx="2" className={ACCENT_A} strokeWidth="2" />
-      <path d="M12 42h18M12 48h10" className={LINE} strokeWidth="2" strokeLinecap="round" />
-
-      {/* sync arrows */}
-      <path d="M40 32h16" className={LINE} strokeWidth="2" strokeLinecap="round" />
-      <path d="M52 28l4 4-4 4" className={LINE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M56 44H40" className={LINE} strokeWidth="2" strokeLinecap="round" />
-      <path d="M44 40l-4 4 4 4" className={LINE} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-
-      {/* right: our platform */}
-      <rect x="60" y="16" width="30" height="42" rx="6" className={LINE} strokeWidth="2" />
-      <circle cx="75" cy="30" r="7" className={ACCENT_B} strokeWidth="2.5" />
-      <path d="M72 30l2 2 4-4" className={ACCENT_B} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M66 44h18M66 50h12" className={LINE} strokeWidth="2" strokeLinecap="round" />
-    </svg>
-  );
-}
-
 function WorkflowIcon() {
   return (
     <svg {...ICON_PROPS} className="h-20 w-24">
@@ -133,7 +110,6 @@ function WorkflowIcon() {
 
 const CAPABILITY_ICON: Record<string, () => JSX.Element> = {
   "Custom Fuel Dashboards": DashboardIcon,
-  "API & POS Integrations": IntegrationIcon,
   "Loyalty & Rewards Engines": LoyaltyIcon,
   "Automated Reporting": ReportingIcon,
   "Hardware & IoT Integrations": IotIcon,
