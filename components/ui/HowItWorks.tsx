@@ -187,8 +187,10 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
               {activeStep.title}
             </h3>
             {/* Fixed height (tall enough for the longest step's copy) so the
-                CTAs below don't shift up/down as descriptions swap length. */}
-            <p className="mt-3 h-12 max-w-xl text-sm leading-relaxed text-brand-900/50">
+                CTAs below don't shift up/down as descriptions swap length.
+                Taller on mobile, where the single-column layout leaves this
+                text much narrower than at lg: and wraps to more lines. */}
+            <p className="mt-3 h-28 max-w-xl text-sm leading-relaxed text-brand-900/50 lg:h-12">
               {activeStep.description}
             </p>
 
