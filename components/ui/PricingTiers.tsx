@@ -20,7 +20,7 @@ function CheckIcon({ className }: { className?: string }) {
 function TierCard({ tier }: { tier: PricingTier }) {
   return (
     <div
-      className={`flex flex-col overflow-hidden rounded-[28px] border-2 p-3 pb-0 text-left ${
+      className={`flex flex-col overflow-hidden rounded-[28px] border p-3 pb-0 text-left ${
         tier.highlighted
           ? "border-brand-600 bg-brand-600 shadow-xl sm:-my-6"
           : "border-[#C2DB86] bg-[#F3F9E1]"
