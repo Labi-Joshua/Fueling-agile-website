@@ -141,16 +141,40 @@ export default function Footer({ content, logoSrc, backgroundImageSrc, certifica
                 </ul>
 
                 <div className="flex items-center gap-3 text-white/50">
-                  <a href="https://x.com" aria-label="X (Twitter)" className="hover:text-white">
+                  <a
+                    href="https://x.com/Fuelingagilenig"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="X (Twitter)"
+                    className="hover:text-white"
+                  >
                     <FaXTwitter size={16} />
                   </a>
-                  <a href="https://facebook.com" aria-label="Facebook" className="hover:text-white">
+                  <a
+                    href="https://www.facebook.com/share/1DxuRUWQkx/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Facebook"
+                    className="hover:text-white"
+                  >
                     <FaFacebookF size={16} />
                   </a>
-                  <a href="https://linkedin.com" aria-label="LinkedIn" className="hover:text-white">
+                  <a
+                    href="https://www.linkedin.com/company/fuelingagilesolutions/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="LinkedIn"
+                    className="hover:text-white"
+                  >
                     <FaLinkedinIn size={16} />
                   </a>
-                  <a href="https://instagram.com" aria-label="Instagram" className="hover:text-white">
+                  <a
+                    href="https://www.instagram.com/fuelingagilesolutions?igsi=MWVwazN4OWVicDNzMg=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="Instagram"
+                    className="hover:text-white"
+                  >
                     <FaInstagram size={16} />
                   </a>
                 </div>
