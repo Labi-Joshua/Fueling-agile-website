@@ -17,80 +17,58 @@ function CheckIcon({ className }: { className?: string }) {
   );
 }
 
-// Starter/Enterprise: plain white card whose only line-work is three
-// separate "bracket" borders (rounded-open-top or rounded-open-bottom) around
-// the header, the price/feature divider, and the CTA — no full card outline.
-function PlainTierCard({ tier }: { tier: PricingTier }) {
-  const percentIndex = tier.pricePercent.indexOf("%");
-  const priceNumber = percentIndex === -1 ? tier.pricePercent : tier.pricePercent.slice(0, percentIndex);
-  const priceSign = percentIndex === -1 ? "" : tier.pricePercent.slice(percentIndex);
-
+function TierCard({ tier }: { tier: PricingTier }) {
   return (
-    <div className="flex flex-1 flex-col rounded-[32px] bg-white px-6 pb-6 pt-1 text-left shadow-sm">
-      <div className="rounded-t-3xl border-l border-r border-t border-[#DCE9AE] pb-6 pt-7">
-        <p className="text-2xl font-semibold text-brand-900">{tier.name}</p>
-        <p className="mt-1 text-sm text-brand-900/50">{tier.vehicleRange}</p>
-      </div>
-
-      <div className="pb-6 pt-6">
-        <span className="text-5xl font-semibold text-brand-900">{priceNumber}</span>
-        <span className="text-2xl font-semibold text-brand-900">{priceSign}</span>
-        <span className="ml-1 text-sm text-brand-900/50">/ Month</span>
-      </div>
-
-      <div className="h-3 rounded-b-2xl border-b border-l border-r border-[#DCE9AE]" />
-
-      {/* A feature ending in ":" is a lead-in label ("Everything in X,
-          plus:"), rendered plain — every other feature gets a "+" marker. */}
-      <ul className="flex flex-1 flex-col gap-2 py-6 text-sm text-brand-900/70">
-        {tier.features.map((feature) =>
-          feature.endsWith(":") ? (
-            <li key={feature} className="text-brand-900/50">
-              {feature}
-            </li>
-          ) : (
-            <li key={feature} className="flex gap-2">
-              <span className="text-brand-900/30">+</span>
-              {feature}
-            </li>
-          )
-        )}
-      </ul>
-
-      <div className="mt-auto flex justify-center rounded-t-2xl border-l border-r border-t border-[#DCE9AE] py-4">
-        <button type="button" className="text-sm font-medium text-brand-900 transition-colors hover:text-brand-600">
-          {tier.ctaText}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-// Growth: the framed-chip card, popped above its neighbors — see the
-// dedicated "Growth" styling task this reuses.
-function HighlightedTierCard({ tier }: { tier: PricingTier }) {
-  return (
-    <div className="flex flex-1 flex-col overflow-hidden rounded-[28px] border border-brand-600 bg-brand-600 p-3 pb-0 text-left shadow-xl sm:-my-6">
-      <div className="rounded-2xl bg-brand-500 px-6 py-6">
-        <p className="text-xl font-semibold text-white">{tier.name}</p>
-        <p className="mt-1 text-xs text-white/70">{tier.vehicleRange}</p>
+    <div
+      className={`flex flex-col overflow-hidden rounded-[28px] border-2 p-3 pb-0 text-left ${
+        tier.highlighted
+          ? "border-brand-600 bg-brand-600 shadow-xl sm:-my-6"
+          : "border-[#C2DB86] bg-[#F3F9E1]"
+      }`}
+    >
+      {/* Header chip — inset from the frame above, its own rounded-bottom
+          corners reveal the frame color peeking out on either side. */}
+      <div
+        className={`rounded-2xl px-6 py-6 ${
+          tier.highlighted ? "bg-brand-500" : "border border-[#C2DB86] bg-white"
+        }`}
+      >
+        <p
+          className={`font-semibold ${
+            tier.highlighted ? "text-xl text-white" : "text-lg text-brand-900"
+          }`}
+        >
+          {tier.name}
+        </p>
+        <p className={`mt-1 text-xs ${tier.highlighted ? "text-white/70" : "text-brand-900/50"}`}>
+          {tier.vehicleRange}
+        </p>
       </div>
 
       <div className="flex flex-1 flex-col gap-6 px-6 pb-6 pt-6">
         <div>
-          <span className="text-4xl font-semibold text-white">{tier.pricePercent}</span>
-          <span className="text-sm text-white/70"> / Month</span>
+          <span className={`text-4xl font-semibold ${tier.highlighted ? "text-white" : "text-brand-900"}`}>
+            {tier.pricePercent}
+          </span>
+          <span className={`text-sm ${tier.highlighted ? "text-white/70" : "text-brand-900/50"}`}> / Month</span>
         </div>
 
+        {/* A feature ending in ":" is a lead-in label ("Everything in X,
+            plus:"), rendered plain — every other feature gets a checkmark. */}
         <ul className="flex flex-col gap-2.5">
           {tier.features.map((feature) =>
             feature.endsWith(":") ? (
-              <li key={feature} className="text-sm text-white/70">
+              <li key={feature} className={`text-sm ${tier.highlighted ? "text-white/70" : "text-brand-900/50"}`}>
                 {feature}
               </li>
             ) : (
-              <li key={feature} className="flex items-start gap-2 text-sm text-white/90">
-                <CheckIcon className="text-white/70" />
+              <li
+                key={feature}
+                className={`flex items-start gap-2 text-sm ${
+                  tier.highlighted ? "text-white/90" : "text-brand-900/70"
+                }`}
+              >
+                <CheckIcon className={tier.highlighted ? "text-white/70" : "text-brand-900/30"} />
                 {feature}
               </li>
             )
@@ -106,10 +84,6 @@ function HighlightedTierCard({ tier }: { tier: PricingTier }) {
       </div>
     </div>
   );
-}
-
-function TierCard({ tier }: { tier: PricingTier }) {
-  return tier.highlighted ? <HighlightedTierCard tier={tier} /> : <PlainTierCard tier={tier} />;
 }
 
 export default function PricingTiers({ content }: PricingTiersProps) {
