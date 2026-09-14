@@ -18,13 +18,13 @@ function PersonaCard({ persona }: { persona: Persona }) {
   const [imageFailed, setImageFailed] = useState(false);
 
   return (
-    <div className="flex flex-col gap-4 rounded-2xl bg-[#E4EFE6] p-6 text-left">
+    <div className="flex flex-col gap-5 rounded-3xl border border-[#C2DB86] bg-[#F3F9E1] p-6 text-left">
       <div>
-        <p className="text-base font-semibold text-brand-900">{persona.title}</p>
-        <p className="mt-1 text-sm leading-relaxed text-brand-900/60">{persona.description}</p>
+        <p className="text-2xl font-semibold text-brand-900">{persona.title}</p>
+        <p className="mt-2 text-sm leading-relaxed text-brand-900/60">{persona.description}</p>
       </div>
 
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl bg-brand-500/10">
+      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-brand-500/10">
         {!imageFailed && (
           <Image
             src={persona.image.src}
