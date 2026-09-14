@@ -20,7 +20,7 @@ export default async function BlogIndexPage() {
     <>
       <BlogIndexHero content={blogIndexHeroContent} />
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-16 px-4 pb-24 pt-16 sm:px-8 lg:grid-cols-2 lg:gap-24">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-16 px-4 pb-20 pt-20 sm:px-8 lg:grid-cols-2 lg:gap-24">
         {/* Featured carousel — only rendered once there's at least one post */}
         {featuredPosts.length > 0 && <FeaturedPostCarousel posts={featuredPosts} />}
 

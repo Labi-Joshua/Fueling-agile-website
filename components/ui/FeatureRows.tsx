@@ -18,7 +18,7 @@ export default function FeatureRows({ content }: FeatureRowsProps) {
   return (
     <section
       ref={sectionRef}
-      className="mx-auto max-w-[1536px] px-4 pt-[233px] text-center sm:px-8 sm:pt-[285px]"
+      className="mx-auto max-w-[1536px] px-4 pt-20 text-center sm:px-8"
     >
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}

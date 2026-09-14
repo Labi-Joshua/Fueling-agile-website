@@ -23,7 +23,7 @@ function CheckIcon() {
 
 export default function PortalPlatforms({ content }: PortalPlatformsProps) {
   return (
-    <section className="mx-auto max-w-5xl px-4 pt-20 text-center sm:px-8 sm:pt-28">
+    <section className="mx-auto max-w-5xl px-4 pt-20 text-center sm:px-8">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>

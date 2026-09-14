@@ -108,7 +108,7 @@ export default function DepotPriceTable({ initialPrices }: DepotPriceTableProps)
   };
 
   return (
-    <section className="mx-auto max-w-5xl px-4 pb-24 pt-24 sm:px-8">
+    <section className="mx-auto max-w-5xl px-4 pt-20 sm:px-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex items-center gap-2.5">
           <span className="text-sm font-semibold text-brand-900">Fuel Prices</span>

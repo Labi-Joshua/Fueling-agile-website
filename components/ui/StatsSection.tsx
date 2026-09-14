@@ -17,7 +17,7 @@ export default function StatsSection({ content }: StatsSectionProps) {
   return (
     <section
       ref={sectionRef}
-      className="mx-auto flex max-w-5xl flex-col items-center gap-12 px-4 pt-36 text-center sm:px-8 sm:pt-44"
+      className="mx-auto flex max-w-5xl flex-col items-center gap-12 px-4 pt-20 text-center sm:px-8"
     >
       <StatsRow stats={content.stats} />
 

@@ -28,7 +28,7 @@ export default function Newsletter({ content }: NewsletterProps) {
   return (
     <section
       ref={sectionRef}
-      className="mx-auto max-w-[1536px] px-4 pb-40 pt-36 sm:px-8 sm:pb-48 sm:pt-44"
+      className="mx-auto max-w-[1536px] px-4 pb-20 pt-20 sm:px-8"
     >
       <div className="relative mx-auto max-w-2xl overflow-visible">
         {/* Decorative interlocking rings, matching the accent color/style used

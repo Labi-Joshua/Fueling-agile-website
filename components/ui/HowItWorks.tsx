@@ -155,7 +155,7 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
     <div ref={wrapperRef}>
       {statsContent && <StatsSection content={statsContent} />}
 
-      <section ref={sectionRef} className="mx-auto max-w-[1536px] px-4 pt-36 text-center sm:px-8 sm:pt-44">
+      <section ref={sectionRef} className="mx-auto max-w-[1536px] px-4 pt-20 text-center sm:px-8">
         <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
           {content.eyebrow}
         </span>

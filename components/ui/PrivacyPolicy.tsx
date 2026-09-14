@@ -76,7 +76,7 @@ function Block({ block }: { block: PrivacyPolicyBlock }) {
 export default function PrivacyPolicy({ content }: PrivacyPolicyProps) {
   return (
     <>
-      <section className="mx-auto max-w-4xl px-4 pt-20 text-center sm:px-8 sm:pt-28">
+      <section className="mx-auto max-w-4xl px-4 pt-20 text-center sm:px-8">
         <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
           {content.eyebrow}
         </span>
@@ -85,7 +85,7 @@ export default function PrivacyPolicy({ content }: PrivacyPolicyProps) {
         </h1>
       </section>
 
-      <section className="mx-auto max-w-4xl px-4 pb-24 pt-12 text-left sm:px-8">
+      <section className="mx-auto max-w-4xl px-4 pb-20 pt-20 text-left sm:px-8">
         <p className="font-semibold text-brand-900">Effective Date: {content.effectiveDate}.</p>
         <div className="mt-3 flex flex-col gap-3">
           {content.intro.map((paragraph, index) => (

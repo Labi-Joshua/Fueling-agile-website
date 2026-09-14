@@ -18,7 +18,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   }
 
   return (
-    <article className="mx-auto max-w-3xl px-4 py-16 sm:px-8">
+    <article className="mx-auto max-w-3xl px-4 py-20 sm:px-8">
       <h1 className="text-3xl font-semibold text-brand-900 sm:text-4xl">{post.title}</h1>
       <p className="mt-3 text-sm text-brand-900/50">
         {post.author} &middot; <time dateTime={post.date}>{post.date}</time>
