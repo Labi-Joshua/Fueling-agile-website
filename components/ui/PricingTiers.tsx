@@ -77,7 +77,7 @@ function TierCard({ tier }: { tier: PricingTier }) {
 
         <button
           type="button"
-          className="mt-auto w-full rounded-full bg-white px-6 py-3 text-sm font-semibold text-brand-600 transition-colors hover:bg-white/90"
+          className="mt-auto w-full rounded-full border border-[#C2DB86] bg-white px-6 py-3 text-sm font-semibold text-brand-600 transition-colors hover:bg-white/90"
         >
           {tier.ctaText}
         </button>
