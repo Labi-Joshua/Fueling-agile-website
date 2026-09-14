@@ -49,21 +49,17 @@ export default function BespokeHero({ content }: BespokeHeroProps) {
         </div>
       </div>
 
-      {/* Supporting illustration in a bordered card. TODO: content.image
-          currently points at the homepage feature tab's placeholder graphic,
-          which already has its own colored background baked in — swap in the
-          dedicated isometric dashboard illustration once that file is
-          provided, sized to sit on a plain background within this card. */}
-      <div className="relative overflow-hidden rounded-3xl border border-brand-900/10 bg-white p-6 sm:p-10">
-        <Image
-          src={content.image.src}
-          alt={content.image.alt}
-          width={2000}
-          height={1590}
-          className="h-auto w-full rounded-2xl"
-          priority
-        />
-      </div>
+      {/* Supporting illustration — its background/border/shadow are already
+          baked into the source image, so it's rendered as-is with no card
+          chrome around it. */}
+      <Image
+        src={content.image.src}
+        alt={content.image.alt}
+        width={2000}
+        height={1590}
+        className="h-auto w-full"
+        priority
+      />
     </section>
   );
 }
