@@ -16,7 +16,7 @@ export default function ReportingShowcase({ content }: ReportingShowcaseProps) {
   const sectionRef = useFadeInOnScroll<HTMLElement>();
 
   return (
-    <section ref={sectionRef} className="mx-auto max-w-4xl px-4 pt-20 text-center sm:px-8">
+    <section ref={sectionRef} className="mx-auto max-w-[1536px] px-4 pt-20 text-center sm:px-8">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>
@@ -25,13 +25,17 @@ export default function ReportingShowcase({ content }: ReportingShowcaseProps) {
       </h2>
       <p className="mx-auto mt-2 max-w-xl text-sm text-brand-900/50">{content.subheading}</p>
 
-      <div className="relative mx-auto mt-12 aspect-[5084/2156] w-full overflow-hidden rounded-2xl bg-[#E4EFE6]">
+      {/* Image already has its own decorative ring background baked in, so
+          it's rendered edge-to-edge with no card chrome around it. Capped to
+          the same max-w-[1088px] margin as the pricing row/other sections
+          on this page. */}
+      <div className="relative mx-auto mt-12 aspect-[5188/2156] w-full max-w-[1088px]">
         <Image
           src={content.image.src}
           alt={content.image.alt}
           fill
-          sizes="(min-width: 1024px) 896px, 100vw"
-          className="object-contain object-bottom"
+          sizes="(min-width: 1024px) 1088px, 100vw"
+          className="object-contain"
         />
       </div>
     </section>

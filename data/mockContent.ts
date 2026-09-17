@@ -1404,8 +1404,8 @@ export const reportingShowcaseContent: ReportingShowcaseContent = {
   subheading:
     "One screen shows you every fill-up, by every driver, as it happens. Download a report anytime, with one click. No sign-up needed. No extra fee. It just comes with your card.",
   image: {
-    src: "/platform.png",
-    alt: "AgileFlex PetrolKaart fleet overview dashboard showing active vehicles, total balance, live tracking, and card balance status",
+    src: "/reporting-dashboard.png",
+    alt: "AgileFlex PetrolKaart vehicles dashboard showing fleet status, vehicle list, and card balances",
   },
 };
 
