@@ -1602,10 +1602,6 @@ export const processStepsContent: ProcessStepsContent = {
   ],
 };
 
-// TODO: dedicated persona photos haven't been provided yet, so these currently
-// point at placeholder image paths that don't exist yet (see PersonaGrid.tsx,
-// which renders a neutral fallback block when an image 404s) — same situation
-// as personaGridContent above.
 export const bespokePersonaGridContent: PersonaGridContent = {
   eyebrow: "Who we build for",
   heading: "If your fuel operation is one-of-a-kind, so is our solution",
@@ -1614,25 +1610,25 @@ export const bespokePersonaGridContent: PersonaGridContent = {
       title: "Retail & Fuel Station Chains",
       description:
         "Custom point-of-sale integrations and loyalty systems that fit the way your stations already run, not the other way around.",
-      image: { src: "/persona-retail-chain.jpg", alt: "A fuel station attendant serving a customer at a retail chain location" },
+      image: { src: "/persona-retail-chain.png", alt: "A fuel station attendant serving a customer at a retail chain location" },
     },
     {
       title: "Financial Institutions & Fintechs",
       description:
         "White-labeled fuel payment infrastructure and reconciliation tools you can build your own product on top of.",
-      image: { src: "/persona-fintech.jpg", alt: "A fintech team reviewing payment infrastructure on a laptop" },
+      image: { src: "/persona-fintech.png", alt: "A fintech team reviewing payment infrastructure on a laptop" },
     },
     {
       title: "Logistics & Distribution Companies",
       description:
         "Route-aware fuel tracking and hardware integrations built for fleets that don't fit a one-size-fits-all card program.",
-      image: { src: "/persona-logistics.jpg", alt: "A logistics coordinator tracking distribution vehicles" },
+      image: { src: "/persona-logistics.png", alt: "A logistics coordinator tracking distribution vehicles" },
     },
     {
       title: "Enterprises with Legacy Systems",
       description:
         "Middleware and integrations that connect your existing ERP or accounting stack to modern fuel data, without a rip-and-replace.",
-      image: { src: "/persona-enterprise-legacy.jpg", alt: "An enterprise IT team reviewing legacy system integrations" },
+      image: { src: "/persona-enterprise-legacy.png", alt: "An enterprise IT team reviewing legacy system integrations" },
     },
   ],
 };
