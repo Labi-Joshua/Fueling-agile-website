@@ -125,7 +125,7 @@ function CapabilityCard({ capability }: { capability: Capability }) {
       <p className="text-sm leading-relaxed text-brand-900/60">{capability.description}</p>
 
       {Icon && (
-        <div className="mt-4 flex flex-1 items-center justify-center py-8">
+        <div className="mt-auto flex items-center justify-center py-8">
           <Icon />
         </div>
       )}
