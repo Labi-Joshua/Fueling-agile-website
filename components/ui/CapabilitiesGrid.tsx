@@ -1,11 +1,12 @@
 "use client";
 
 // Bespoke Solutions page: grid of capability cards (e.g. "Custom Fuel
-// Dashboards"), each with a small illustration inset inside its own
-// pale-green panel.
-import Image from "next/image";
-import type { CapabilitiesGridContent, Capability } from "@/data/mockContent";
+// Dashboards"), styled identically to the "Who we build for" persona grid —
+// reuses the same ImageTextCard component, just with an illustration instead
+// of a photo.
+import type { CapabilitiesGridContent } from "@/data/mockContent";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
+import ImageTextCard from "@/components/ui/ImageTextCard";
 
 export interface CapabilitiesGridProps {
   content: CapabilitiesGridContent;
@@ -18,23 +19,6 @@ const CAPABILITY_IMAGE: Record<string, { src: string; alt: string }> = {
   "Hardware & IoT Integrations": { src: "/capability-iot.png", alt: "Illustration of a sensor connected to a fuel pump and a delivery truck" },
   "Workflow Automation": { src: "/capability-workflow.png", alt: "Illustration of a document turning into an automated, completed task" },
 };
-
-function CapabilityCard({ capability }: { capability: Capability }) {
-  const image = CAPABILITY_IMAGE[capability.title];
-
-  return (
-    <div className="flex flex-col gap-2 rounded-3xl border border-[#C2DB86] bg-white p-6 text-left shadow-[8px_-8px_0px_0px_#C2DB86]">
-      <p className="text-lg font-semibold text-brand-900">{capability.title}</p>
-      <p className="text-sm leading-relaxed text-brand-900/60">{capability.description}</p>
-
-      {image && (
-        <div className="relative mt-auto aspect-square w-full overflow-hidden rounded-2xl bg-[#F3F9E1] p-10">
-          <Image src={image.src} alt={image.alt} fill sizes="(min-width: 640px) 360px, 100vw" className="object-contain p-2" />
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function CapabilitiesGrid({ content }: CapabilitiesGridProps) {
   const sectionRef = useFadeInOnScroll<HTMLElement>();
@@ -55,7 +39,11 @@ export default function CapabilitiesGrid({ content }: CapabilitiesGridProps) {
       <div className="mt-12 flex flex-wrap justify-center gap-6">
         {content.capabilities.map((capability) => (
           <div key={capability.title} className="w-full sm:w-[calc((100%-3rem)/3)]">
-            <CapabilityCard capability={capability} />
+            <ImageTextCard
+              title={capability.title}
+              description={capability.description}
+              image={CAPABILITY_IMAGE[capability.title]}
+            />
           </div>
         ))}
       </div>
