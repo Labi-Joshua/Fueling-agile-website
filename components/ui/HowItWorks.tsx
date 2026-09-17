@@ -165,8 +165,8 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
         </h2>
         <p className="mt-2 text-sm text-brand-900/50">{content.subtitle}</p>
 
-        <div className="mt-16 grid grid-cols-1 items-center gap-12 text-left lg:grid-cols-[1fr_347px] lg:gap-16">
-          <div className="flex flex-col items-start lg:pr-20">
+        <div className="mx-auto mt-16 grid max-w-[1088px] grid-cols-1 items-center gap-12 text-left sm:grid-cols-2 sm:gap-10 lg:gap-16">
+          <div className="flex flex-col items-start sm:pr-6 lg:pr-20">
             {/* Step indicator: a pill-shaped track holding the active step as an
                 elongated pill and the rest as dots */}
             <div className="inline-flex items-center gap-1.5 rounded-full bg-brand-900/5 p-2">
@@ -189,17 +189,18 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
             </h3>
             {/* Fixed height (tall enough for the longest step's copy) so the
                 CTAs below don't shift up/down as descriptions swap length.
-                Taller on mobile, where the single-column layout leaves this
-                text much narrower than at lg: and wraps to more lines. */}
-            <p className="mt-3 h-28 max-w-xl text-sm leading-relaxed text-brand-900/50 lg:h-12">
+                Taller below xl:, where the text column is narrow enough
+                (single-column below sm:, a squeezed half-row from sm: to
+                xl:) that it wraps to more lines. */}
+            <p className="mt-3 h-28 max-w-xl text-sm leading-relaxed text-brand-900/50 xl:h-12">
               {activeStep.description}
             </p>
 
-            <div className="mt-8 flex flex-row gap-3 sm:gap-4">
+            <div className="mt-8 flex flex-col gap-3 sm:gap-4 xl:flex-row">
               <button
                 type="button"
                 onClick={openRequestFuelCardModal}
-                className="flex items-center justify-center gap-2 rounded-full bg-brand-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600 sm:px-8 sm:py-4"
+                className="flex items-center justify-center gap-2 rounded-full bg-brand-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600 xl:px-8 xl:py-4"
               >
                 {content.primaryCtaText}
                 <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
@@ -214,18 +215,17 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
               </button>
               <Link
                 href="/request"
-                className="flex items-center justify-center rounded-full border border-brand-500 px-5 py-3 text-sm font-semibold text-brand-500 transition-colors hover:bg-brand-500/5 sm:px-8 sm:py-4"
+                className="flex items-center justify-center rounded-full border border-brand-500 px-5 py-3 text-sm font-semibold text-brand-500 transition-colors hover:bg-brand-500/5 xl:px-8 xl:py-4"
               >
                 {content.secondaryCtaText}
               </Link>
             </div>
           </div>
 
-          {/* Colored panel, one per step, capped to the same 347px max-width as
-              the pricing tier cards (keeps the 544:501 aspect, just smaller).
-              All steps render at once, each crossfading + parallaxing per
-              applyProgress above. */}
-          <div className="relative mx-auto aspect-[544/501] w-full max-w-[347px] overflow-hidden rounded-2xl">
+          {/* Colored panel, one per step, sized to fill its column up to a
+              480px cap (keeps the 544:501 aspect). All steps render at once,
+              each crossfading + parallaxing per applyProgress above. */}
+          <div className="relative mx-auto aspect-[544/501] w-full max-w-[480px] overflow-hidden rounded-2xl">
             {steps.map((step, index) => (
               <div
                 key={step.title}
@@ -238,7 +238,7 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
                   src={step.image.src}
                   alt={step.image.alt}
                   fill
-                  sizes="(min-width: 1024px) 347px, 100vw"
+                  sizes="(min-width: 640px) 480px, 100vw"
                   className={IMAGE_FIT[index]}
                 />
               </div>

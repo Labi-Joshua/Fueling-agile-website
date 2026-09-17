@@ -128,7 +128,7 @@ export default function WhyUs({ content }: WhyUsProps) {
       </h2>
       <p className="mx-auto mt-2 max-w-xl text-sm text-brand-900/50">{content.subtitle}</p>
 
-      <div className="mt-16 grid grid-cols-1 items-center gap-12 text-left lg:grid-cols-2 lg:gap-16">
+      <div className="mx-auto mt-16 grid max-w-[1088px] grid-cols-1 items-center gap-12 text-left sm:grid-cols-2 sm:gap-10 lg:gap-16">
         <div className="flex flex-col items-start">
           {/* Step indicator: a pill-shaped track holding the active point as an
               elongated pill and the rest as dots */}
@@ -156,11 +156,11 @@ export default function WhyUs({ content }: WhyUsProps) {
             {activePoint.description}
           </p>
 
-          <div className="mt-8 flex flex-row gap-3 sm:gap-4">
+          <div className="mt-8 flex flex-col gap-3 sm:gap-4 xl:flex-row">
             <button
               type="button"
               onClick={openRequestFuelCardModal}
-              className="flex items-center justify-center gap-2 rounded-full bg-brand-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600 sm:px-8 sm:py-4"
+              className="flex items-center justify-center gap-2 rounded-full bg-brand-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600 xl:px-8 xl:py-4"
             >
               {content.primaryCtaText}
               <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
@@ -175,18 +175,18 @@ export default function WhyUs({ content }: WhyUsProps) {
             </button>
             <Link
               href="/request"
-              className="flex items-center justify-center rounded-full border border-brand-500 px-5 py-3 text-sm font-semibold text-brand-500 transition-colors hover:bg-brand-500/5 sm:px-8 sm:py-4"
+              className="flex items-center justify-center rounded-full border border-brand-500 px-5 py-3 text-sm font-semibold text-brand-500 transition-colors hover:bg-brand-500/5 xl:px-8 xl:py-4"
             >
               {content.secondaryCtaText}
             </Link>
           </div>
         </div>
 
-        {/* Colored panel, one per point, capped to the same 347px max-width
-            as the pricing tier cards (same 544:501 aspect as HowItWorks,
-            just smaller). All points render at once, each crossfading +
-            parallaxing per applyProgress above. */}
-        <div className="relative mx-auto aspect-[544/501] w-full max-w-[347px] overflow-hidden rounded-2xl">
+        {/* Colored panel, one per point, sized to fill its column up to a
+            480px cap (same 544:501 aspect as HowItWorks, just smaller). All
+            points render at once, each crossfading + parallaxing per
+            applyProgress above. */}
+        <div className="relative mx-auto aspect-[544/501] w-full max-w-[480px] overflow-hidden rounded-2xl">
           {points.map((point, index) => (
             <div
               key={point.title}
@@ -199,7 +199,7 @@ export default function WhyUs({ content }: WhyUsProps) {
                 src={point.image.src}
                 alt={point.image.alt}
                 fill
-                sizes="(min-width: 1024px) 347px, 100vw"
+                sizes="(min-width: 640px) 480px, 100vw"
                 className="object-cover object-bottom"
               />
             </div>
