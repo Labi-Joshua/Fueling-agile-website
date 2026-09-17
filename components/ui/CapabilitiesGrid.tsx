@@ -49,9 +49,14 @@ export default function CapabilitiesGrid({ content }: CapabilitiesGridProps) {
       </h2>
       <p className="mx-auto mt-2 max-w-xl text-sm text-brand-900/50">{content.subheading}</p>
 
-      <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3">
+      {/* flex-wrap + justify-center (rather than a grid) so a partial last
+          row — e.g. 2 cards left over from a row of 3 — centers itself
+          instead of hugging the left edge under an empty trailing column. */}
+      <div className="mt-12 flex flex-wrap justify-center gap-6">
         {content.capabilities.map((capability) => (
-          <CapabilityCard key={capability.title} capability={capability} />
+          <div key={capability.title} className="w-full sm:w-[calc((100%-3rem)/3)]">
+            <CapabilityCard capability={capability} />
+          </div>
         ))}
       </div>
     </section>
