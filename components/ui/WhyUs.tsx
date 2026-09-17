@@ -182,10 +182,11 @@ export default function WhyUs({ content }: WhyUsProps) {
           </div>
         </div>
 
-        {/* Colored panel, one per point, sized to the same 544x501 mockup spec
-            as HowItWorks (scales down proportionally below that). All points
-            render at once, each crossfading + parallaxing per applyProgress above. */}
-        <div className="relative mx-auto aspect-[544/501] w-full max-w-[544px] overflow-hidden rounded-2xl">
+        {/* Colored panel, one per point, capped to the same 347px max-width
+            as the pricing tier cards (same 544:501 aspect as HowItWorks,
+            just smaller). All points render at once, each crossfading +
+            parallaxing per applyProgress above. */}
+        <div className="relative mx-auto aspect-[544/501] w-full max-w-[347px] overflow-hidden rounded-2xl">
           {points.map((point, index) => (
             <div
               key={point.title}
@@ -198,7 +199,7 @@ export default function WhyUs({ content }: WhyUsProps) {
                 src={point.image.src}
                 alt={point.image.alt}
                 fill
-                sizes="(min-width: 1024px) 544px, 100vw"
+                sizes="(min-width: 1024px) 347px, 100vw"
                 className="object-cover object-bottom"
               />
             </div>

@@ -165,7 +165,7 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
         </h2>
         <p className="mt-2 text-sm text-brand-900/50">{content.subtitle}</p>
 
-        <div className="mt-16 grid grid-cols-1 items-center gap-12 text-left lg:grid-cols-[1fr_544px] lg:gap-16">
+        <div className="mt-16 grid grid-cols-1 items-center gap-12 text-left lg:grid-cols-[1fr_347px] lg:gap-16">
           <div className="flex flex-col items-start lg:pr-20">
             {/* Step indicator: a pill-shaped track holding the active step as an
                 elongated pill and the rest as dots */}
@@ -221,10 +221,11 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
             </div>
           </div>
 
-          {/* Colored panel, one per step, sized to the 544x501 mockup spec (scales
-              down proportionally below that). All steps render at once, each
-              crossfading + parallaxing per applyProgress above. */}
-          <div className="relative mx-auto aspect-[544/501] w-full max-w-[544px] overflow-hidden rounded-2xl">
+          {/* Colored panel, one per step, capped to the same 347px max-width as
+              the pricing tier cards (keeps the 544:501 aspect, just smaller).
+              All steps render at once, each crossfading + parallaxing per
+              applyProgress above. */}
+          <div className="relative mx-auto aspect-[544/501] w-full max-w-[347px] overflow-hidden rounded-2xl">
             {steps.map((step, index) => (
               <div
                 key={step.title}
@@ -237,7 +238,7 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
                   src={step.image.src}
                   alt={step.image.alt}
                   fill
-                  sizes="(min-width: 1024px) 544px, 100vw"
+                  sizes="(min-width: 1024px) 347px, 100vw"
                   className={IMAGE_FIT[index]}
                 />
               </div>
