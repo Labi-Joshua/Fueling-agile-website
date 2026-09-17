@@ -3,11 +3,13 @@
 import type { Metadata } from "next";
 import BespokeHero from "@/components/ui/BespokeHero";
 import CapabilitiesGrid from "@/components/ui/CapabilitiesGrid";
+import BuildProcessSteps from "@/components/ui/BuildProcessSteps";
 import PersonaGrid from "@/components/ui/PersonaGrid";
 import Newsletter from "@/components/ui/Newsletter";
 import {
   bespokeHeroContent,
   capabilitiesContent,
+  buildProcessContent,
   bespokePersonaGridContent,
   bespokeNewsletterContent,
 } from "@/data/mockContent";
@@ -25,6 +27,9 @@ export default function BespokeSolutionsPage() {
 
       {/* "What we build" capability cards */}
       <CapabilitiesGrid content={capabilitiesContent} />
+
+      {/* "Get Started" walkthrough: four alternating image/text steps */}
+      <BuildProcessSteps content={buildProcessContent} />
 
       {/* "Who we build for" persona grid */}
       <PersonaGrid content={bespokePersonaGridContent} />

@@ -437,6 +437,22 @@ export interface ProcessStepsContent {
   steps: ProcessStep[];
 }
 
+// Bespoke Solutions page: "get started" walkthrough — alternating image/text
+// rows, each with its own CTA (see BuildProcessSteps.tsx).
+export interface BuildProcessStep {
+  title: string;
+  description: string;
+  image: { src: string; alt: string };
+}
+
+export interface BuildProcessContent {
+  eyebrow: string;
+  heading: string;
+  ctaText: string;
+  ctaHref: string;
+  steps: BuildProcessStep[];
+}
+
 // ==================== CONTENT DATA ====================
 // Top navigation links, shared by every page via app/layout.tsx
 export const navLinks: NavLink[] = [
@@ -1511,6 +1527,44 @@ export const capabilitiesContent: CapabilitiesGridContent = {
       title: "Workflow Automation",
       description:
         "We map out the repetitive, manual parts of running your fuel operation and replace them with tools that run themselves.",
+    },
+  ],
+};
+
+// Bespoke Solutions page: "get started" walkthrough, rendered right after
+// CapabilitiesGrid. TODO: no dedicated illustrations exist yet for these
+// four steps — image paths below don't resolve to real files yet, so
+// BuildProcessSteps.tsx falls back to a plain tinted block per step until
+// real artwork is provided.
+export const buildProcessContent: BuildProcessContent = {
+  eyebrow: "Get Started",
+  heading: "Four simple steps, from your first message to a working system",
+  ctaText: "Get in touch",
+  ctaHref: "/request",
+  steps: [
+    {
+      title: "Tell us the problem",
+      description:
+        "Walk us through what's not working, the process, the software, the gap in your current setup. The more specific you are, the faster we can pinpoint exactly what needs fixing.",
+      image: { src: "/bespoke-step-problem.png", alt: "A chat conversation describing a business's fuel operation problem" },
+    },
+    {
+      title: "We design the fix",
+      description:
+        "We map out exactly what needs to be built, how it should work, what it needs to connect to, and what success actually looks like for your team. You see the plan before anything gets built.",
+      image: { src: "/bespoke-step-design.png", alt: "A designer mapping out a custom tool's plan" },
+    },
+    {
+      title: "We build it",
+      description:
+        "Our team develops and tests the solution, checking it against real scenarios from your business, not just a demo environment. Nothing reaches you until it's actually been put through its paces.",
+      image: { src: "/bespoke-step-build.png", alt: "Engineers building and testing a custom tool" },
+    },
+    {
+      title: "You start using it",
+      description:
+        "Live, working, and yours, with our team on hand to walk you and your staff through it. No dropping a finished system on you and disappearing.",
+      image: { src: "/bespoke-step-launch.png", alt: "A team using their new custom dashboard" },
     },
   ],
 };
