@@ -43,6 +43,7 @@ export default function CapabilitiesGrid({ content }: CapabilitiesGridProps) {
               title={capability.title}
               description={capability.description}
               image={CAPABILITY_IMAGE[capability.title]}
+              aspectClassName="aspect-[15/16]"
             />
           </div>
         ))}
