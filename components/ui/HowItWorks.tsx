@@ -160,7 +160,7 @@ export default function HowItWorks({ content, statsContent }: HowItWorksProps) {
         <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
           {content.eyebrow}
         </span>
-        <h2 className="mt-3 text-2xl font-semibold text-brand-900 sm:text-3xl">
+        <h2 className="mt-3 text-2xl font-semibold text-brand-900 sm:text-[36px]">
           {content.title}
         </h2>
         <p className="mt-2 text-sm text-brand-900/50">{content.subtitle}</p>

@@ -18,7 +18,7 @@ export default function PersonaGrid({ content }: PersonaGridProps) {
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>
-      <h2 className="mx-auto mt-3 max-w-2xl text-2xl font-semibold text-brand-900 sm:text-3xl">
+      <h2 className="mx-auto mt-3 max-w-2xl text-2xl font-semibold text-brand-900 sm:text-[36px]">
         {content.heading}
       </h2>
 

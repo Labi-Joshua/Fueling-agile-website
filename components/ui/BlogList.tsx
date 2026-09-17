@@ -31,7 +31,7 @@ export default function BlogList({ content, posts }: BlogListProps) {
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>
-      <h2 className="mt-3 text-2xl font-semibold text-brand-900 sm:text-3xl">
+      <h2 className="mt-3 text-2xl font-semibold text-brand-900 sm:text-[36px]">
         {content.heading}
       </h2>
 
