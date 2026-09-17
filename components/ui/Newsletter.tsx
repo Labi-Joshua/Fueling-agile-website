@@ -85,7 +85,7 @@ export default function Newsletter({ content }: NewsletterProps) {
             </button>
           </form>
 
-          <label className="mx-auto mt-4 flex max-w-sm items-start justify-center gap-2 text-center text-xs text-brand-900/50">
+          <label className="mx-auto mt-4 flex max-w-sm items-start justify-center gap-2 text-left text-xs text-brand-900/50">
             <input
               type="checkbox"
               checked={consent}
