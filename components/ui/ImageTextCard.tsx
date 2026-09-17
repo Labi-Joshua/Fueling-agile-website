@@ -20,13 +20,13 @@ export default function ImageTextCard({ title, description, image }: ImageTextCa
   const [imageFailed, setImageFailed] = useState(false);
 
   return (
-    <div className="flex w-full flex-col gap-4 rounded-3xl border border-[#C2DB86] bg-white px-3 pb-3 pt-10 text-left">
-      <div>
+    <div className="flex w-full flex-col gap-4 rounded-3xl border border-[#C2DB86] bg-white pb-3 pt-10 text-left">
+      <div className="px-4">
         <p className="text-xl font-semibold text-brand-900">{title}</p>
         <p className="mt-1 text-sm leading-relaxed text-brand-900/50">{description}</p>
       </div>
 
-      <div className="relative aspect-[3/2] w-full overflow-hidden rounded-2xl bg-brand-500/10">
+      <div className="relative mx-3 aspect-[3/2] overflow-hidden rounded-2xl bg-brand-500/10">
         {!imageFailed && (
           <Image
             src={image.src}
