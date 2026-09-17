@@ -1,9 +1,8 @@
 "use client";
 
 // Bespoke Solutions page: grid of capability cards (e.g. "Custom Fuel
-// Dashboards"), each with a small illustration. The illustrations already
-// carry their own background/border, so they're rendered as-is with no
-// extra card chrome around them.
+// Dashboards"), each with a small illustration inset inside its own
+// pale-green panel.
 import Image from "next/image";
 import type { CapabilitiesGridContent, Capability } from "@/data/mockContent";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
@@ -25,12 +24,12 @@ function CapabilityCard({ capability }: { capability: Capability }) {
 
   return (
     <div className="flex flex-col gap-2 rounded-3xl border border-[#C2DB86] bg-white p-6 text-left">
-      <p className="text-base font-semibold text-brand-900">{capability.title}</p>
+      <p className="text-lg font-semibold text-brand-900">{capability.title}</p>
       <p className="text-sm leading-relaxed text-brand-900/60">{capability.description}</p>
 
       {image && (
-        <div className="relative mt-auto aspect-square w-full max-w-[220px] self-center">
-          <Image src={image.src} alt={image.alt} fill sizes="220px" className="object-contain" />
+        <div className="relative mt-auto aspect-square w-full overflow-hidden rounded-2xl bg-[#F3F9E1] p-10">
+          <Image src={image.src} alt={image.alt} fill sizes="(min-width: 640px) 360px, 100vw" className="object-contain p-2" />
         </div>
       )}
     </div>
