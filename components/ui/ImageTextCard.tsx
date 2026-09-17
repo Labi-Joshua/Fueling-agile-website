@@ -26,7 +26,7 @@ export default function ImageTextCard({ title, description, image }: ImageTextCa
         <p className="mt-1 text-sm leading-relaxed text-brand-900/50">{description}</p>
       </div>
 
-      <div className="relative mx-3 aspect-[3/2] overflow-hidden rounded-2xl bg-brand-500/10">
+      <div className="relative mx-3 mt-auto aspect-[3/2] overflow-hidden rounded-2xl bg-brand-500/10">
         {!imageFailed && (
           <Image
             src={image.src}
