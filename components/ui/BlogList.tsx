@@ -2,6 +2,7 @@
 
 // Homepage "latest posts" preview grid, showing up to a few post cards with a
 // "Read more" CTA below (links out to the full /blog index).
+import Link from "next/link";
 import type { BlogSectionContent } from "@/data/mockContent";
 import { useFadeInOnScroll } from "@/hooks/useFadeInOnScroll";
 
@@ -19,7 +20,7 @@ export interface BlogListProps {
 
 // Preview grid, not the full archive — cap it so the section can't grow
 // unbounded as more posts get published.
-const MAX_POSTS = 6;
+const MAX_POSTS = 3;
 
 export default function BlogList({ content, posts }: BlogListProps) {
   const sectionRef = useFadeInOnScroll<HTMLElement>();
@@ -66,12 +67,12 @@ export default function BlogList({ content, posts }: BlogListProps) {
         ))}
       </div>
 
-      <button
-        type="button"
-        className="mt-10 rounded-full bg-brand-500 px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
+      <Link
+        href="/blog"
+        className="mt-10 inline-flex items-center justify-center rounded-full bg-brand-500 px-8 py-4 text-sm font-semibold text-white transition-colors hover:bg-brand-600"
       >
         {content.ctaText}
-      </button>
+      </Link>
     </section>
   );
 }
