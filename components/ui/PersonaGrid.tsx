@@ -14,7 +14,7 @@ export default function PersonaGrid({ content }: PersonaGridProps) {
   const sectionRef = useFadeInOnScroll<HTMLElement>();
 
   return (
-    <section ref={sectionRef} className="mx-auto max-w-4xl px-4 pt-20 text-center sm:px-8">
+    <section ref={sectionRef} className="mx-auto max-w-[1536px] px-4 pt-20 text-center sm:px-8">
       <span className="text-xs font-medium uppercase tracking-wide text-orange-500">
         {content.eyebrow}
       </span>
@@ -22,7 +22,7 @@ export default function PersonaGrid({ content }: PersonaGridProps) {
         {content.heading}
       </h2>
 
-      <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
+      <div className="mx-auto mt-12 grid max-w-[1088px] grid-cols-1 gap-6 sm:grid-cols-2">
         {content.personas.map((persona) => (
           <ImageTextCard
             key={persona.title}
