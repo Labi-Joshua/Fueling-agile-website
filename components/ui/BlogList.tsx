@@ -17,8 +17,13 @@ export interface BlogListProps {
   posts: BlogListPost[];
 }
 
+// Preview grid, not the full archive — cap it so the section can't grow
+// unbounded as more posts get published.
+const MAX_POSTS = 6;
+
 export default function BlogList({ content, posts }: BlogListProps) {
   const sectionRef = useFadeInOnScroll<HTMLElement>();
+  const visiblePosts = posts.slice(0, MAX_POSTS);
 
   return (
     <section ref={sectionRef} className="mx-auto max-w-[1536px] px-4 pt-20 sm:px-8">
@@ -30,7 +35,7 @@ export default function BlogList({ content, posts }: BlogListProps) {
       </h2>
 
       <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
-        {posts.map((post) => (
+        {visiblePosts.map((post) => (
           <article key={post.slug} className="flex flex-col gap-4">
             {/* Placeholder brand-mark thumbnail (posts here don't carry featured images) */}
             <div className="relative aspect-[3/2] overflow-hidden rounded-xl bg-brand-500/10 p-4 sm:p-5">
