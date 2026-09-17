@@ -401,10 +401,8 @@ export interface BespokeHeroContent {
   eyebrow: string;
   heading: string;
   subheading: string;
-  primaryCtaText: string;
-  primaryCtaHref: string;
-  secondaryCtaText: string;
-  secondaryCtaHref: string;
+  ctaText: string;
+  ctaHref: string;
   image: { src: string; alt: string };
 }
 
@@ -1484,10 +1482,8 @@ export const bespokeHeroContent: BespokeHeroContent = {
   heading: "We build the thing you actually need for your business",
   subheading:
     "Tell us the problem. We'll build the tool, system, or integration that solves it, made for your business, not a template.",
-  primaryCtaText: "Discuss your project",
-  primaryCtaHref: "/request",
-  secondaryCtaText: "See how it works",
-  secondaryCtaHref: "#how-it-works",
+  ctaText: "Contact our team",
+  ctaHref: "/request",
   image: {
     src: "/hero-bespoke-isometric.png",
     alt: "Isometric illustration of custom dashboards, charts, and integrations",

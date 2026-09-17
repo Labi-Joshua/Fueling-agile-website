@@ -26,10 +26,10 @@ export default function BespokeHero({ content }: BespokeHeroProps) {
 
         <div className="mt-8 flex flex-row gap-3 sm:gap-4">
           <Link
-            href={content.primaryCtaHref}
+            href={content.ctaHref}
             className="flex items-center justify-center gap-2 rounded-full bg-brand-500 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-600 sm:px-8 sm:py-4"
           >
-            {content.primaryCtaText}
+            {content.ctaText}
             <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
               <path
                 d="M3 1.5L8.5 6L3 10.5"
@@ -39,12 +39,6 @@ export default function BespokeHero({ content }: BespokeHeroProps) {
                 strokeLinejoin="round"
               />
             </svg>
-          </Link>
-          <Link
-            href={content.secondaryCtaHref}
-            className="flex items-center justify-center rounded-full border border-brand-500 px-5 py-3 text-sm font-semibold text-brand-500 transition-colors hover:bg-brand-500/5 sm:px-8 sm:py-4"
-          >
-            {content.secondaryCtaText}
           </Link>
         </div>
       </div>
