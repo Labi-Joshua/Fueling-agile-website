@@ -1446,9 +1446,6 @@ export const pricingTiersContent: PricingTiersContent = {
 };
 
 // Agile Flex solutions page: "who it's for" persona grid.
-// TODO: each persona needs a dedicated photo — these currently point at
-// placeholder image paths that don't exist yet (see PersonaGrid.tsx, which
-// renders a neutral fallback block when an image 404s).
 export const personaGridContent: PersonaGridContent = {
   eyebrow: "Built for how you work",
   heading: "A fuel solution for whoever's watching the budget",
@@ -1457,25 +1454,25 @@ export const personaGridContent: PersonaGridContent = {
       title: "Business Owners",
       description:
         "Stop guessing if your fuel budget is being respected. See what was spent, by who, and where. No need to chase anyone for a receipt.",
-      image: { src: "/persona-business-owner.jpg", alt: "A business owner standing in his showroom" },
+      image: { src: "/persona-business-owner.png", alt: "A business owner standing in his showroom" },
     },
     {
       title: "Fleet & Operations Managers",
       description:
         "Set the rules once, daily limits, role-based access, station restrictions, and let the system enforce them automatically. No more policing every fill-up by hand.",
-      image: { src: "/persona-fleet-manager.jpg", alt: "A fleet operations manager reviewing a clipboard near a truck" },
+      image: { src: "/persona-fleet-manager.png", alt: "A fleet operations manager reviewing a clipboard near a truck" },
     },
     {
       title: "Finance Teams",
       description:
         "Get monthly electronic reports that reconcile themselves. Painless bookkeeping, transparent fuel structure, no hidden charges.",
-      image: { src: "/persona-finance-team.jpg", alt: "Two finance team members reviewing documents at a desk" },
+      image: { src: "/persona-finance-team.png", alt: "Two finance team members reviewing documents at a desk" },
     },
     {
       title: "Enterprise Procurement",
       description:
         "Custom-branded cards, dedicated account managers, and pricing that gets better as your fleet grows. Built to handle 50, 100, or more vehicles without breaking down.",
-      image: { src: "/persona-procurement.jpg", alt: "Enterprise procurement staff reviewing inventory in a warehouse" },
+      image: { src: "/persona-procurement.png", alt: "Enterprise procurement staff reviewing inventory in a warehouse" },
     },
   ],
 };
