@@ -23,7 +23,7 @@ function CapabilityCard({ capability }: { capability: Capability }) {
   const image = CAPABILITY_IMAGE[capability.title];
 
   return (
-    <div className="flex flex-col gap-2 rounded-3xl border border-[#C2DB86] bg-white p-6 text-left">
+    <div className="flex flex-col gap-2 rounded-3xl border border-[#C2DB86] bg-white p-6 text-left shadow-[8px_-8px_0px_0px_#C2DB86]">
       <p className="text-lg font-semibold text-brand-900">{capability.title}</p>
       <p className="text-sm leading-relaxed text-brand-900/60">{capability.description}</p>
 
