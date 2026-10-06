@@ -803,14 +803,6 @@ export const footerContent: FooterContent = {
   phone: "+234 706 5587 385, +234 706 699 1031",
   columns: [
     {
-      heading: "Product",
-      links: [
-        { label: "How It Works", href: "/how-it-works" },
-        { label: "Our Card", href: "/card" },
-        { label: "FAQs", href: "/faqs" },
-      ],
-    },
-    {
       heading: "Solutions",
       links: [
         { label: "Agile Flex Petrolkaart", href: "/solutions/agileflex" },
