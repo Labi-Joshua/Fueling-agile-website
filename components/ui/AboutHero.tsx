@@ -2,7 +2,7 @@
 // "stroke" graphic positioned behind it.
 import Image from "next/image";
 import type { AboutHeroContent } from "@/data/mockContent";
-import VideoPlayer from "@/components/ui/VideoPlayer";
+import YouTubeEmbed from "@/components/ui/YouTubeEmbed";
 
 export interface AboutHeroProps {
   content: AboutHeroContent;
@@ -33,11 +33,7 @@ export default function AboutHero({ content, strokeImageSrc }: AboutHeroProps) {
         </div>
 
         <div className="relative">
-          <VideoPlayer
-            videoSrc={content.video.videoSrc}
-            posterSrc={content.video.posterSrc}
-            title={content.video.thumbnailAlt}
-          />
+          <YouTubeEmbed youtubeId={content.video.youtubeId} title={content.video.title} />
         </div>
       </div>
     </section>

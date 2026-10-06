@@ -23,9 +23,8 @@ export interface AboutHeroContent {
   heading: string;
   subheading: string;
   video: {
-    videoSrc?: string;
-    posterSrc?: string;
-    thumbnailAlt: string;
+    youtubeId: string;
+    title: string;
   };
 }
 
@@ -517,7 +516,8 @@ export const aboutHeroContent: AboutHeroContent = {
   subheading:
     "We are on a mission to help Nigerian businesses protect their profit margins, eliminate overspending, and take complete control of their fuel operations. Rooted in transparency, we build secure systems that keep your fleet on the move.",
   video: {
-    thumbnailAlt: "City skyline at dusk",
+    youtubeId: "y1NaC8ff-Ac",
+    title: "Fueling Agile Solutions — About Us",
   },
 };
 
