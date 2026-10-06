@@ -7,7 +7,7 @@ import Footer from "@/components/ui/Footer";
 import QueryProvider from "@/components/providers/QueryProvider";
 import SmoothScrollProvider from "@/components/providers/SmoothScrollProvider";
 import RequestFuelCardModalProvider from "@/components/providers/RequestFuelCardModalProvider";
-import BackToTopButton from "@/components/ui/BackToTopButton";
+import WhatsAppButton from "@/components/ui/WhatsAppButton";
 import { navLinks, footerContent } from "@/data/mockContent";
 
 // Body font (Manrope) — loaded via next/font and exposed as a CSS variable
@@ -76,8 +76,8 @@ export default function RootLayout({
                 ]}
               />
 
-              {/* Floating "back to top" button, appears once the page has scrolled a bit */}
-              <BackToTopButton />
+              {/* Floating WhatsApp chat button */}
+              <WhatsAppButton />
             </RequestFuelCardModalProvider>
           </SmoothScrollProvider>
         </QueryProvider>
