@@ -324,8 +324,9 @@ export interface PrivacyPolicyContent {
 
 // "Request fuel cards" modal — opened from every "Request fuel cards" CTA
 // button site-wide (Hero, HowItWorks, WhyUs, StatsSection) via
-// RequestFuelCardModalProvider. No backend wired up yet — submitting just
-// prevents the native page reload until one is connected.
+// RequestFuelCardModalProvider. Submits to /api/request-fuel-card, which
+// relays it (and any attached vehicle sheet) through Zoho SMTP — see
+// lib/mailer.ts.
 export interface RequestFuelCardModalContent {
   eyebrow: string;
   heading: string;
@@ -355,6 +356,7 @@ export interface RequestFuelCardModalContent {
   bulkVehicleMessage: string;
   bulkVehicleSheetUrl: string;
   bulkVehicleButtonText: string;
+  vehicleSheetUploadLabel: string;
   submitText: string;
 }
 
@@ -1378,6 +1380,7 @@ export const requestFuelCardModalContent: RequestFuelCardModalContent = {
   bulkVehicleSheetUrl:
     "https://docs.google.com/spreadsheets/d/1qSvNLML0ndk_q7cU7RMcPkCV73WmOOLn5rPWWEoPFsE/export?format=xlsx&gid=1944412090",
   bulkVehicleButtonText: "Download vehicle sheet",
+  vehicleSheetUploadLabel: "Upload completed vehicle sheet (optional, 4MB max)",
   submitText: "Submit form",
 };
 
