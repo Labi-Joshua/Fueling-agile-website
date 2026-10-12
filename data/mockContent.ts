@@ -348,6 +348,13 @@ export interface RequestFuelCardModalContent {
   vehicleMakePlaceholder: string;
   vehicleModelPlaceholder: string;
   registrationPlaceholder: string;
+  // Shown instead of the single make/model/registration row once the
+  // selected vehicle count is too high to reasonably fill in one at a time
+  // (see BULK_VEHICLE_THRESHOLD in RequestFuelCardModal.tsx).
+  bulkVehicleHeading: string;
+  bulkVehicleMessage: string;
+  bulkVehicleSheetUrl: string;
+  bulkVehicleButtonText: string;
   submitText: string;
 }
 
@@ -1365,6 +1372,12 @@ export const requestFuelCardModalContent: RequestFuelCardModalContent = {
   vehicleMakePlaceholder: "Vehicle make",
   vehicleModelPlaceholder: "Vehicle model",
   registrationPlaceholder: "Registration number",
+  bulkVehicleHeading: "Requesting cards for more than 2 vehicles?",
+  bulkVehicleMessage:
+    "Download our vehicle information sheet, fill in the details for your full fleet, and email it to us along with this form so we can set every card up in one go.",
+  bulkVehicleSheetUrl:
+    "https://docs.google.com/spreadsheets/d/1qSvNLML0ndk_q7cU7RMcPkCV73WmOOLn5rPWWEoPFsE/export?format=xlsx&gid=1944412090",
+  bulkVehicleButtonText: "Download vehicle sheet",
   submitText: "Submit form",
 };
 

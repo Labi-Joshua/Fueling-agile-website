@@ -21,13 +21,38 @@ const inputClassName =
 
 const labelClassName = "flex items-center gap-1 text-sm font-medium text-brand-900";
 
+// Above this many vehicles, filling in just one make/model/registration row
+// no longer makes sense — show the bulk vehicle sheet download instead.
+const BULK_VEHICLE_THRESHOLD = 2;
+
 function RequiredMark() {
   return <span className="text-red-500">*</span>;
+}
+
+function DownloadIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
+      <path
+        d="M6 1v6.5M3 6l3 3 3-3M1.5 10.5h9"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
 }
 
 export default function RequestFuelCardModal({ isOpen, onClose, content }: RequestFuelCardModalProps) {
   const lenis = useLenis();
   const bodyRef = useRef<HTMLDivElement>(null);
+  // Raw selected option (e.g. "1", "10+") — kept as the same string the
+  // <select> uses so it stays a normal controlled input. The numeric count
+  // below (parseInt stops at the first non-digit, so "10+" -> 10, no special-
+  // casing needed) drives whether the single vehicle-info row or the bulk
+  // sheet download renders.
+  const [vehicleCountValue, setVehicleCountValue] = useState(content.vehicleCountOptions[0]);
+  const vehicleCount = parseInt(vehicleCountValue, 10) || 0;
   // Drives the custom scroll-position indicator below (a plain styled div,
   // not native scrollbar theming — iOS Safari never renders
   // ::-webkit-scrollbar, and it's not guaranteed to render as a persistent
@@ -201,7 +226,12 @@ export default function RequestFuelCardModal({ isOpen, onClose, content }: Reque
                 <label className={labelClassName}>
                   {content.vehicleCountLabel} <RequiredMark />
                 </label>
-                <select required defaultValue={content.vehicleCountOptions[0]} className={`mt-2 appearance-none ${inputClassName}`}>
+                <select
+                  required
+                  value={vehicleCountValue}
+                  onChange={(e) => setVehicleCountValue(e.target.value)}
+                  className={`mt-2 appearance-none ${inputClassName}`}
+                >
                   {content.vehicleCountOptions.map((option) => (
                     <option key={option} value={option} className="text-brand-900">
                       {option}
@@ -210,14 +240,31 @@ export default function RequestFuelCardModal({ isOpen, onClose, content }: Reque
                 </select>
               </div>
 
-              <div>
-                <label className={labelClassName}>{content.vehicleInfoLabel}</label>
-                <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  <input type="text" placeholder={content.vehicleMakePlaceholder} className={inputClassName} />
-                  <input type="text" placeholder={content.vehicleModelPlaceholder} className={inputClassName} />
-                  <input type="text" placeholder={content.registrationPlaceholder} className={inputClassName} />
+              {vehicleCount > BULK_VEHICLE_THRESHOLD ? (
+                <div className="flex flex-col items-start gap-3 rounded-2xl border border-brand-500/20 bg-white p-4">
+                  <div>
+                    <p className="text-sm font-medium text-brand-900">{content.bulkVehicleHeading}</p>
+                    <p className="mt-1 text-sm text-brand-900/60">{content.bulkVehicleMessage}</p>
+                  </div>
+                  <a
+                    href={content.bulkVehicleSheetUrl}
+                    download
+                    className="inline-flex items-center gap-2 rounded-full border border-brand-500 px-5 py-2.5 text-sm font-semibold text-brand-500 transition-colors hover:bg-brand-500/5"
+                  >
+                    <DownloadIcon />
+                    {content.bulkVehicleButtonText}
+                  </a>
                 </div>
-              </div>
+              ) : (
+                <div>
+                  <label className={labelClassName}>{content.vehicleInfoLabel}</label>
+                  <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-3">
+                    <input type="text" placeholder={content.vehicleMakePlaceholder} className={inputClassName} />
+                    <input type="text" placeholder={content.vehicleModelPlaceholder} className={inputClassName} />
+                    <input type="text" placeholder={content.registrationPlaceholder} className={inputClassName} />
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="mt-6 flex justify-end">
